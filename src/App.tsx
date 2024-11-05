@@ -1,35 +1,37 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Layout from "./layouts/AppLayout";
+import './App.css';
+import LandingPage from "./pages/LandingPage";
+import HomePage from "./pages/HomePage";
+import Cart from "./pages/Cart";
+import OrderHistory from "./pages/OrderHistory";
+import Messages from "./pages/Messages";
+import Gifts from "./pages/Gifts";
+import Settings from "./pages/Settings";
+import Logout from "./pages/Logout";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        {/*  Authenticated routes */}
+        <Route element={<Layout />}>
+        <Route path="/HomePage" element={<HomePage />} />
+          <Route path="/Gifts" element={<Gifts />} /> 
+           <Route path="/Messages" element={<Messages />} />
+           <Route path="/Cart" element={<Cart />} />
+           <Route path="/OrderHistory" element={<OrderHistory />} />
+           <Route path="/Settings" element={<Settings />} />
+           <Route path="/Logout" element={<Logout />} />
+        </Route>
+
+        {/* Landing Page Routes  */}
+          <Route path="/" element={<LandingPage />} />
+        {/* <Route path="/login" element={<Login />} /> */}
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

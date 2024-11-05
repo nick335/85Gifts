@@ -1,0 +1,27 @@
+[
+    {
+      "id": 1,
+      "name": "Mark Ajayi",
+      "location": "Wuse Abuja",
+      "feedback": "What set them apart from other store is the attention to details, the packaging is also very beautiful",
+      "stars": 5,
+      "image": "/src/assets/profile-images/person1.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Melissa Ibe",
+       "location": "Ikeja, Lagos",
+      "feedback": "What set them apart from other store is the attention to details, the packaging is also very beautiful",
+      "stars": 5,
+      "image": "src/assets/profile-images/person2.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Hauwa Musa",
+      "location": "Dela HilKana",
+      "feedback": "What set them apart from other store is the attention to details, the packaging is also very beautiful",
+      "stars": 5,
+      "image": "src/assets/profile-images/person3.jpg"
+    }
+  ]
+  
