@@ -8,7 +8,6 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
-  // SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -63,9 +62,7 @@ export function AppSidebar() {
   return (
     <Sidebar className="bg-[#032bb7]" >
       <SidebarContent className="bg-[#032bb7] text-white">
-        <SidebarGroup className="bg-[#032bb7]">
-          {/* <SidebarGroupLabel> */}
-          {/* </SidebarGroupLabel> */}
+        <SidebarGroup className="bg-[#032bb7] hover:text-white">
           <SidebarGroupContent className="">
             <SidebarMenu>
             <span className=''>
@@ -77,7 +74,7 @@ export function AppSidebar() {
                           {items.map((item) => (
                 <SidebarMenuItem key={item.title} >
                   <SidebarMenuButton asChild>
-                    <Link to={item.path} className="hover:bg-[#041c85] hover:text-white">
+                    <Link to={item.path} className="hover:bg-900">
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>
@@ -93,7 +90,7 @@ export function AppSidebar() {
                 <SidebarMenuItem>
                     {footerItems.map((item) => (
                     <  SidebarMenuButton asChild>
-                    <Link to={item.path} className="hover:bg-[#041c85] hover:text-white text-white">
+                    <Link to={item.path} className="hover:bg-[#041c85]text-white">
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>
