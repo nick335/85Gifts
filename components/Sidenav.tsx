@@ -65,7 +65,7 @@ export function AppSidebar() {
         <SidebarGroup className="bg-[#032bb7] hover:text-white">
           <SidebarGroupContent className="">
             <SidebarMenu>
-            <span className=''>
+            <span>
 
             <Link to='/HomePage' className=''>
             <img src='../src/assets/logo.png' alt='logo' className='w-28 mb-2'/>
@@ -73,7 +73,7 @@ export function AppSidebar() {
             </span>
                           {items.map((item) => (
                 <SidebarMenuItem key={item.title} >
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild tooltip={item.title}>
                     <Link to={item.path} className="hover:bg-900">
                       <item.icon />
                       <span>{item.title}</span>
@@ -87,9 +87,9 @@ export function AppSidebar() {
       </SidebarContent>
             <SidebarFooter className="bg-[#032bb7] text-white ">
               <SidebarMenu>
-                <SidebarMenuItem>
+                <SidebarMenuItem >
                     {footerItems.map((item) => (
-                    <  SidebarMenuButton asChild>
+                    <  SidebarMenuButton asChild tooltip={item.title}>
                     <Link to={item.path} className="hover:bg-[#041c85]text-white">
                       <item.icon />
                       <span>{item.title}</span>
