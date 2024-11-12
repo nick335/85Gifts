@@ -60,7 +60,7 @@ const footerItems = [
 
 export function AppSidebar() {
   return (
-    <Sidebar className="bg-[#032bb7]" >
+    <Sidebar collapsible="icon" className="bg-[#032bb7]">
       <SidebarContent className="bg-[#032bb7] text-white">
         <SidebarGroup className="bg-[#032bb7] hover:text-white">
           <SidebarGroupContent className="">

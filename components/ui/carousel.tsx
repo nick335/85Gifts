@@ -37,7 +37,7 @@ export default function Carousel() {
   }, [changeSlide]);
 
   return (
-    <div className="carousel overflow-hidden relative w-[90vw]  h-[60vw] sm:h-[40vw] md:h-[30vw] lg:h-[300px]">
+    <div className="carousel overflow-hidden relative w-[60vw]  h-[60vw] sm:h-[40vw] md:h-[30vw] lg:h-[300px]">
       <div
         className="slides flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${current * 100}%)` }} // Slide to the left
