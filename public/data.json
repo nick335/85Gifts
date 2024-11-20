@@ -1,0 +1,23 @@
+ [
+  {
+    "id": "ORD001",
+   "date": "2023-09-01",
+    "total": 99.99,
+    "status": "Delivered",
+    "imageUrl": "/src/assets/order-1.jpg"
+  },
+  {
+    "id": "ORD002",
+   "date": "2023-09-05",
+    "total": 149.49,
+    "status": "Shipped",
+    "imageUrl": "/src/assets/order-2.jpg"
+  },
+  {
+    "id": "ORD003",
+   "date": "2023-09-10",
+    "total": 249.0,
+    "status": "Processing",
+    "imageUrl": "/src/assets/order-3.jpg"
+  }
+]
