@@ -1,30 +1,32 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Carousel from "@/components/ui/carousel";
-import HomeBentoGrid from "@/components/HomeBentoGrid";
+// import HomeBentoGrid from "@/components/HomeBentoGrid";
 import { Button } from "@/components/ui/button";
 import CustomerRatings from "@/components/CustomerRatings";
 import Footer from "@/components/Footer";
 import { GoArrowRight } from "react-icons/go";
 import { QuantityDropdown } from "@/components/quantity-dropdown";
+import BentGrid from "@/components/BentotestGrid";
+
 
 
 export default function LandingPage() {
   return (
     <>
     <div className="Body">
-      <div className="w-full top-0 mt-0"
+      <div className="w-full top-0 mt-0 h-full bg-gradient-to-r from-[#E2E5FF] to-[#B5B8FF]"
         style={{
       backgroundImage: 'linear-gradient(to left, #E2E5FF, #B5B8FF)',
-      height: "100vh",
-      width: "100vw",
+      height: "105vh",
+      width: "100%",
   }}
       >
       <Navbar/>
     
     <div className="main">
     <div className="hero-section flex flex-row gap-5 mt-48">
-      <div>
+      <div className="hero-text">
          <h1 className="hero-section-h1">Express your love in a <span> PACKAGE</span> </h1>
          <p>At 85gifts we create and provide crafted, personalized gifts 
             to help celebrate your most treasured memories
@@ -38,7 +40,8 @@ export default function LandingPage() {
       </div>
     </div>
     <div className="bento-grid">
-        <HomeBentoGrid/>
+        {/* <HomeBentoGrid/> */}
+        <BentGrid/>
     </div>
 
        <div className="BestSelling">
