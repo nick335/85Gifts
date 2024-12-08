@@ -1,9 +1,10 @@
 export default function Gifts() {   
     return (
       <>
-      <div>
-        <h1>Gifts</h1>
-      </div>
+      
+      
+            <h1>Gift</h1>
+          
       </>
     );
     }   
