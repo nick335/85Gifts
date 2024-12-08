@@ -4,7 +4,7 @@ import { NotebookPen, RotateCw, Star, X } from "lucide-react";
 export default function OrderHistory() {
   return (
     <>
-      <div className="flex flex-col mx-auto h-96 w-96 border-2 border-rose-500">
+      <div className="flex flex-col mx-auto h-[100%] w-[100%] bg-blue-500 border-2 border-rose-500">
         <div className="flex flex-row text-center items-center gap-4 rounded-md bg-muted mx-auto p-1">
           <div className="flex flex-row gap-4 items-center text-center mx-auto">
             <div className="bg-white p-2 rounded-full">
@@ -16,7 +16,7 @@ export default function OrderHistory() {
         {/* Your order history content goes here */}
         <div className="flex flex-row items-center justify-between gap-6 p-4">
           <div className="oderProcess flex flex-1 items-center justify-between gap-4 mx-8">
-            <div className="flex flex-col border-2 border-muted-foreground  mx-4">
+            <div className="flex flex-col border-2 border-muted-foreground mx-4">
               <span className="inline-block h-[250px] min-h-[1em] w-0.5 self-stretch border-2 border-muted"></span>
             </div>
             <div className="sideTrack flex flex-col justify-between gap-4 ">
