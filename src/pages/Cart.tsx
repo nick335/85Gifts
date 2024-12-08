@@ -1,22 +1,16 @@
 export default function Cart() {    
     return (
       <>
-      <div className="h-screen bg-gradient-to-r from-[#B5BCFF] via-[#E2E5FF] to-white">
-        <div>
-          <div className="bg-[#E8E5E5] flex justify-between">
-              <div className="flex gap-2">
-                <img src="src\assets\icons\mdi_cart.png" className="bg-white rounded-xl" />
-                <h1>Cart</h1>
-              </div>
-              <div><h1> ⏩ </h1></div>
-              <div className="flex gap-2">
-                <img src="src\assets\icons\mdi_account-payment.png" />
-                <h1>Checkout</h1>
-              </div>
-            </div>
+      
+        <div className="flex flex-col mx-auto h-[100%] w-[100%] bg-blue-500 border-2 border-rose-500 ">
+        <div className="flex flex-row text-center items-center gap-4 rounded-md bg-muted mx-auto p-1">
+          <div className="flex flex-row gap-4 items-center text-center mx-auto">
+            <div className="bg-white p-2 rounded-full">
+      <div>
+        <h1>Cart</h1>
         </div>
-        <div className="font-medium text-sm text-center flex justify-center items-center">
-        <p className="">Need help? Check our <a href="#"> help and support </a> or <a href="#"> contact us</a></p>
+      </div>
+      </div>
       </div>
       </div>
       </>
