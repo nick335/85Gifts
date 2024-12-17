@@ -11,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 
 // Menu items.
@@ -65,10 +66,12 @@ export function AppSidebar() {
         <SidebarGroup className="bg-[#032bb7] hover:text-white">
           <SidebarGroupContent className="">
             <SidebarMenu>
-            <span>
-
+            <span className="justify-center gap-2 items-center">
+            <div className="mb-4">
+            <SidebarTrigger />
+            </div>
             <Link to='/HomePage' className=''>
-            <img src='../src/assets/logo.png' alt='logo' className='w-28 mb-2'/>
+            <img src='../src/assets/logo.png' alt='logo' className='w-28 mb-2 min-w-10'/>
             </Link>
             </span>
                           {items.map((item) => (
