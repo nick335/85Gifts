@@ -39,12 +39,12 @@ export default function LandingPage() {
                 <Carousel />
               </div>
             </div>
-            <div className="bento-grid grid-flow-col border-2 border-rose-400">
+            <div className="bento-grid grid-flow-col">
               {/* <HomeBentoGrid/> */}
               <BentGrid />
             </div>
 
-            <div className="hidden BestSelling border-2 bg-orange-400">
+            <div className=" BestSelling border-2 bg-orange-400">
               <span className="best-selling-text w-full flex justify-between ">
                 <h1 className="">Best Selling Gifts</h1>
 
