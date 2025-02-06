@@ -10,6 +10,7 @@ import Messages from "./pages/Messages";
 import Gifts from "./pages/Gifts";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
+import Signup from "./pages/Signup";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
            <Route path="/Settings" element={<Settings />} />
            <Route path="/Logout" element={<Logout />} />
         </Route>
-
+        <Route path="/Signup" element={<Signup />} />
         {/* Landing Page Routes  */}
           <Route path="/" element={<LandingPage />} />
         {/* <Route path="/login" element={<Login />} /> */}
