@@ -3,12 +3,12 @@ import { BsArrowDownRight } from "react-icons/bs";
 export default function BentGrid() {
   return (
     <>
-      <div className="wrapper grid grid-cols-6 grid-rows-3 gap-4 grid-flow-dense ">
-        <div className="box1 col-start-1 col-end-3 row-start-1 row-end-2">
+      <div className="wrapper grid grid-flow-col md:grid-cols-6 md:grid-rows-2 gap-2 md:grid-flow-dense ">
+        <div className="box1 max-h-52 md:col-start-1 md:col-end-3 md:row-start-1 md:row-end-2">
           <img
             className="box1-img"
             src="src/assets/Chritsmas.png"
-            alt="thankyougift"
+            alt="thank you gift"
           />
         </div>
         <div className="box2 col-start-3 col-end-5 row-start-1 row-end-4">
@@ -26,20 +26,20 @@ export default function BentGrid() {
             </button>
           </span>
         </div>
-        <div className="box3 col-start-1 col-end-3 row-start-2 row-end-3 mt-24">
+        <div className="box3 col-start-5 col-end-7 row-start-1 row-end-2 ">
           <span>
             <h1>2k+</h1>
             <h3> Satisfied Customer so far</h3>
           </span>
         </div>
-        <div className="box4 col-start-5 col-end-7 row-start-2 row-end-3 mt-24 ">
+        <div className="box4  md:col-start-5 md:col-end-7 md:row-start-2 row-end-3  max-h-64 md:-mt-32">
           <img
             src="src/assets/thankyougift.png"
-            alt="thankyougift"
-            className=""
+            alt="thank you gift"
+            className="border-2 border-green-400"
           />
         </div>
-        <div className="box5 col-start-5 col-end-7 row-start-1 row-end-2">
+        <div className="box5  md:col-start-1 md:col-end-3 md:row-start-2 md:row-end-3 md:-mt-8">
           <span className="box-5-item">
             <h2>Let us suggest the Suitable gifts for you</h2>
             <span className="arrow-circle">
