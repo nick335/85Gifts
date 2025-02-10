@@ -24,7 +24,7 @@ export default function LandingPage() {
           <Navbar />
 
           <div className="main">
-            <div className="hero-section grid grid-cols-5 max-w-fit md:mt-48 ">
+            <div className="hero-section grid grid-cols-5 max-w-fit md:mt-16 lg:mt-24">
               <div className="hero-text col-span-full md:col-span-2">
                 <h1 className="hero-section-h1">
                   Express your love in a <span> PACKAGE</span>{" "}
@@ -39,25 +39,29 @@ export default function LandingPage() {
                 <Carousel />
               </div>
             </div>
-            <div className="bento-grid grid-flow-col">
+            <div className="bento-grid max-h-fit -mt-60 md:mt-1 ">
               {/* <HomeBentoGrid/> */}
               <BentGrid />
             </div>
 
-            <div className=" BestSelling border-2 bg-orange-400">
+            <div className=" BestSelling border-2 border-orange-400">
               <span className="best-selling-text w-full flex justify-between ">
-                <h1 className="">Best Selling Gifts</h1>
+                <h1 className="text-sm md:text-2xl lg:text-4xl">
+                  Best Selling Gifts
+                </h1>
 
-                <Button className="explore-button">
-                  <p>Explore more</p>
+                <Button className="explore-button text-sm md:text-2xl lg:text-4xl p-2">
+                  <p className=" text-sm md:text-2xl lg:text-4xl p-2">
+                    Explore more
+                  </p>
                 </Button>
               </span>
 
-              <div className="Bestselling flex gap-4 mb-10 h-[100vh]">
-                <div className="gift-item">
+              <div className="Bestselling flex flex-col  md:flex gap-4 mb-10 h-[100vh] w-[100vw] border-2 border-green-400">
+                <div className="gift-item border-2 border-rose-500">
                   <img src="src/assets/items(4).png" alt="for her" />
                 </div>
-                <div className="gift-item">
+                <div className="gift-item border-2 border-purple-400">
                   <img src="/src/assets/items(5).png" alt="for him" />
                   <span className="best-seller-buttons">
                     <Button className="add-to-cart-button">
@@ -69,11 +73,13 @@ export default function LandingPage() {
                     </span>
                   </span>
                 </div>
-                <div className="gift-item">
+                <div className="gift-item border-2 border-brown-400">
                   <img src="/src/assets/items(6).png" alt="roses" />
                 </div>
               </div>
             </div>
+
+            {/* TOP GIFT SECTION */}
             <div className="TopGifts">
               <span className="best-selling-text w-full flex justify-between mt-10">
                 <h1 className="text-xl">Top Gifts Packages</h1>
