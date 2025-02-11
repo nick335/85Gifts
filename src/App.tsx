@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./layouts/AppLayout";
 import './App.css';
@@ -8,6 +8,7 @@ import Cart from "./pages/Cart";
 import OrderHistory from "./pages/OrderHistory";
 import Messages from "./pages/Messages";
 import Gifts from "./pages/Gifts";
+import Login from "./pages/LoginPage";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
@@ -29,7 +30,7 @@ function App() {
         <Route path="/Signup" element={<Signup />} />
         {/* Landing Page Routes  */}
           <Route path="/" element={<LandingPage />} />
-        {/* <Route path="/login" element={<Login />} /> */}
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );
