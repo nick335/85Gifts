@@ -1,55 +1,110 @@
-import  React from 'react';
-import { Link } from 'react-router-dom';    
-import SearchInput from './ui/search-bar';
-import { Button } from './ui/button';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react"; // For the hamburger menu icon
+import SearchInput from "./ui/search-bar";
+import { Button } from "./ui/button";
 
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-export default function Navbar(){
-    return(
+  return (
+    <header className="bg-transparent text-[18px]">
+      <nav className="flex items-center justify-between px-6 py-4 md:px-10">
+        {/* Logo */}
+        <Link to="/" className="flex items-center">
+          <img src="../src/assets/logo.png" alt="logo" className="h-10" />
+        </Link>
 
-        <>
-    <div className='bg-transparent h-20 text-[18px]'>
-        <nav className='navbar h-10 mt-10 w-full flex flex-row bg-transparent text-center justify-between'>
-            <span className='mr-[20vw]'>
+        {/* Desktop Menu */}
+        <div className="hidden md:flex gap-6 text-gray-800">
+          <Link to="/FindAGift" className="hover:text-primary">
+            Find a gift
+          </Link>
+          <Link to="/Men" className="hover:text-primary">
+            Men
+          </Link>
+          <Link to="/Women" className="hover:text-primary">
+            Women
+          </Link>
+          <Link to="/Event" className="hover:text-primary">
+            Event
+          </Link>
+        </div>
 
-                <Link to='/' className='navbar-logo'>
-                <img src='../src/assets/logo.png' alt='logo' className='logo'/>
-                </Link>
-        </span>
-                <div className='nav-items flex flex-row align-middle  gap-[4vw] justify-between ml-8'>
-                <Link to='/FindAGift'>
-                   Find a gift
-                </Link>
+        {/* Search Input (Visible only on larger screens) */}
+        <div className="hidden md:block">
+          <SearchInput />
+        </div>
 
-                <Link to='/Men'>
-                Men
-                </Link>
+        {/* Login & Button */}
+        <div className="hidden md:flex items-center gap-4">
+          <Link
+            to="/HomePage"
+            className="text-primary hover:rounded-full px-4 py-1 hover:bg-black hover:text-white"
+          >
+            Login
+          </Link>
+          <Button className="bg-secondary text-black rounded-full px-6 py-2 hover:bg-primary hover:text-white">
+            Get Started
+          </Button>
+        </div>
 
-                <Link to="/Women">
-                Women
-                </Link>
-                <Link to='/Event'>
-                Event
-                </Link>
-                </div>
-                <div className=''>
-                 <SearchInput/>
-                </div>
-                <div className=''>
-                    <span className='mr-2'>
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-gray-800"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
+      </nav>
 
-                <Link to="/HomePage" className='mr-4'>
-                Login
-                </Link>
-                    </span>
-                <Button className="bg-secondary text-black rounded-full px-6 py-2 hover:bg-primary hover:text-white">
-      Get Started
-    </Button>
-
-                </div>
-        </nav>
-    </div>
-    </>
-    )
-    
+      {/* Mobile Menu (Hidden by default) */}
+      <div
+        className={`${
+          menuOpen ? "block" : "hidden"
+        } md:hidden bg-blue-600 bg-gradient-to-tr absolute top-16 left-2 w-[95%] shadow-lg py-4 px-6`}
+      >
+        <div className="flex flex-col gap-4">
+          <Link
+            to="/FindAGift"
+            className="hover:text-primary"
+            onClick={() => setMenuOpen(false)}
+          >
+            Find a gift
+          </Link>
+          <Link
+            to="/Men"
+            className="hover:text-primary"
+            onClick={() => setMenuOpen(false)}
+          >
+            Men
+          </Link>
+          <Link
+            to="/Women"
+            className="hover:text-primary"
+            onClick={() => setMenuOpen(false)}
+          >
+            Women
+          </Link>
+          <Link
+            to="/Event"
+            className="hover:text-primary hover:rounded-md hover:bg-slate-400 hover:bg-gradient-to-br"
+            onClick={() => setMenuOpen(false)}
+          >
+            Event
+          </Link>
+          <Link
+            to="/HomePage"
+            className="hover:text-primary"
+            onClick={() => setMenuOpen(false)}
+          >
+            Login
+          </Link>
+          <Button className="bg-secondary text-black rounded-full px-6 py-2 hover:bg-primary hover:text-white">
+            Get Started
+          </Button>
+        </div>
+      </div>
+    </header>
+  );
 }
