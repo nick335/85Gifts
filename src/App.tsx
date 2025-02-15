@@ -12,6 +12,7 @@ import Login from "./pages/LoginPage";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
+import Reset from "./pages/PassReset";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         {/* Landing Page Routes  */}
           <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset" element={<Reset />} />
       </Routes>
     </Router>
   );
