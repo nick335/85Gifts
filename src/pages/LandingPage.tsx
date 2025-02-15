@@ -44,26 +44,25 @@ export default function LandingPage() {
               <BentGrid />
             </div>
 
-            <div className=" BestSelling border-2 border-orange-400">
-              <span className="best-selling-text w-full flex justify-between ">
-                <h1 className="text-sm md:text-2xl lg:text-4xl">
+            {/* Best selling section */}
+            <div className="BestSelling w-[100%] p-2">
+              <span className="best-selling-text flex justify-between ">
+                <h1 className="text-sm md:text-1xl lg:text-2xl">
                   Best Selling Gifts
                 </h1>
 
-                <Button className="explore-button text-sm md:text-2xl lg:text-4xl p-2">
-                  <p className=" text-sm md:text-2xl lg:text-4xl p-2">
-                    Explore more
-                  </p>
+                <Button className="explore-button p-2 text-sm md:text-2xl lg:text-3xl">
+                  Explore more
                 </Button>
               </span>
 
-              <div className="Bestselling flex flex-col  md:flex gap-4 mb-10 h-[100vh] w-[100vw] border-2 border-green-400">
-                <div className="gift-item border-2 border-rose-500">
+              <div className="Bestselling flex flex-col gap-4 md:flex-row mt-5  md:mb-10 justify-center">
+                <div className="gift-item  rounded-lg ">
                   <img src="src/assets/items(4).png" alt="for her" />
                 </div>
-                <div className="gift-item border-2 border-purple-400">
+                <div className="gift-item relative   rounded-lg">
                   <img src="/src/assets/items(5).png" alt="for him" />
-                  <span className="best-seller-buttons">
+                  <span className="best-seller-buttons flex flex-row justify-end items-end absolute w-full h-40 bottom-12  left-6 gap-4">
                     <Button className="add-to-cart-button">
                       Add to cart
                       <GoArrowRight />
@@ -73,7 +72,7 @@ export default function LandingPage() {
                     </span>
                   </span>
                 </div>
-                <div className="gift-item border-2 border-brown-400">
+                <div className="gift-item inline-block   rounded-lg">
                   <img src="/src/assets/items(6).png" alt="roses" />
                 </div>
               </div>
@@ -120,24 +119,24 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="friendship-offer">
-            <div className="friendship-offer-text">
+          <div className="friendship-offer flex flex-col md:flex-row justify-between gap-4 md:mb-14 md:mt-10 bg-white w-full  h-[50vh]">
+            <div className="friendship-offer-text md:w-[50%]">
               <h1 className="">friendship day offer</h1>
-              <p>A big opportunity to extend lov eto you friends</p>
-              <Button className="shop-now-button">
-                <p>shop Now</p>
-              </Button>
-
-              <div></div>
+              <p>A big opportunity to extend love to you friends</p>
+              <Button className="shop-now-button p-2">shop Now</Button>
             </div>
 
             <div className="friendship-img">
-              <img src="/src/assets/frame7.png" alt="friendship" />
+              <img
+                src="/src/assets/frame7.png"
+                alt="friendship"
+                className=" w-[100%] md:h-[50vh]"
+              />
             </div>
           </div>
 
-          <div className="services">
-            <div className="service">
+          <div className="services border-2 border-green-400">
+            <div className="service ">
               <div className="service-icon">
                 <img src="src/assets/icons/delivery.svg" alt="free delivery" />
               </div>
