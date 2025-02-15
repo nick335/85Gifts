@@ -135,7 +135,10 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="services border-2 border-green-400">
+          <div
+            className="services flex flex-col mt-5 md:flex-row md:mt-0 justify-between items-center
+          gap-4 bg-[#f5f5f5]  border-2 border-green-400"
+          >
             <div className="service ">
               <div className="service-icon">
                 <img src="src/assets/icons/delivery.svg" alt="free delivery" />

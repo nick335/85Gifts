@@ -762,14 +762,14 @@ button.explore-button {
 }
 
 .services {
-  display: flex;
+  /* display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
-  gap: 8vw;
+  align-items: center; */
+  /* gap: 8vw; */
   /* margin-top: 10px; */
-  height: 18vh;
-  background-color: #F5F5F5;
+  /* height: 18vh; */
+  /* background-color: #F5F5F5; */
 }
 
 
@@ -784,7 +784,7 @@ button.explore-button {
 .service-icon {
   width: 100px;
   background-color: #fff;
-  height: 1.5emvw;
+  height: 1.5vw;
   align-items: center;
   border-radius: 50%;
   flex-direction: column;
@@ -880,7 +880,7 @@ button.explore-button {
 
 .footer {
 
-  height: 30vh;
+  /* height: 30vh; */
   background-color: #1F2022;
   margin-top: 50px;
   color: white;
