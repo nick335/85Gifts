@@ -7,89 +7,98 @@ import google from "../assets/icons/Google.png";
 import eyeOpen from "../assets/icons/Eye.png";
 import eyeClosed from "../assets/icons/Eye.png";
 
-
 function Login() {
   const [step, setStep] = useState<"email" | "password">("email");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [serverError, setServerError] = useState("");
-  const [validationErrors, setValidationErrors] = useState([]);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const navigate = useNavigate();
 
-  const handleEmailSubmit = () => {
+  const validateEmail = (email: string): boolean => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
-    if (email) {
-      setStep("password");
+  const handleEmailSubmit = () => {
+    setValidationErrors([]);
+    if (!email) {
+      setValidationErrors(["Email is required"]);
+      return;
     }
-    
-    
+    if (!validateEmail(email)) {
+      setValidationErrors(["Please enter a valid email address"]);
+      return;
+    }
+    setStep("password");
   };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setServerError(""); 
     setValidationErrors([]);
-
+  
     axios
       .post("https://eight5gifts-be.onrender.com/api/user/signin", { email, password })
       .then((result) => {
-        console.log(result);
-        if (result.data === "Success") {
-          navigate("/HomePage"); 
+        console.log(result.data); // Debugging: Check API response in console
+  
+        if (result.data.success) {
+          // Save the token (if needed)
+          localStorage.setItem("authToken", result.data.data.authToken);
+  
+          // Navigate to home page
+          navigate("/HomePage");
+        } else {
+          setServerError("Invalid login. Please check your credentials.");
         }
       })
       .catch((err) => {
         if (err.response && err.response.status === 400) {
-          
           if (err.response.data.errors) {
             setValidationErrors(err.response.data.errors);
           } else if (err.response.data) {
-            setServerError(err.response.data);
+            setServerError( "Invalid Credentials. Please try again.");
           }
         } else {
           setServerError("Something went wrong. Please try again.");
         }
       });
   };
+  
 
   return (
     <div className="flex flex-col-reverse md:flex-row h-screen">
       <div className="w-full md:w-1/2 flex items-center justify-center bg-white p-6 sm:p-8">
         <div className="max-w-sm w-full">
-          <img src="src/assets/logo.png" alt="Logo" className="w-14 mb-4 -translate-y-28 -translate-x-6" />
-          <h2 className="text-xl font-semibold mb-4">Welcome back! Please enter your details</h2>
+        <img src="src/assets/logo.png" alt="Logo" className="w-14 mb-4 -translate-y-28 -translate-x-6" />
+          
+          <h2 className="text-xl font-semibold mb-4 -mt-20">Welcome back! Please enter your details</h2>
 
           {step === "email" ? (
             <>
-              <label className="block text-gray-600 mb-2">Email</label>
+              
               <input
                 type="email"
                 placeholder="johndoe.pal@gmail.com"
-                className="w-full p-3 border rounded mb-1"
-              onChange={(e) => setEmail(e.target.value)}
+                className="w-full p-3 border rounded mb-5"
+                onChange={(e) => setEmail(e.target.value)}
               />
-               {validationErrors.length > 0 && (
-          <ul style={{ color: "red" }}>
-            {validationErrors.map((error, index) => (
-              <li key={index}>{error.msg}</li>
-            ))}
-          </ul>
-        )}
-               <button onClick={handleEmailSubmit} className="w-full bg-black text-white p-3 rounded mb-3">
+              {validationErrors.map((error, index) => (
+                <p key={index} className="text-red-500 text-sm">{error}</p>
+              ))}
+              <button onClick={handleEmailSubmit} className="w-full bg-black text-white p-3 rounded mb-5">
                 Continue with email
               </button>
-              <button className="w-full border p-3 rounded flex items-center justify-center">
+              <button className="w-full border p-3 mt-1 rounded flex items-center justify-center">
                 <img src={google} alt="Google" className="w-5 h-5 mr-2" />
                 Continue with Google
               </button>
-              <p className="mt-4 text-sm text-gray-600">
-                Don’t have an account? <a href="#" className="text-[#072AC8]">Sign up</a>
-              </p>
             </>
           ) : (
             <form onSubmit={handleLogin}>
-              <label className="block text-gray-600 mb-2">Enter Password</label>
+              
               <div className="relative w-full">
                 <input
                   type={showPassword ? "text" : "password"}
@@ -104,19 +113,11 @@ function Login() {
                   onClick={() => setShowPassword(!showPassword)}
                 />
               </div>
-              {/* Display validation errors */}
-        {validationErrors.length > 0 && (
-          <ul style={{ color: "red" }}>
-            {validationErrors.map((error, index) => (
-              <li key={index}>{error.msg}</li>
-            ))}
-          </ul>
-        )}
-
-        {/* Display server errors */}
-        {serverError && <p style={{ color: "red" }}>{serverError}</p>}
-
- <button type="submit" className="w-full bg-black text-white p-3 rounded mb-3">
+              {validationErrors.map((error, index) => (
+                <p key={index} className="text-red-500 text-sm">{error}</p>
+              ))}
+              {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
+              <button type="submit" className="w-full bg-black text-white p-3 mt-2 rounded mb-3">
                 Sign In
               </button>
               <button className="w-full border p-3 rounded flex items-center justify-center">
@@ -124,11 +125,15 @@ function Login() {
                 Continue with Google
               </button>
               <p className="mt-4 text-sm text-gray-600">
+                <Link to="/reset" className="text-red-600">Forgot Password?</Link>
+              </p>
+              <p className="mt-4 text-sm text-gray-600">
                 Don’t have an account? <Link to="/signup" className="text-[#072AC8]">Sign up</Link>
               </p>
               <button onClick={() => setStep("email")} className="text-[#072AC8] text-sm mt-4">
                 Back to email
               </button>
+              
             </form>
           )}
         </div>
