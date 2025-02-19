@@ -2,8 +2,10 @@ import feedback from "../public/feedback.json";
 
 export default function CustomerRatings() {
   return (
-    <div className="customer-feedback  mt-4">
-      <h1>Our Customer Feedbacks</h1>
+    <div className="customer-feedback flex flex-col justify-center text-center py-4">
+      <h1 className="text-2xl tracking-normal md:text-4xl font-medium md:tracking-wide my-5">
+        Our Customer Feedbacks
+      </h1>
       <div className="feedback flex flex-col justify-between gap-4  md:flex-row">
         {feedback.map((feed) => (
           <div

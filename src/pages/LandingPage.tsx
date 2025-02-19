@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { GoArrowRight } from "react-icons/go";
 import { QuantityDropdown } from "@/components/quantity-dropdown";
 import BentGrid from "@/components/BentotestGrid";
+import Services from "@/components/Services";
 
 export default function LandingPage() {
   return (
@@ -26,10 +27,11 @@ export default function LandingPage() {
           <div className="main">
             <div className="hero-section grid grid-cols-5 max-w-fit md:mt-16 lg:mt-24">
               <div className="hero-text col-span-full md:col-span-2">
-                <h1 className="hero-section-h1">
-                  Express your love in a <span> PACKAGE</span>{" "}
+                <h1 className="hero-section-h1 text-3xl/9   md:text-5xl/8 lg:text-6xl mb-5">
+                  Express your love in a
+                  <span className="font-[500] text-[#072AC8]"> PACKAGE</span>
                 </h1>
-                <p>
+                <p className="hero-section-p text-sm md:text-lg lg:text-xl ">
                   At 85gifts we create and provide crafted, personalized gifts
                   to help celebrate your most treasured memories making it easy
                   to find the perfect gift for everyone around you.
@@ -123,7 +125,7 @@ export default function LandingPage() {
             <div className="friendship-offer-text md:w-[50%]">
               <h1 className="">friendship day offer</h1>
               <p>A big opportunity to extend love to you friends</p>
-              <Button className="shop-now-button p-2">shop Now</Button>
+              <Button className="shop-now-button p-4">shop Now</Button>
             </div>
 
             <div className="friendship-img">
@@ -135,45 +137,7 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div
-            className="services flex flex-col mt-5 md:flex-row md:mt-0 justify-between items-center
-          gap-4 bg-[#f5f5f5]  border-2 border-green-400"
-          >
-            <div className="service ">
-              <div className="service-icon">
-                <img src="src/assets/icons/delivery.svg" alt="free delivery" />
-              </div>
-              <h4>Free Delivery</h4>
-              <p>for all order above 50k</p>
-            </div>
-
-            <div className="service">
-              <div className="service-icon">
-                <img src="src/assets/icons/security.png" alt="free delivery" />
-              </div>
-              <h4>Secure Payment</h4>
-              <p>Seamless payment on any device</p>
-            </div>
-
-            <div className="service">
-              <div className="service-icon">
-                <img src="/src/assets/icons/return.png" alt="free delivery" />
-              </div>
-              <h4>7 days Return Policy</h4>
-              <p>7 days return policy on all orders</p>
-            </div>
-
-            <div className="service">
-              <div className="service-icon">
-                <img
-                  src="/src/assets/icons/customer-care.png"
-                  alt="free delivery"
-                />
-              </div>
-              <h4>24/7 Customer Care</h4>
-              <p>Available customer care agents</p>
-            </div>
-          </div>
+          <Services />
 
           <CustomerRatings />
 
