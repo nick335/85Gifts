@@ -499,21 +499,21 @@ button.explore-button {
 
 
 .friendship-offer-text {
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 20px;
-  padding: 10vw;
+  padding: 10vw; */
 }
 
 .friendship-offer h1 {
-  font-size: 3.5em;
+  /* font-size: 3.5em;
   font-weight: 500;
   font-style: normal;
   font-weight: 500;
   line-height: 86px;
-  letter-spacing: 0.213px;
+  letter-spacing: 0.213px; */
 }
 
 
@@ -521,12 +521,12 @@ button.explore-button {
 
 
 .shop-now-button {
-  height: 3vh;
+  /* height: 3vh;
   color: black;
   font-size: 1em;
   border-radius: 15px;
   background: var(--blue, #fff);
-  align-items: center;
+  align-items: center; */
 }
 
 

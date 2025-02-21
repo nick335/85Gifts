@@ -31,12 +31,12 @@ const services = [
 function Services() {
   return (
     <>
-      <div className="flex flex-col mt-56 md:h-44 md:flex-row md:mt-0 justify-between items-center gap-4 bg-[#f5f5f5] md:mx-2">
+      <div className="flex flex-col mt-12 md:h-44 md:flex-row md:mt-0 justify-between items-center gap-4 bg-[#f5f5f5] md:mx-2 md:px-4 md:py-4 md:rounded-lg">
         {services.map((service, index) => (
           <Link
             key={index}
             to={service.href}
-            className="service w-[90%] md:h-0  flex flex-col gap-4 justify-center items-center hover:ease-in-out"
+            className="service w-[90%] md:h-0  flex flex-col gap-4 justify-center items-center hover:ease-in-out my-4"
           >
             <div className="service-icon">
               <img

@@ -94,8 +94,12 @@ export default function LandingPage() {
                   />
                 </div>
                 <div className="gift-item relative   rounded-lg">
-                  <img src="/src/assets/items(5).png" alt="Cup cakes" />
-                  <span className="best-seller-buttons flex flex-col bottom-1 gap-2 items-center justify-center  md:flex-row md:justify-end md:items-end absolute md:w-full h-20 md:bottom-12  md:left-6 md:gap-4">
+                  <img
+                    src="/src/assets/items(5).png"
+                    alt="Cup cakes"
+                    className="w-full h-full"
+                  />
+                  <span className="best-seller-buttons flex flex-col bottom-1 gap-2 items-center justify-center  md:flex-row md:justify-end md:items-end absolute md:w-full h-20 md:bottom-12  md:left-6 md:gap-4 ">
                     <Button className="add-to-cart-button bg-white cursor-pointer text-black p-2 rounded-lg hover:bg-primary hover:text-white font-bold  duration-300 ease-in-out">
                       Add to cart
                       <GoArrowRight />
@@ -106,15 +110,19 @@ export default function LandingPage() {
                   </span>
                 </div>
                 <div className="gift-item inline-block   rounded-lg">
-                  <img src="/src/assets/items(6).png" alt="Giorgio Perfume" />
+                  <img
+                    src="/src/assets/items(6).png"
+                    alt="Giorgio Perfume"
+                    className="md:h-full"
+                  />
                 </div>
-                <div className="gift-item  rounded-lg ">
+                {/* <div className="gift-item  rounded-lg ">
                   <img
                     src="src/assets/items(4).png"
                     alt="for her"
-                    className=" md:h-full"
+                    className=""
                   />
-                </div>
+                </div> */}
               </div>
             </div>
 
@@ -128,7 +136,7 @@ export default function LandingPage() {
                 <Button className="explore-button p-2">Explore more</Button>
               </span>
 
-              <div className="Topgifts-circle grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mt-5 md:mb-10 justify-center items-center">
+              <div className="Topgifts-circle grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mt-5 md:mb-10 md:mt-24 justify-center items-center">
                 {TopGifts.map((gift) => (
                   <div className="grid justify-items-center gap-4 text-center">
                     <div className="circle-image">
@@ -143,18 +151,24 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="friendship-offer flex flex-col md:flex-row justify-between gap-4 md:mb-14 md:mt-10 bg-white w-full  h-[50vh]">
-            <div className="friendship-offer-text md:w-[50%]">
-              <h1 className="">friendship day offer</h1>
-              <p>A big opportunity to extend love to you friends</p>
-              <Button className="shop-now-button p-4">shop Now</Button>
+          <div className="friendship-offer grid grid-cols-1 mt-12  md:grid-cols-2 justify-between gap-4 md:mb-14 md:mt-16 bg-white w-full  md:h-[50vh]">
+            <div className="friendship-offer-text  mb-12 md:mb-0 ">
+              <h1 className="text-4xl my-6  md:text-6xl tracking-wide font-bold  md:font-extrabold">
+                friendship day offer
+              </h1>
+              <p className="text-md md:text-3xl my-4 md:my-6">
+                A big opportunity to extend love to you friends
+              </p>
+              <Button className="shop-now-button p-4 text-2xl text-black rounded-full drop-shadow-lg   font-bold h-10 bg-white hover:bg-primary hover:text-white duration-300 ease-in-out my-6">
+                shop Now
+              </Button>
             </div>
 
-            <div className="friendship-img">
+            <div className="friendship-img grid justify-center items-center">
               <img
                 src="/src/assets/frame7.png"
                 alt="friendship"
-                className=" w-[100%] md:h-[50vh]"
+                className=" w-[100%] md:h-[48vh] "
               />
             </div>
           </div>
