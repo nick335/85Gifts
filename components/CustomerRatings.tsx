@@ -2,7 +2,7 @@ import feedback from "../public/feedback.json";
 
 export default function CustomerRatings() {
   return (
-    <div className="customer-feedback grid grid-cols-1 grid-auto-flow justify-center text-center py-4">
+    <div className="customer-feedback grid grid-cols-1 grid-auto-flow justify-center text-center p-4 my-6">
       <h1 className="text-2xl font-bold   tracking-normal md:text-5xl md:font-extrabold md:tracking-wide my-5">
         Our Customer Feedbacks
       </h1>
