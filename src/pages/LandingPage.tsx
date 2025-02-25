@@ -1,4 +1,3 @@
-// import React from "react";
 import Navbar from "@/components/Navbar";
 import Carousel from "@/components/ui/carousel";
 // import HomeBentoGrid from "@/components/HomeBentoGrid";
