@@ -1,34 +1,33 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { AnimatedMenuButton } from "./MobBtn";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react"; // For the hamburger menu icon
+// import { Menu, X } from "lucide-react"; // For the hamburger menu icon
 import SearchInput from "./ui/search-bar";
 import { Button } from "./ui/button";
 
+const NavLinks = [
+  { title: "Find a gift", href: "/FindAGift" },
+  { title: "Men", href: "/men" },
+  { title: "Women", href: "/women" },
+  { title: "Event", href: "/event" },
+];
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="bg-transparent text-[18px]">
-      <nav className="flex items-center justify-between px-6 py-4 md:px-10">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
-          <img src="../src/assets/logo.png" alt="logo" className="h-10" />
-        </Link>
-
+    <header className="flex items-center justify-between bg-transparent text-[18px] w-full px-6 py-4 md:px-12 md:py-6">
+      {/* Logo */}
+      <Link to="/" className="flex items-center">
+        <img src="../src/assets/logo.png" alt="logo" className="h-10" />
+      </Link>
+      <nav className="flex w-[80%] items-center justify-between  ">
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-6 text-gray-800">
-          <Link to="/FindAGift" className="hover:text-primary">
-            Find a gift
-          </Link>
-          <Link to="/Men" className="hover:text-primary">
-            Men
-          </Link>
-          <Link to="/Women" className="hover:text-primary">
-            Women
-          </Link>
-          <Link to="/Event" className="hover:text-primary">
-            Event
-          </Link>
+        <div className="hidden  md:font-bold md:flex gap-6 text-gray-800">
+          {NavLinks.map((link, index) => (
+            <Link key={index} to={link.href} className="hover:text-primary">
+              {link.title}
+            </Link>
+          ))}
         </div>
 
         {/* Search Input (Visible only on larger screens) */}
@@ -48,15 +47,11 @@ export default function Navbar() {
             Get Started
           </Button>
         </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-gray-800"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          {menuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
       </nav>
+      {/* Mobile Menu Button */}
+      <div className="block items-center justify-items-center md:hidden">
+        <AnimatedMenuButton onClick={() => setMenuOpen(!menuOpen)} />
+      </div>
 
       {/* Mobile Menu (Hidden by default) */}
       <div
