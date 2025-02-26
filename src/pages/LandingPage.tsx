@@ -1,4 +1,3 @@
-
 import Navbar from "@/components/Navbar";
 import Carousel from "@/components/ui/carousel";
 // import HomeBentoGrid from "@/components/HomeBentoGrid";
@@ -8,7 +7,26 @@ import Footer from "@/components/Footer";
 import { GoArrowRight } from "react-icons/go";
 import { QuantityDropdown } from "@/components/quantity-dropdown";
 import BentGrid from "@/components/BentotestGrid";
+import Services from "@/components/Services";
 
+const TopGifts = [
+  {
+    image: "/src/assets/items(2).png",
+    text: "For Him Gift Package",
+  },
+  {
+    image: "/src/assets/items(1).png",
+    text: "For Her Gift Package",
+  },
+  {
+    image: "/src/assets/items.png",
+    text: "Festival Period Gifts",
+  },
+  {
+    image: "/src/assets/items(3).png",
+    text: "Work Gifts",
+  },
+];
 export default function LandingPage() {
   return (
     <>
@@ -24,148 +42,137 @@ export default function LandingPage() {
           <Navbar />
 
           <div className="main">
-            <div className="hero-section flex flex-row gap-5 mt-48">
-              <div className="hero-text">
-                <h1 className="hero-section-h1">
-                  Express your love in a <span> PACKAGE</span>{" "}
+            <div className="hero-section grid grid-cols-5 lg:px-12 max-w-fit md:mt-2 lg:mt-4">
+              <div
+                className="hero-text
+              col-span-full  mb-4 md:col-span-2"
+              >
+                <h1 className="hero-section-h1 text-3xl/9   md:text-5xl/8 lg:text-6xl mb-5">
+                  Express your love in a
+                  <span className="font-[700] text-[#072AC8] md:drop-shadow-2xl">
+                    {" "}
+                    PACKAGE
+                  </span>
                 </h1>
-                <p>
+                <p className="hero-section-p text-sm md:text-lg lg:text-xl/6 md:text-left p-1 md:p-0">
                   At 85gifts we create and provide crafted, personalized gifts
                   to help celebrate your most treasured memories making it easy
                   to find the perfect gift for everyone around you.
                 </p>
+                <Button className="bg-secondary text-black rounded-full my-4 hover:bg-primary hover:text-white font-bold w-40 h-10 duration-300 ease-in-out">
+                  Get Started
+                </Button>
               </div>
-              <div className="carousel">
+              <div className="carousel col-start-1 col-end-6 md:col-start-4 md:col-end-6">
                 <Carousel />
               </div>
             </div>
-            <div className="bento-grid">
+            <div className="bento-grid max-h-fit  md:mt-1">
               {/* <HomeBentoGrid/> */}
               <BentGrid />
             </div>
 
-            <div className="BestSelling">
-              <span className="best-selling-text w-full flex justify-between ">
-                <h1 className="">Best Selling Gifts</h1>
+            {/* Best selling section */}
+            <div className="BestSelling w-[100%] p-2">
+              <span className="best-selling-text flex justify-between ">
+                <h1 className="text-md font-bold md:text-1xl lg:text-2xl">
+                  Best Selling Gifts
+                </h1>
 
-                <Button className="explore-button">
-                  <p>Explore more</p>
+                <Button className="explore-button p-4 text-sm md:text-2xl lg:text-3xl">
+                  Explore more
                 </Button>
               </span>
 
-              <div className="Bestselling flex gap-4 mb-10 h-[100vh]">
-                <div className="gift-item">
-                  <img src="src/assets/items(4).png" alt="for her" />
+              <div className="Bestselling grid grid-cols-2 md:grid-flow-col gap-2 mt-5  md:mb-10 justify-center">
+                <div className="gift-item  rounded-lg ">
+                  <img
+                    src="src/assets/items(4).png"
+                    alt="for her"
+                    className=" md:h-full"
+                  />
                 </div>
-                <div className="gift-item">
-                  <img src="/src/assets/items(5).png" alt="for him" />
-                  <span className="best-seller-buttons">
-                    <Button className="add-to-cart-button">
+                <div className="gift-item relative   rounded-lg">
+                  <img
+                    src="/src/assets/items(5).png"
+                    alt="Cup cakes"
+                    className="w-full h-full"
+                  />
+                  <span className="best-seller-buttons flex flex-col bottom-1 gap-2 items-center justify-center  md:flex-row md:justify-end md:items-end absolute md:w-full h-20 md:bottom-12  md:left-6 md:gap-4 ">
+                    <Button className="add-to-cart-button bg-white cursor-pointer text-black p-2 rounded-lg hover:bg-primary hover:text-white font-bold  duration-300 ease-in-out">
                       Add to cart
                       <GoArrowRight />
                     </Button>
-                    <span className="quantity-dropdown">
+                    <span className="quantity-dropdown    mx-auto md:mx-0">
                       <QuantityDropdown />
                     </span>
                   </span>
                 </div>
-                <div className="gift-item">
-                  <img src="/src/assets/items(6).png" alt="roses" />
+                <div className="gift-item inline-block   rounded-lg">
+                  <img
+                    src="/src/assets/items(6).png"
+                    alt="Giorgio Perfume"
+                    className="md:h-full"
+                  />
                 </div>
+                {/* <div className="gift-item  rounded-lg ">
+                  <img
+                    src="src/assets/items(4).png"
+                    alt="for her"
+                    className=""
+                  />
+                </div> */}
               </div>
             </div>
+
+            {/* TOP GIFT SECTION */}
             <div className="TopGifts">
               <span className="best-selling-text w-full flex justify-between mt-10">
-                <h1 className="text-xl">Top Gifts Packages</h1>
+                <h1 className="text-md font-bold md:text-xl">
+                  Top Gifts Packages
+                </h1>
 
-                <Button className="explore-button">Explore more</Button>
+                <Button className="explore-button p-2">Explore more</Button>
               </span>
 
-              <div className="Topgifts-circle">
-                <div>
-                  <div className="circle-image">
-                    <img src="src/assets/items(2).png" alt="Your Image" />
+              <div className="Topgifts-circle grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mt-5 md:mb-10 md:mt-24 justify-center items-center">
+                {TopGifts.map((gift) => (
+                  <div className="grid justify-items-center gap-4 text-center">
+                    <div className="circle-image">
+                      <img src={gift.image} alt="Your Image" />
+                    </div>
+                    <span className="circle-text text-[#333] text-center mx-auto font-bold text-lg md:text-2xl">
+                      {gift.text}
+                    </span>
                   </div>
-                  <span className="circle-text">For Him Gift Package</span>
-                </div>
-
-                <div>
-                  <div className="circle-image">
-                    <img src="src/assets/items(1).png" alt="Your Image" />
-                  </div>
-                  <span className="circle-text">For Her Gift Package</span>
-                </div>
-
-                <div>
-                  <div className="circle-image">
-                    <img src="src/assets/items.png" alt="Your Image" />
-                  </div>
-                  <span className="circle-text">Festival Period Gifts</span>
-                </div>
-
-                <div>
-                  <div className="circle-image">
-                    <img src="src/assets/items(3).png" alt="Your Image" />
-                  </div>
-                  <span className="circle-text">Work Gifts</span>
-                  <div></div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="friendship-offer">
-            <div className="friendship-offer-text">
-              <h1 className="">friendship day offer</h1>
-              <p>A big opportunity to extend lov eto you friends</p>
-              <Button className="shop-now-button">
-                <p>shop Now</p>
+          <div className="friendship-offer grid grid-cols-1 mt-12  md:grid-cols-2 justify-between gap-4 md:mb-14 md:mt-16 bg-white w-full  md:h-[50vh]">
+            <div className="friendship-offer-text  mb-12 md:mb-0 ">
+              <h1 className="text-4xl my-6  md:text-6xl tracking-wide font-bold  md:font-extrabold">
+                friendship day offer
+              </h1>
+              <p className="text-md md:text-3xl my-4 md:my-6">
+                A big opportunity to extend love to you friends
+              </p>
+              <Button className="shop-now-button p-4 text-2xl text-black rounded-full drop-shadow-lg   font-bold h-10 bg-white hover:bg-primary hover:text-white duration-300 ease-in-out my-6">
+                shop Now
               </Button>
-
-              <div></div>
             </div>
 
-            <div className="friendship-img">
-              <img src="/src/assets/frame7.png" alt="friendship" />
-            </div>
-          </div>
-
-          <div className="services">
-            <div className="service">
-              <div className="service-icon">
-                <img src="src/assets/icons/delivery.svg" alt="free delivery" />
-              </div>
-              <h4>Free Delivery</h4>
-              <p>for all order above 50k</p>
-            </div>
-
-            <div className="service">
-              <div className="service-icon">
-                <img src="src/assets/icons/security.png" alt="free delivery" />
-              </div>
-              <h4>Secure Payment</h4>
-              <p>Seamless payment on any device</p>
-            </div>
-
-            <div className="service">
-              <div className="service-icon">
-                <img src="/src/assets/icons/return.png" alt="free delivery" />
-              </div>
-              <h4>7 days Return Policy</h4>
-              <p>7 days return policy on all orders</p>
-            </div>
-
-            <div className="service">
-              <div className="service-icon">
-                <img
-                  src="/src/assets/icons/customer-care.png"
-                  alt="free delivery"
-                />
-              </div>
-              <h4>24/7 Customer Care</h4>
-              <p>Available customer care agents</p>
+            <div className="friendship-img grid justify-center items-center">
+              <img
+                src="/src/assets/frame7.png"
+                alt="friendship"
+                className=" w-[100%] md:h-[48vh] "
+              />
             </div>
           </div>
+
+          <Services />
 
           <CustomerRatings />
 
