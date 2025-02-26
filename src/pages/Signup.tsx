@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 import logo from "../assets/logo.png";
 import Frame285 from "../assets/Frame285.png";
 
@@ -8,9 +8,7 @@ export default function Signup() {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
-    userName: "",
     email: "",
-    phoneNumber: "",
     password: "",
     confirmPassword: "",
   });
@@ -18,9 +16,7 @@ export default function Signup() {
   const [errors, setErrors] = useState<{
     firstName?: string;
     lastName?: string;
-    userName?: string;
     email?: string;
-    phoneNumber?: number;
     password?: string;
     confirmPassword?: string;
   }>({});
@@ -33,9 +29,7 @@ export default function Signup() {
     const validationErrors: {
       firstName?: string;
       lastName?: string;
-      userName?: string;
       email?: string;
-      phoneNumber?: number;
       password?: string;
       confirmPassword?: string;
     } = {};
@@ -48,13 +42,6 @@ export default function Signup() {
       isValid = false;
       validationErrors.lastName = "Last Name is required";
     }
-    if (!formData.userName.trim()) {
-      isValid = false;
-      validationErrors.userName = "Username is required";
-    } else if (formData.userName.length < 6) {
-      isValid = false;
-      validationErrors.userName = "Username must be at least 6 characters";
-    }
     if (!formData.email.trim()) {
       isValid = false;
       validationErrors.email = "Email is required";
@@ -62,19 +49,12 @@ export default function Signup() {
       isValid = false;
       validationErrors.email = "Invalid email format";
     }
-    // if (formData.phoneNumber === null || typeof formData.phoneNumber !== 'number') {
-    //   isValid = false;
-    //   validationErrors.phoneNumber = "Phone Number is required";
-    // }else if((formData.phoneNumber).length > 11 || (formData.phoneNumber).length < 11) {
-    //   isValid = false;
-    //   validationErrors.phoneNumber = "Phone Number is not valid";
-    // }
     if (!formData.password.trim()) {
       isValid = false;
       validationErrors.password = "Password required";
-    } else if (formData.password.length < 8) {
+    } else if (formData.password.length < 6) {
       isValid = false;
-      validationErrors.password = "Password must be at least 8 characters long";
+      validationErrors.password = "Password must be at least 6 characters long";
     }
     if (formData.confirmPassword !== formData.password) {
       isValid = false;
@@ -84,34 +64,51 @@ export default function Signup() {
     setErrors(validationErrors);
     setValid(isValid);
 
+    // Authenticate User if valid
+
     if (isValid) {
-      try{
+      try {
+        // Destructuring only the necessary fields from formData
+        const { firstName, lastName, email, password } = formData;
+        console.log(firstName, lastName, email, password);
+
         const response = await axios.post(
-          'https://eight5gifts-be.onrender.com/api/user/signup',
-          formData
+          "https://eight5gifts-be.onrender.com/api/user/signup",
+          {
+            firstName,
+            lastName,
+            email,
+            password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
         );
 
-      if(response.status === 201){
-        localStorage.setItem("token", response.data.token);
-        
-        alert('Registered successfully');
-        navigate("/homepage")
+        if (response.status === 201) {
+          localStorage.setItem("authToken", response.data.authToken);
+          alert(
+            "Registered successfully. Verification code has been sent to your email, expires in 5 mins!"
+          );
+          navigate("/VerifyEmail", { state: {  email }});
+        }
+      } catch (err) {
+        console.log("Signup error:", err);
+        alert("Signup failed. Please try again.");
       }
-    }catch(err) {
-      console.error("Signup error: ", err);
-      alert("Signup failed. Please try again");
     }
-  }
-};
+  };
 
   return (
     <>
       <div className="signup-page flex flex-col sm:flex-row lg:flex-row">
-        <div className="signup-left w-full sm:w-1/2 p-4">
+        <div className="signup-left w-full h-full sm:w-1/2 p-4">
           <div>
             <img src={logo} alt="Logo" height={45} width={75} />
           </div>
-          <div className="mt-[10%]">
+          <div className="mt-[5%]">
             <p className="text-xl font-semibold text-center sm:text-left">
               Hi there! Let's create your account and get you going.
             </p>
@@ -156,22 +153,6 @@ export default function Signup() {
               {valid ? (
                 <></>
               ) : (
-                <span className="text-sm text-red-600">{errors.userName};</span>
-              )}
-              <input
-                type="text"
-                name="username"
-                placeholder="Enter your username"
-                className="w-full sm:w-1/2 p-3 border rounded-xl mb-4 outline-none"
-                required
-                value={formData.userName}
-                onChange={(e) =>
-                  setFormData({ ...formData, userName: e.target.value })
-                }
-              />
-              {valid ? (
-                <></>
-              ) : (
                 <span className="text-sm text-red-600">{errors.email};</span>
               )}
               <input
@@ -185,18 +166,6 @@ export default function Signup() {
                   setFormData({ ...formData, email: e.target.value })
                 }
               />
-
-              {/* <input
-                type="tel"
-                name="phoneNumber"
-                placeholder="Enter your phone number"
-                className="w-full sm:w-1/2 p-3 border rounded-xl mb-4 outline-none"
-                required
-                value={formData.phoneNumber}
-                onChange={(e) =>
-                  setFormData({ ...formData, phoneNumber: e.target.value })
-                }
-              /> */}
               {valid ? (
                 <></>
               ) : (
@@ -213,7 +182,6 @@ export default function Signup() {
                   setFormData({ ...formData, password: e.target.value })
                 }
               />
-
               {valid ? (
                 <></>
               ) : (
@@ -232,12 +200,13 @@ export default function Signup() {
                   setFormData({ ...formData, confirmPassword: e.target.value })
                 }
               />
-
               <button className="bg-black text-white rounded-xl w-full sm:w-1/2 px-10 py-5">
                 Submit
               </button>
             </form>
-            <p className="mt-5 mr-10">Already have an account? <Link to="/">Login</Link></p>
+            <p className="mt-5 mr-10">
+              Already have an account? <Link to="/Login">Login</Link>
+            </p>
           </div>
         </div>
         <div

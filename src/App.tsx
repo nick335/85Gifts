@@ -1,4 +1,3 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./layouts/AppLayout";
 import './App.css';
@@ -10,7 +9,8 @@ import Messages from "./pages/Messages";
 import Gifts from "./pages/Gifts";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
-import Signup from "./pages/Signup";
+import Signup from "./pages/Signup"
+import VerifyEmail from "./pages/VerifyEmail";
 
 function App() {
   return (
@@ -27,6 +27,7 @@ function App() {
            <Route path="/Logout" element={<Logout />} />
         </Route>
         <Route path="/Signup" element={<Signup />} />
+        <Route path="/VerifyEmail" element={<VerifyEmail />} />
         {/* Landing Page Routes  */}
           <Route path="/" element={<LandingPage />} />
         {/* <Route path="/login" element={<Login />} /> */}
