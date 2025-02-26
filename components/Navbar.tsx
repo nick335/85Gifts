@@ -38,14 +38,16 @@ export default function Navbar() {
         {/* Login & Button */}
         <div className="hidden md:flex items-center gap-4">
           <Link
-            to="/HomePage"
+            to="/login"
             className="text-primary hover:rounded-full px-4 py-1 hover:bg-black hover:text-white"
           >
             Login
           </Link>
-          <Button className="bg-secondary text-black rounded-full px-6 py-2 hover:bg-primary hover:text-white">
-            Get Started
-          </Button>
+          <Link to="Signup">
+            <Button className="bg-secondary text-black rounded-full px-6 py-2 hover:bg-primary hover:text-white">
+              Get Started
+            </Button>
+          </Link>
         </div>
       </nav>
       {/* Mobile Menu Button */}
@@ -89,15 +91,17 @@ export default function Navbar() {
             Event
           </Link>
           <Link
-            to="/HomePage"
+            to="/login"
             className="hover:text-primary"
             onClick={() => setMenuOpen(false)}
           >
             Login
           </Link>
-          <Button className="bg-secondary text-black rounded-full px-6 py-2 hover:bg-primary hover:text-white">
-            Get Started
-          </Button>
+          <Link to="/Signup">
+            <Button className="bg-secondary text-black rounded-full px-6 py-2 hover:bg-primary hover:text-white">
+              Get Started
+            </Button>
+          </Link>
         </div>
       </div>
     </header>

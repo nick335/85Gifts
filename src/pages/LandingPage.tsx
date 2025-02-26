@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import { Link } from "react-router-dom";
 import Carousel from "@/components/ui/carousel";
 // import HomeBentoGrid from "@/components/HomeBentoGrid";
 import { Button } from "@/components/ui/button";
@@ -59,9 +60,11 @@ export default function LandingPage() {
                   to help celebrate your most treasured memories making it easy
                   to find the perfect gift for everyone around you.
                 </p>
-                <Button className="bg-secondary text-black rounded-full my-4 hover:bg-primary hover:text-white font-bold w-40 h-10 duration-300 ease-in-out">
-                  Get Started
-                </Button>
+                <Link to="/Signup">
+                  <Button className="bg-secondary text-black rounded-full my-4 hover:bg-primary hover:text-white font-bold w-40 h-10 duration-300 ease-in-out">
+                    Get Started
+                  </Button>
+                </Link>
               </div>
               <div className="carousel col-start-1 col-end-6 md:col-start-4 md:col-end-6">
                 <Carousel />
