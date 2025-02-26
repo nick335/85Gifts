@@ -7,7 +7,7 @@ import {
   Plus,
   PhoneMissed,
 } from "lucide-react";
-import Lady from "../assets/Chat/Lady.png";
+// import Lady from "../assets/Chat/Lady.png";
 
 
 export default function Messages() {
@@ -39,7 +39,7 @@ export default function Messages() {
               <div className="border rounded-full bg-white w-[55px] h-[53px] flex justify-center items-center">
                 <Bell />
               </div>
-              <img src={Lady} alt="Icon"/>
+              {/* <img src={Lady} alt="Icon"/> */}
             </div>
           </div>
         </header>
