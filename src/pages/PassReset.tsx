@@ -11,20 +11,20 @@ export default function Reset() {
             <img src={logo} alt="Logo" height={45} width={75} />
           </div>
           <div className="mt-[10%] flex flex-col justify-center items-center ">
-              <p className="font-medium sm:text-left">Please enter your email</p>
-              <input
-                type="email"
-                placeholder="Enter email address"
-                className="w-full sm:w-1/2 p-3 border rounded-xl mb-4 outline-none"
-              />
-              <button type="submit" className="w-full bg-black text-white p-3 mt-2  mb-3 max-w-[50%] rounded-xl"> 
-                Get OTP
-              </button>
-              </div>
-               <p className="mt-4 text-sm text-gray-600 ">
-                              <Link to="/login" className="text-[#072AC8]">Back to Login</Link>
-                            </p>
-            
+            <p className="font-medium sm:text-left">Please enter your email</p>
+            <input
+              type="email"
+              placeholder="Enter email address"
+              className="w-full sm:w-1/2 p-3 border rounded-xl mb-4 outline-none"
+            />
+            <button type="submit" className="w-full bg-black text-white p-3 mt-2  mb-3 max-w-[50%] rounded-xl">
+              Get OTP
+            </button>
+          </div>
+          <p className="mt-4 text-sm text-gray-600 ">
+            <Link to="/login" className="text-[#072AC8]">Back to Login</Link>
+          </p>
+
         </div>
         <div
           className="signup-right w-full sm:w-1/2 flex justify-center items-center bg-cover bg-center sm:hidden lg:block"

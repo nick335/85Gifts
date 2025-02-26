@@ -125,7 +125,7 @@ function Login() {
                 Continue with Google
               </button>
               <p className="mt-4 text-sm text-gray-600">
-                <Link to="/reset" className="text-red-600">Forgot Password?</Link>
+                <Link to="/reset-password" className="text-red-600">Forgot Password?</Link>
               </p>
               <p className="mt-4 text-sm text-gray-600">
                 Don’t have an account? <Link to="/signup" className="text-[#072AC8]">Sign up</Link>
