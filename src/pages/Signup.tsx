@@ -21,6 +21,7 @@ export default function Signup() {
     confirmPassword?: string;
   }>({});
   const [valid, setValid] = useState(true);
+  const [serverError, setServerError] = useState<string | null>(null);
   const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -63,6 +64,7 @@ export default function Signup() {
 
     setErrors(validationErrors);
     setValid(isValid);
+    setServerError(null);
 
     // Authenticate User if valid
 
@@ -92,11 +94,20 @@ export default function Signup() {
           alert(
             "Registered successfully. Verification code has been sent to your email, expires in 5 mins!"
           );
-          navigate("/VerifyEmail", { state: {  email }});
+          navigate("/VerifyEmail", { state: { email } });
         }
       } catch (err) {
-        console.log("Signup error:", err);
-        alert("Signup failed. Please try again.");
+        if (axios.isAxiosError(err)) {
+          if (!err.response) {
+            // Network or server issue(no response)
+            setServerError(
+              "Network error. Please check your internet connection or try again later."
+            );
+          } else {
+            console.log("Signup error:", err);
+            alert("Signup failed. Please try again.");
+          }
+        }
       }
     }
   };
@@ -204,6 +215,9 @@ export default function Signup() {
                 Submit
               </button>
             </form>
+            {serverError && (
+              <div className="mt-4 text-red-600 text-sm">{serverError}</div>
+            )}
             <p className="mt-5 mr-10">
               Already have an account? <Link to="/Login">Login</Link>
             </p>

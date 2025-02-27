@@ -15,6 +15,8 @@ export default function VerifyEmail() {
   const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    console.log(verificationCode);
+
     if (!verificationCode.trim()) {
       setError("Please enter the verification code");
       return;
@@ -24,7 +26,7 @@ export default function VerifyEmail() {
       // Send the verification code to the backend for validation
       const response = await axios.post(
         "https://eight5gifts-be.onrender.com/api/user/verify",
-        { verificationCode },
+        { email, verificationCode },
         {
           headers: {
             "Content-Type": "application/json",
@@ -36,13 +38,32 @@ export default function VerifyEmail() {
         alert("Email verified successfully!");
         navigate("/HomePage");
       }
-    } catch (err) {
+    } catch (err: unknown) {
       console.log("Verification error:", err);
-      setError("Invalid or expired verification code. Please try again.");
+
+      if (axios.isAxiosError(err) && err.response) {
+        console.log("Backend response error:", err.response.data);
+        // Handle backend error responses
+        switch (err.response.status) {
+          case 400:
+            setError("Invalid verification code. Please try again.");
+            break;
+          case 401:
+            setError("Expired verification code. Request a new one.");
+            break;
+          case 500:
+            setError("Server error. Please try again later.");
+            break;
+          default:
+            setError("Something went wrong. Please try again.");
+        }
+      } else {
+        // Handle network errors
+        setError("Network error. Please check your internet connection.");
+      }
     }
   };
 
-  
   return (
     <>
       <div className="flex flex-col sm:flex-row lg:flex-row">
