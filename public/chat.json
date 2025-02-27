@@ -1,0 +1,66 @@
+[
+    {
+      "id": 1,
+      "name": "Collin Asange",
+      "message": "Good day, I will like to know if you ...",
+      "date": "Today",
+      "image": "/src/assets/Chat/Collin.png"
+    },
+    {
+      "id": 2,
+      "name": "Mr Martins",
+      "message": "Do you still have the mug in blue color ...",
+      "date": "Today",
+      "image": "/src/assets/Chat/Martins.png"
+    },
+    {
+      "id": 3,
+      "name": "Mrs Bibanke",
+      "message": "Okay thank you",
+      "date": "Saturday",
+      "image": "/src/assets/Chat/Bibanke.png"
+    },
+    {
+      "id": 4,
+      "name": "Aishat Bisi",
+      "message": "Yes Gotten my package",
+      "date": "Thursday",
+      "image": "/src/assets/Chat/Bisi.png"
+    },
+    {
+      "id": 5,
+      "name": "Mrs Dollar",
+      "message": "Thank you, ma hope like your item ..",
+      "date": "Tuesday",
+      "image": "/src/assets/Chat/Dollar.png"
+    },
+    {
+      "id": 6,
+      "name": "Roseline Glass",
+      "message": "Thank you for your patronage",
+      "date": "Monday",
+      "image": "/src/assets/Chat/Roseline.png"
+    },
+    {
+      "id": 7,
+      "name": "Collete Anyi",
+      "message": "Thank you for your patronage",
+      "date": "25 02 2025",
+      "image": "/src/assets/Chat/Anyi.png"
+    },
+    {
+      "id": 8,
+      "name": "Hidayya Saud",
+      "message": "Thank you for your patronage",
+      "date": "22 02 2025",
+      "image": "/src/assets/Chat/Hidayya.png"
+    },
+    {
+      "id": 9,
+      "name": "Shalewa Aina",
+      "message": "Thank you for your patronage",
+      "date": "22 02 2025",
+      "image": "/src/assets/Chat/Shalewa.png"
+    }
+]
+  
