@@ -14,6 +14,7 @@ import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
 import Reset from "./pages/PassReset";
 import AdminReset from "./pages/AdminReset";
+import CustomerResetPassword from "./pages/CustomerResetPassword";
 
 function App() {
   return (
@@ -21,20 +22,25 @@ function App() {
       <Routes>
         {/*  Authenticated routes */}
         <Route element={<Layout />}>
-        <Route path="/HomePage" element={<HomePage />} />
-          <Route path="/Gifts" element={<Gifts />} /> 
-           <Route path="/Messages" element={<Messages />} />
-           <Route path="/Cart" element={<Cart />} />
-           <Route path="/OrderHistory" element={<OrderHistory />} />
-           <Route path="/Settings" element={<Settings />} />
-           <Route path="/Logout" element={<Logout />} />
+          <Route path="/HomePage" element={<HomePage />} />
+          <Route path="/Gifts" element={<Gifts />} />
+          <Route path="/Messages" element={<Messages />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/OrderHistory" element={<OrderHistory />} />
+          <Route path="/Settings" element={<Settings />} />
+          <Route path="/Logout" element={<Logout />} />
         </Route>
         <Route path="/Signup" element={<Signup />} />
         {/* Landing Page Routes  */}
-          <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset" element={<Reset />} />
+
         <Route path="/admin/reset" element={<AdminReset />} />
+
+        
+        <Route path="/reset-password" element={<CustomerResetPassword />} />
+
       </Routes>
     </Router>
   );
