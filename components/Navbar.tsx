@@ -6,10 +6,10 @@ import SearchInput from "./ui/search-bar";
 import { Button } from "./ui/button";
 
 const NavLinks = [
-  { title: "Find a gift", href: "/FindAGift" },
-  { title: "Men", href: "/men" },
-  { title: "Women", href: "/women" },
-  { title: "Event", href: "/event" },
+  { title: "Find Gift", href: "/Signup" },
+  { title: "Men", href: "/Signup" },
+  { title: "Women", href: "/Signup" },
+  { title: "Event", href: "/Signup" },
 ];
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -63,28 +63,28 @@ export default function Navbar() {
       >
         <div className="flex flex-col gap-4">
           <Link
-            to="/FindAGift"
+            to="/Signup"
             className="hover:text-primary"
             onClick={() => setMenuOpen(false)}
           >
-            Find a gift
+            Find Gift
           </Link>
           <Link
-            to="/Men"
+            to="/Signup"
             className="hover:text-primary"
             onClick={() => setMenuOpen(false)}
           >
             Men
           </Link>
           <Link
-            to="/Women"
+            to="/Signup"
             className="hover:text-primary"
             onClick={() => setMenuOpen(false)}
           >
             Women
           </Link>
           <Link
-            to="/Event"
+            to="/Signup"
             className="hover:text-primary hover:rounded-md hover:bg-slate-400 hover:bg-gradient-to-br"
             onClick={() => setMenuOpen(false)}
           >

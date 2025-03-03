@@ -12,7 +12,7 @@ import Login from "./pages/LoginPage";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
-import Reset from "./pages/PassReset";
+import AdminLogin from "./pages/AdminLogin";
 import AdminReset from "./pages/AdminReset";
 import CustomerResetPassword from "./pages/CustomerResetPassword";
 
@@ -34,9 +34,13 @@ function App() {
         {/* Landing Page Routes  */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/reset" element={<Reset />} />
-        <Route path="/adminreset" element={<AdminReset />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        <Route path="/admin/reset" element={<AdminReset />} />
+
+        
         <Route path="/reset-password" element={<CustomerResetPassword />} />
+
       </Routes>
     </Router>
   );

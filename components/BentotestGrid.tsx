@@ -1,4 +1,5 @@
 import { BsArrowDownRight } from "react-icons/bs";
+import { Link } from "react-router-dom";
 
 export default function BentGrid() {
   return (
@@ -29,9 +30,11 @@ export default function BentGrid() {
             <span className="brand-categories bg-[#A9A9A9] p-2 rounded-lg">
               25 brands Different categories
             </span>
+            <Link to="/Signup">
             <button className="box-2-explore">
               <p>Explore</p>
             </button>
+            </Link>
           </span>
         </div>
 
