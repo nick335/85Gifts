@@ -37,7 +37,7 @@ export default function VerifyEmail() {
       // Send the verification code to the backend for validation
       const response = await axios.post(
         "https://eight5gifts-be.onrender.com/api/user/verify",
-        { email, verificationCode },
+        {token: verificationCode },
         {
           headers: {
             "Content-Type": "application/json",
