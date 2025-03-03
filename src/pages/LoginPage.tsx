@@ -66,6 +66,23 @@ function Login() {
         }
       });
   };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const response = await axios.get("https://eight5gifts-be.onrender.com/api/user/auth0/signin", {
+        withCredentials: true, // Ensures cookies (if any) are included
+      });
+  
+      // If the backend provides a redirect URL, navigate to it
+      if (response.data.redirectUrl) {
+        window.location.href = response.data.redirectUrl; 
+      } else {
+        console.error("No redirect URL received from the server.");
+      }
+    } catch (error) {
+      console.error("Google login failed:", error);
+    }
+  };
   
 
   return (
@@ -91,10 +108,13 @@ function Login() {
               <button onClick={handleEmailSubmit} className="w-full bg-black text-white p-3 rounded mb-5">
                 Continue with email
               </button>
-              <button className="w-full border p-3 mt-1 rounded flex items-center justify-center">
+              <button onClick={handleGoogleSignIn} className="w-full border p-3 mt-1 rounded flex items-center justify-center">
                 <img src={google} alt="Google" className="w-5 h-5 mr-2" />
                 Continue with Google
               </button>
+              <p className="mt-4 text-sm text-gray-600">
+                <Link to="/reset" className="text-red-600">Forgot Password?</Link>
+              </p>
             </>
           ) : (
             <form onSubmit={handleLogin}>
@@ -120,7 +140,7 @@ function Login() {
               <button type="submit" className="w-full bg-black text-white p-3 mt-2 rounded mb-3">
                 Sign In
               </button>
-              <button className="w-full border p-3 rounded flex items-center justify-center">
+              <button onClick={handleGoogleSignIn} className="w-full border p-3 rounded flex items-center justify-center">
                 <img src={google} alt="Google" className="w-5 h-5 mr-2" />
                 Continue with Google
               </button>

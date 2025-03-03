@@ -34,7 +34,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset" element={<Reset />} />
-        <Route path="/adminreset" element={<AdminReset />} />
+        <Route path="/admin/reset" element={<AdminReset />} />
       </Routes>
     </Router>
   );
