@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/logo.png";
 import Frame285 from "../assets/Frame285.png";
+import eyeOpen from "../assets/icons/eye.svg";
+import eyeClosed from "../assets/icons/eye-off.svg";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -22,6 +24,9 @@ export default function Signup() {
   }>({});
   const [valid, setValid] = useState(true);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [emailExistsError, setEmailExistsError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,6 +70,7 @@ export default function Signup() {
     setErrors(validationErrors);
     setValid(isValid);
     setServerError(null);
+    setEmailExistsError(null); 
 
     // Authenticate User if valid
 
@@ -72,7 +78,7 @@ export default function Signup() {
       try {
         // Destructuring only the necessary fields from formData
         const { firstName, lastName, email, password } = formData;
-        console.log(firstName, lastName, email, password);
+        // console.log(firstName, lastName, email, password);
 
         const response = await axios.post(
           "https://eight5gifts-be.onrender.com/api/user/signup",
@@ -90,7 +96,12 @@ export default function Signup() {
         );
 
         if (response.status === 201) {
-          localStorage.setItem("authToken", response.data.authToken);
+          // console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
+          // console.log("authToken", response.data.authToken);
+          // console.log("Response Data:", response.data);
+          localStorage.setItem("authToken", response.data.data.authToken); 
+          // console.log("authToken", response.data.data.authToken);
+          console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));     
           alert(
             "Registered successfully. Verification code has been sent to your email, expires in 5 mins!"
           );
@@ -104,7 +115,11 @@ export default function Signup() {
               "Network error. Please check your internet connection or try again later."
             );
           } else {
-            console.log("Signup error:", err);
+            const status = err.response.status;
+            if (status === 400 && err.response.data.message.includes("email")){
+              setEmailExistsError("This email already registered. Please try logging in.");
+            }else
+            // console.log("Signup error:", err);
             alert("Signup failed. Please try again.");
           }
         }
@@ -177,22 +192,33 @@ export default function Signup() {
                   setFormData({ ...formData, email: e.target.value })
                 }
               />
+              {emailExistsError && (
+                <span className="text-sm text-red-600">{emailExistsError}</span>
+              )}
               {valid ? (
                 <></>
               ) : (
                 <span className="text-sm text-red-600">{errors.password};</span>
               )}
+              <div className="relative w-full sm:w-1/2 mb-4">
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Create a strong password"
-                className="w-full sm:w-1/2 p-3 border rounded-xl mb-4 outline-none"
+                className="w-full p-3 border rounded-xl outline-none"
                 required
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })
                 }
               />
+               <img
+                  src={showPassword ? eyeOpen : eyeClosed}
+                  alt="Toggle Password Visibility"
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer w-5 h-5"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+                </div>
               {valid ? (
                 <></>
               ) : (
@@ -200,17 +226,25 @@ export default function Signup() {
                   {errors.confirmPassword};
                 </span>
               )}
+              <div className="relative w-full sm:w-1/2 mb-4">
               <input
-                type="password"
+                type={showConfirmPassword ? "text" : "password"}
                 name="confirmPassword"
                 placeholder="Re-enter your password"
-                className="w-full sm:w-1/2 p-3 border rounded-xl mb-4 outline-none"
+                className="w-full p-3 border rounded-xl  outline-none"
                 required
                 value={formData.confirmPassword}
                 onChange={(e) =>
                   setFormData({ ...formData, confirmPassword: e.target.value })
                 }
               />
+              <img
+                  src={showConfirmPassword ? eyeOpen : eyeClosed}
+                  alt="Toggle Confirm Password Visibility"
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer w-5 h-5"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                />
+              </div>
               <button className="bg-black text-white rounded-xl w-full sm:w-1/2 px-10 py-5">
                 Submit
               </button>

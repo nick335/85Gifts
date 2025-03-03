@@ -22,6 +22,17 @@ export default function VerifyEmail() {
       return;
     }
 
+    console.log(localStorage.getItem("authToken"));
+
+    // Retrieve the Bearer token from localStorage
+    const authToken = localStorage.getItem("authToken");
+    console.log("AuthToken retrieved from localStorage:", authToken);
+
+    if (!authToken) {
+      setError("Authentication token not found. Please log in again.");
+      return;
+    }
+
     try {
       // Send the verification code to the backend for validation
       const response = await axios.post(
@@ -30,6 +41,7 @@ export default function VerifyEmail() {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`, // Attach Bearer token here
           },
         }
       );
