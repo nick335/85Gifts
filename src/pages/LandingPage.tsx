@@ -82,9 +82,11 @@ export default function LandingPage() {
                   Best Selling Gifts
                 </h1>
 
+                <Link to="/Signup">
                 <Button className="explore-button p-4 text-sm md:text-2xl lg:text-3xl">
                   Explore more
                 </Button>
+                </Link>
               </span>
 
               <div className="Bestselling grid grid-cols-2 md:grid-flow-col gap-2 mt-5  md:mb-10 justify-center">
@@ -102,10 +104,12 @@ export default function LandingPage() {
                     className="w-full h-full"
                   />
                   <span className="best-seller-buttons flex flex-col bottom-1 gap-2 items-center justify-center  md:flex-row md:justify-end md:items-end absolute md:w-full h-20 md:bottom-12  md:left-6 md:gap-4 ">
+                  <Link to="/Signup">
                     <Button className="add-to-cart-button bg-white cursor-pointer text-black p-2 rounded-lg hover:bg-primary hover:text-white font-bold  duration-300 ease-in-out">
                       Add to cart
                       <GoArrowRight />
                     </Button>
+                    </Link>
                     <span className="quantity-dropdown    mx-auto md:mx-0">
                       <QuantityDropdown />
                     </span>
@@ -134,9 +138,11 @@ export default function LandingPage() {
                 <h1 className="text-md font-bold md:text-xl">
                   Top Gifts Packages
                 </h1>
-
+                <Link to="/Signup">
                 <Button className="explore-button p-2">Explore more</Button>
+                </Link>
               </span>
+              
 
               <div className="Topgifts-circle grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 mt-5 md:mb-10 md:mt-24 justify-center items-center">
                 {TopGifts.map((gift) => (
@@ -161,9 +167,11 @@ export default function LandingPage() {
               <p className="text-md md:text-3xl my-4 md:my-6">
                 A big opportunity to extend love to you friends
               </p>
+              <Link to="/Signup">
               <Button className="shop-now-button p-4 text-2xl text-black rounded-full drop-shadow-lg   font-bold h-10 bg-white hover:bg-primary hover:text-white duration-300 ease-in-out my-6">
                 shop Now
               </Button>
+              </Link>
             </div>
 
             <div className="friendship-img grid justify-center items-center">

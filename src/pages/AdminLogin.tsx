@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import background from "../assets/icons/loginbg.png";
-import axios from "axios";
 import logo from "../assets/logo.png";
+import axios from "axios";
 import { Link } from "react-router-dom";
-import google from "../assets/icons/Google.png";
-import eyeOpen from "../assets/icons/eye.svg";
-import eyeClosed from "../assets/icons/eye-off.svg";
+import eyeOpen from "../assets/icons/Eye.png";
+import eyeClosed from "../assets/icons/Eye.png";
 
-function Login() {
+function AdminLogin() {
   const [step, setStep] = useState<"email" | "password">("email");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -35,51 +34,39 @@ function Login() {
     setStep("password");
   };
 
-  
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setServerError(""); 
     setValidationErrors([]);
   
     axios
-      .post("https://eight5gifts-be.onrender.com/api/user/signin", { email, password })
+      .post("https://eight5gifts-be.onrender.com/api/admin/signin", { email, password })
       .then((result) => {
-        console.log("API Response:", result.data);
+        console.log(result.data); // Debugging: Check API response in console
   
-        if (result.data && result.data.success) {
+        if (result.data.success) {
+          // Save the token (if needed)
           localStorage.setItem("authToken", result.data.data.authToken);
+  
+          // Navigate to home page
           navigate("/HomePage");
         } else {
-          setServerError(result.data.message || "Invalid login.");
+          setServerError("Invalid login. Please check your credentials.");
         }
       })
       .catch((err) => {
-        console.error("Login error:", err);
-        if (err.response) {
-          setServerError(err.response.data?.message || "Invalid Credentials. Please try again.");
+        if (err.response && err.response.status === 400) {
+          if (err.response.data.errors) {
+            setValidationErrors(err.response.data.errors);
+          } else if (err.response.data) {
+            setServerError( "Invalid Credentials. Please try again.");
+          }
         } else {
           setServerError("Something went wrong. Please try again.");
         }
       });
   };
-  
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const response = await axios.get("https://eight5gifts-be.onrender.com/api/user/auth0/signin", {
-        withCredentials: true, // Ensures cookies (if any) are included
-      });
-  
-      // If the backend provides a redirect URL, navigate to it
-      if (response.data.redirectUrl) {
-        window.location.href = response.data.redirectUrl; 
-      } else {
-        console.error("No redirect URL received from the server.");
-      }
-    } catch (error) {
-      console.error("Google login failed:", error);
-    }
-  };
   
 
   return (
@@ -88,7 +75,7 @@ function Login() {
         <div className="max-w-sm w-full">
         <img src={logo} alt="Logo" className="w-14 mb-4 -translate-y-28 -translate-x-6" />
           
-          <h2 className="text-xl font-semibold mb-4 -mt-20">Welcome back! Please enter your details</h2>
+          <h2 className="text-xl font-semibold mb-4 -mt-20">Welcome back Admin! Please enter your details</h2>
 
           {step === "email" ? (
             <>
@@ -105,10 +92,7 @@ function Login() {
               <button onClick={handleEmailSubmit} className="w-full bg-black text-white p-3 rounded mb-5">
                 Continue with email
               </button>
-              <button onClick={handleGoogleSignIn} className="w-full border p-3 mt-1 rounded flex items-center justify-center">
-                <img src={google} alt="Google" className="w-5 h-5 mr-2" />
-                Continue with Google
-              </button>
+              
               <p className="mt-4 text-sm text-gray-600">
                 <Link to="/reset" className="text-red-600">Forgot Password?</Link>
               </p>
@@ -137,15 +121,12 @@ function Login() {
               <button type="submit" className="w-full bg-black text-white p-3 mt-2 rounded mb-3">
                 Sign In
               </button>
-              <button onClick={handleGoogleSignIn} className="w-full border p-3 rounded flex items-center justify-center">
-                <img src={google} alt="Google" className="w-5 h-5 mr-2" />
-                Continue with Google
-              </button>
+             
               <p className="mt-4 text-sm text-gray-600">
-                <Link to="/reset-password" className="text-red-600">Forgot Password?</Link>
+                <Link to="/admin/reset" className="text-red-600">Forgot Password?</Link>
               </p>
               <p className="mt-4 text-sm text-gray-600">
-                Don’t have an account? <Link to="/signup" className="text-[#072AC8]">Sign up</Link>
+                Don’t have an account? <Link to="/admin/signup" className="text-[#072AC8]">Sign up</Link>
               </p>
               <button onClick={() => setStep("email")} className="text-[#072AC8] text-sm mt-4">
                 Back to email
@@ -163,4 +144,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default AdminLogin;
