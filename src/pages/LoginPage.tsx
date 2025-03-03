@@ -5,8 +5,8 @@ import axios from "axios";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
 import google from "../assets/icons/Google.png";
-import eyeOpen from "../assets/icons/Eye.png";
-import eyeClosed from "../assets/icons/Eye.png";
+import eyeOpen from "../assets/icons/eye.svg";
+import eyeClosed from "../assets/icons/eye-off.svg";
 
 function Login() {
   const [step, setStep] = useState<"email" | "password">("email");
