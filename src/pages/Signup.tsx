@@ -115,9 +115,8 @@ export default function Signup() {
               "Network error. Please check your internet connection or try again later."
             );
           } else {
-            const status = err.response.status;
-            if (status === 400 && err.response.data.message.includes("email")){
-              setEmailExistsError("This email already registered. Please try logging in.");
+            if (err.response.data.error === "Email already exist"){
+              setEmailExistsError("This email is already registered. Please try logging in.");
             }else
             // console.log("Signup error:", err);
             alert("Signup failed. Please try again.");
