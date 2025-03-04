@@ -4,7 +4,7 @@ import background from "../assets/icons/loginbg.png";
 import axios from "axios";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
-import google from "../assets/icons/Google.png";
+import google from "../assets/icons/google.svg";
 import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/eye-off.svg";
 

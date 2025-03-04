@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/logo.png";
@@ -7,9 +7,29 @@ import Frame285 from "../assets/Frame285.png";
 export default function VerifyEmail() {
   const [verificationCode, setVerificationCode] = useState("");
   const [error, setError] = useState("");
+  const [timer, setTimer] = useState<number>(300);
+  const [resendDisabled, setResendDisabled] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const email = location.state?.email || "";
+
+  // Countdown Timer Effect
+  useEffect(() => {
+    if (timer > 0) {
+      const countdown = setInterval(() => setTimer((prev) => prev - 1), 1000);
+      return () => clearInterval(countdown);
+    } else {
+      setResendDisabled(false);
+    }
+  }, [timer]);
+  
+
+  //  Format time(MM:SS)
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes}:${secs < 10 ? "0" : ""}${secs}`;
+  };
 
   // Handle verification submission
   const handleVerify = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,7 +57,7 @@ export default function VerifyEmail() {
       // Send the verification code to the backend for validation
       const response = await axios.post(
         "https://eight5gifts-be.onrender.com/api/user/verify",
-        {token: verificationCode },
+        { token: verificationCode },
         {
           headers: {
             "Content-Type": "application/json",
@@ -76,6 +96,41 @@ export default function VerifyEmail() {
     }
   };
 
+  // Handle Resend Verification Code
+  const handleResendCode = async () => {
+    const authToken = localStorage.getItem("authToken");
+
+    if (!authToken) {
+      setError("Authentication token not found. Please log in again.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "https://eight5gifts-be.onrender.com/api/user/resend-verification",
+        { email },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`,
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        setError("");
+        alert("verification code resent successfully");
+        setResendDisabled(true);
+        setTimer(300);
+      }
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err) && err.response) {
+        setError("Failed to resend the code. Please try again.");
+      } else {
+        setError("Network error. Please check your internet connection.");
+      }
+    }
+  };
   return (
     <>
       <div className="flex flex-col sm:flex-row lg:flex-row">
@@ -91,6 +146,7 @@ export default function VerifyEmail() {
               A verification code has been sent to <b>{email}</b>. Please enter
               it below
             </p>
+
             <form
               onSubmit={handleVerify}
               className="flex flex-col place-items-center"
@@ -107,6 +163,23 @@ export default function VerifyEmail() {
                 Verify Now
               </button>
             </form>
+            {/* Resend email block */}
+            <div className="mt-7 flex  justify-center items-center">
+              <p className="mb-3 text-[#072AC8] font-bold">
+                Code expires in {formatTime(timer)}
+              </p>
+              <button
+                className={`px-3 py-1 ml-8 rounded-lg items-center ${
+                  resendDisabled
+                    ? "bg-gray-400 text-white cursor-not-allowed"
+                    : "bg-[#072AC8] text-white"
+                }`}
+                disabled={resendDisabled}
+                onClick={handleResendCode}
+              >
+                Resend Code
+              </button>
+            </div>
           </div>
         </div>
 
