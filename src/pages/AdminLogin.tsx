@@ -125,9 +125,7 @@ function AdminLogin() {
               <p className="mt-4 text-sm text-gray-600">
                 <Link to="/admin/reset" className="text-red-600">Forgot Password?</Link>
               </p>
-              <p className="mt-4 text-sm text-gray-600">
-                Don’t have an account? <Link to="/admin/signup" className="text-[#072AC8]">Sign up</Link>
-              </p>
+             
               <button onClick={() => setStep("email")} className="text-[#072AC8] text-sm mt-4">
                 Back to email
               </button>
