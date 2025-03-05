@@ -5,6 +5,7 @@ import logo from "../assets/logo.png";
 import Frame285 from "../assets/Frame285.png";
 import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/eye-off.svg";
+import google from "../assets/icons/google.svg";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -70,7 +71,7 @@ export default function Signup() {
     setErrors(validationErrors);
     setValid(isValid);
     setServerError(null);
-    setEmailExistsError(null); 
+    setEmailExistsError(null);
 
     // Authenticate User if valid
 
@@ -79,7 +80,6 @@ export default function Signup() {
         // Destructuring only the necessary fields from formData
         const { firstName, lastName, email, password } = formData;
         // console.log(firstName, lastName, email, password);
-
         const response = await axios.post(
           "https://eight5gifts-be.onrender.com/api/user/signup",
           {
@@ -96,12 +96,12 @@ export default function Signup() {
         );
 
         if (response.status === 201) {
-          // console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
-          // console.log("authToken", response.data.authToken);
-          // console.log("Response Data:", response.data);
-          localStorage.setItem("authToken", response.data.data.authToken); 
+          localStorage.setItem("authToken", response.data.data.authToken);
           // console.log("authToken", response.data.data.authToken);
-          console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));     
+          console.log(
+            "AuthToken set in localStorage:",
+            localStorage.getItem("authToken")
+          );
           alert(
             "Registered successfully. Verification code has been sent to your email, expires in 5 mins!"
           );
@@ -115,11 +115,11 @@ export default function Signup() {
               "Network error. Please check your internet connection or try again later."
             );
           } else {
-            if (err.response.data.error === "Email already exist"){
-              setEmailExistsError("This email is already registered. Please try logging in.");
-            }else
-            // console.log("Signup error:", err);
-            alert("Signup failed. Please try again.");
+            if (err.response.data.error === "Email already exist") {
+              setEmailExistsError(
+                "This email is already registered. Please try logging in."
+              );
+            } else alert("Signup failed. Please try again.");
           }
         }
       }
@@ -133,12 +133,12 @@ export default function Signup() {
           <div>
             <img src={logo} alt="Logo" height={45} width={75} />
           </div>
-          <div className="mt-[5%]">
-            <p className="text-xl font-semibold text-center sm:text-left">
+          <div className="mt-[5%] ml-[10%] ">
+            <p className="text-xl font-semibold sm:text-left text-start">
               Hi there! Let's create your account and get you going.
             </p>
             <form
-              className="flex flex-col items-center sm:items-start mt-5 ml-6"
+              className="flex flex-col items-center sm:items-start mt-5 ml-15"
               onSubmit={handleSignup}
             >
               {valid ? (
@@ -200,24 +200,24 @@ export default function Signup() {
                 <span className="text-sm text-red-600">{errors.password};</span>
               )}
               <div className="relative w-full sm:w-1/2 mb-4">
-              <input
-                type={showPassword ? "text" : "password"}
-                name="password"
-                placeholder="Create a strong password"
-                className="w-full p-3 border rounded-xl outline-none"
-                required
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
-              />
-               <img
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  placeholder="Create a strong password"
+                  className="w-full p-3 border rounded-xl outline-none"
+                  required
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                />
+                <img
                   src={showPassword ? eyeOpen : eyeClosed}
                   alt="Toggle Password Visibility"
                   className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer w-5 h-5"
                   onClick={() => setShowPassword(!showPassword)}
                 />
-                </div>
+              </div>
               {valid ? (
                 <></>
               ) : (
@@ -226,18 +226,21 @@ export default function Signup() {
                 </span>
               )}
               <div className="relative w-full sm:w-1/2 mb-4">
-              <input
-                type={showConfirmPassword ? "text" : "password"}
-                name="confirmPassword"
-                placeholder="Re-enter your password"
-                className="w-full p-3 border rounded-xl  outline-none"
-                required
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, confirmPassword: e.target.value })
-                }
-              />
-              <img
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Re-enter your password"
+                  className="w-full p-3 border rounded-xl  outline-none"
+                  required
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                />
+                <img
                   src={showConfirmPassword ? eyeOpen : eyeClosed}
                   alt="Toggle Confirm Password Visibility"
                   className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer w-5 h-5"
@@ -248,12 +251,19 @@ export default function Signup() {
                 Submit
               </button>
             </form>
+            <p className="mt-5 ml-8 text-start ">
+              Already have an account?{" "}
+              <Link className="text-[#072AC8]" to="/Login">
+                Login
+              </Link>
+            </p>
             {serverError && (
               <div className="mt-4 text-red-600 text-sm">{serverError}</div>
             )}
-            <p className="mt-5 mr-10">
-              Already have an account? <Link to="/Login">Login</Link>
-            </p>
+            <button className="w-1/2  border p-3 mt-5 ml-15 rounded-lg outline-none flex items-center justify-center">
+              <img src={google} alt="Google" className="w-5 h-5 mr-2" />
+              Continue with Google
+            </button>
           </div>
         </div>
         <div
