@@ -43,9 +43,9 @@ export default function CustomerResetPassword() {
   
       alert("OTP sent to your email.");
       setStep("otp");
-    } catch (error) {
+    } catch (error: any) {
       console.error("OTP Request Error:", error);
-      alert("Failed to send OTP. Please try again.");
+      alert(`${error.response?.data?.error || "An error occurred."}`);
     } finally {
       setLoading(false);
     }
@@ -83,9 +83,9 @@ export default function CustomerResetPassword() {
   
       alert("OTP Verified Successfully!");
       setStep("password");
-    } catch (error) {
+    } catch (error: any) {
       console.error("OTP Verification Error:", error);
-      alert("Invalid or expired OTP. Please try again.");
+      alert(`${error.response?.data?.error || "An error occurred."}`);
     } finally {
       setLoading(false);
     }
