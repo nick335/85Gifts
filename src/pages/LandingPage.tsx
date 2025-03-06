@@ -12,7 +12,7 @@ import Services from "@/components/Services";
 
 const TopGifts = [
   {
-    image: "/src/assets/items(2).png",
+    image: "src/assets/items(2).png",
     text: "For Him Gift Package",
   },
   {
