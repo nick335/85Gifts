@@ -12,19 +12,19 @@ import Services from "@/components/Services";
 
 const TopGifts = [
   {
-    image: "/src/assets/items(2).png",
+    image: "../src/assets/items(2).png",
     text: "For Him Gift Package",
   },
   {
-    image: "/src/assets/items(1).png",
+    image: "../src/assets/items(1).png",
     text: "For Her Gift Package",
   },
   {
-    image: "/src/assets/items.png",
+    image: "../src/assets/items.png",
     text: "Festival Period Gifts",
   },
   {
-    image: "/src/assets/items(3).png",
+    image: "../src/assets/items(3).png",
     text: "Work Gifts",
   },
 ];
