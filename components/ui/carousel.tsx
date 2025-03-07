@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 
 const slides = [
-  { id: 1, image: '/src/assets/perfumes.png' },
-  { id: 2, image: '/src/assets/roses.png' },
-  { id: 3, image: '/src/assets/forher.png' },
-  { id: 4, image: '/src/assets/forhim.png' },
+  { id: 1, image: 'https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741366840/perfumes_jvr9vj.png' },
+  { id: 2, image: 'https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741366923/roses_biuans.png' },
+  { id: 3, image: 'https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741367124/forher_ql3av3.png' },
+  { id: 4, image: 'https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741367177/forhim_efxqul.png' },
 ];
 
 // Add duplicates for seamless looping

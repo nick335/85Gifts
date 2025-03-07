@@ -12,7 +12,7 @@ import Services from "@/components/Services";
 
 const TopGifts = [
   {
-    image: "src/assets/items(2).png",
+    image: "https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741360014/items_2_notfvw.png",
     text: "For Him Gift Package",
   },
   {
@@ -20,7 +20,7 @@ const TopGifts = [
     text: "For Her Gift Package",
   },
   {
-    image: "/src/assets/items.png",
+    image: "https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741360730/items_lssr1q.png",
     text: "Festival Period Gifts",
   },
   {
