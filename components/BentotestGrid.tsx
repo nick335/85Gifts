@@ -15,7 +15,7 @@ export default function BentGrid() {
         >
           <img
             className="box1-img"
-            src="src/assets/Chritsmas.png"
+            src="https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741367408/Chritsmas_piroiy.png"
             alt="thank you gift"
           />
         </div>
@@ -47,7 +47,7 @@ export default function BentGrid() {
 
         <div className="box4 col-start-1 col-end-7 row-start-8 row-end-10  md:col-start-5 md:col-end-7 md:row-start-2 md:row-end-3 mb-4 md:-mt-24">
           <img
-            src="src/assets/thankyougift.png"
+            src="https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741372524/thankyougift_kp5rqa.png"
             alt="thank you gift"
             className="h-40 md:h-[40vh]"
           />

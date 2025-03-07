@@ -92,14 +92,14 @@ export default function LandingPage() {
               <div className="Bestselling grid grid-cols-2 md:grid-flow-col gap-2 mt-5  md:mb-10 justify-center">
                 <div className="gift-item  rounded-lg ">
                   <img
-                    src="src/assets/items(4).png"
+                    src="https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741372619/items_4_jo35xd.png"
                     alt="for her"
                     className=" md:h-full"
                   />
                 </div>
                 <div className="gift-item relative   rounded-lg">
                   <img
-                    src="/src/assets/items(5).png"
+                    src="https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741372618/items_5_eeo052.png"
                     alt="Cup cakes"
                     className="w-full h-full"
                   />
@@ -117,7 +117,7 @@ export default function LandingPage() {
                 </div>
                 <div className="gift-item inline-block   rounded-lg">
                   <img
-                    src="/src/assets/items(6).png"
+                    src="https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741372619/items_6_mrwc1j.png"
                     alt="Giorgio Perfume"
                     className="md:h-full"
                   />
@@ -176,7 +176,7 @@ export default function LandingPage() {
 
             <div className="friendship-img grid justify-center items-center">
               <img
-                src="/src/assets/frame7.png"
+                src="https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741372762/Frame7_rquige.png"
                 alt="friendship"
                 className=" w-[100%] md:h-[48vh] "
               />
