@@ -18,7 +18,7 @@ export default function Navbar() {
     <header className="flex items-center justify-between bg-transparent text-[18px] w-full px-6 py-4 md:px-12 md:py-6">
       {/* Logo */}
       <Link to="/" className="flex items-center">
-        <img src="../src/assets/logo.png" alt="logo" className="h-10" />
+        <img src="https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741372844/logo_gayznn.png" alt="logo" className="h-10" />
       </Link>
       <nav className="flex w-[80%] items-center justify-between  ">
         {/* Desktop Menu */}
