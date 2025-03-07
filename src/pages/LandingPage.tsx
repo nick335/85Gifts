@@ -16,7 +16,7 @@ const TopGifts = [
     text: "For Him Gift Package",
   },
   {
-    image: "/src/assets/items(1).png",
+    image: "https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741359660/items_1_adkgs6.png",
     text: "For Her Gift Package",
   },
   {
@@ -24,7 +24,7 @@ const TopGifts = [
     text: "Festival Period Gifts",
   },
   {
-    image: "/src/assets/items(3).png",
+    image: "https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741359222/items_3_fx2lki.png",
     text: "Work Gifts",
   },
 ];
