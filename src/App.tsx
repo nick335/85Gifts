@@ -15,6 +15,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminReset from "./pages/AdminReset";
 import CustomerResetPassword from "./pages/CustomerResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   return (
@@ -41,6 +42,7 @@ function App() {
 
         
         <Route path="/reset-password" element={<CustomerResetPassword />} />
+        <Route path="*" element={<ErrorPage/>} />
 
       </Routes>
     </Router>

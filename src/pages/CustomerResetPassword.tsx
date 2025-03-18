@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import background from "../assets/icons/loginbg.png";
-import eyeOpen from "../assets/icons/Eye.png";
+import eyeOpen from "../assets/icons/eye.png";
 import eyeClosed from "../assets/icons/Eye.png";
 
 export default function CustomerResetPassword() {
@@ -26,31 +26,36 @@ export default function CustomerResetPassword() {
       alert("Please enter a valid email address.");
       return;
     }
-  
+
     try {
       setLoading(true);
       const { data } = await axios.post(
         "https://eight5gifts-be.onrender.com/api/user/forgot-password",
         { email }
       );
-  
+
       if (data?.data?.authToken) {
         localStorage.setItem("authToken", data.data.authToken); // Store auth token
         console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
       } else {
         throw new Error("Auth token not received.");
       }
-  
+
       alert("OTP sent to your email.");
       setStep("otp");
-    } catch (error: any) {
-      console.error("OTP Request Error:", error);
-      alert(`${error.response?.data?.error || "An error occurred."}`);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("OTP Request Error:", error);
+        alert(`${error.response?.data?.error || "An error occurred."}`);
+      } else {
+        console.error("OTP Request Error:", error);
+        alert("An unexpected error occurred.")
+      }
     } finally {
       setLoading(false);
     }
   };
-  
+
 
   // 2️⃣ **Verify OTP **
   const handleOtpVerification = async () => {
@@ -60,13 +65,13 @@ export default function CustomerResetPassword() {
     }
 
 
-  const authToken = localStorage.getItem("authToken"); // ✅ Retrieve the token
-  if (!authToken) {
-    alert("Session expired. Please restart the process.");
-    setStep("email");
-    return;
-  }
-  
+    const authToken = localStorage.getItem("authToken"); // ✅ Retrieve the token
+    if (!authToken) {
+      alert("Session expired. Please restart the process.");
+      setStep("email");
+      return;
+    }
+
     try {
       setLoading(true);
       const { data } = await axios.post(
@@ -80,17 +85,22 @@ export default function CustomerResetPassword() {
         }
       );
       console.log(data)
-  
+
       alert("OTP Verified Successfully!");
       setStep("password");
-    } catch (error: any) {
-      console.error("OTP Verification Error:", error);
-      alert(`${error.response?.data?.error || "An error occurred."}`);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("OTP Verification Error:", error);
+        alert(`${error.response?.data?.error || "An error occurred."}`);
+      } else {
+        console.error("Unexpected Error:", error);
+        alert("An unexpected error occurred.")
+      }
     } finally {
       setLoading(false);
     }
   };
-  
+
 
   // 3️⃣ **Submit New Password**
   const handleResetPassword = async () => {
