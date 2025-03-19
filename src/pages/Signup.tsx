@@ -129,11 +129,11 @@ export default function Signup() {
   return (
     <>
       <div className="signup-page flex flex-col sm:flex-row lg:flex-row">
+        <Link to="/" className="absolute top-6 left-6 md:top-10 md:left-10">
+          <img src={logo} alt="Logo" className="w-[71px] h-[43px]" />
+        </Link>
         <div className="signup-left w-full h-full sm:w-1/2 p-4">
-          <div>
-            <img src={logo} alt="Logo" height={45} width={75} />
-          </div>
-          <div className="mt-[5%] ml-[10%] ">
+          <div className="mt-[10%] ml-[10%] ">
             <p className="text-xl font-semibold sm:text-left text-start">
               Hi there! Let's create your account and get you going.
             </p>
@@ -247,20 +247,20 @@ export default function Signup() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 />
               </div>
-              <button className="bg-black text-white rounded-xl w-full sm:w-1/2 px-10 py-5">
+              <button className="bg-black text-white rounded-xl w-full sm:w-1/2 px-10 py-5 transition duration-300 hover:bg-gray-800">
                 Submit
               </button>
             </form>
             <p className="mt-5 ml-8 text-start ">
               Already have an account?{" "}
-              <Link className="text-[#072AC8]" to="/Login">
+              <Link className="text-[#072AC8] hover:text-[#072ac8d0]" to="/Login">
                 Login
               </Link>
             </p>
             {serverError && (
               <div className="mt-4 text-red-600 text-sm">{serverError}</div>
             )}
-            <button className="w-1/2  border p-3 mt-5 ml-15 rounded-lg outline-none flex items-center justify-center">
+            <button className="w-1/2  border p-3 mt-5 ml-15 rounded-lg outline-none flex items-center justify-center transition duration-300 hover:bg-[#B5B8FF]">
               <img src={google} alt="Google" className="w-5 h-5 mr-2" />
               Continue with Google
             </button>

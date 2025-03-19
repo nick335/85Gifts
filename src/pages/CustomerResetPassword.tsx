@@ -4,6 +4,8 @@ import axios from "axios";
 import background from "../assets/icons/loginbg.png";
 import eyeOpen from "../assets/icons/eye.png";
 import eyeClosed from "../assets/icons/Eye.png";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
 
 export default function CustomerResetPassword() {
   const navigate = useNavigate();
@@ -141,9 +143,9 @@ export default function CustomerResetPassword() {
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Left Side - Form */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-white px-6 sm:px-8 py-20 relative">
-        <a href="/" className="absolute top-6 left-6 md:top-10 md:left-10">
-          <img src="src/assets/logo.png" alt="Logo" className="w-[71px] h-[43px]" />
-        </a>
+        <Link to="/" className="absolute top-6 left-6 md:top-10 md:left-10">
+          <img src={logo} alt="Logo" className="w-[71px] h-[43px]" />
+        </Link>
 
         <div className="max-w-sm w-full md:mt-0 mt-32">
           {/* Step 1: Email Input */}
@@ -161,7 +163,7 @@ export default function CustomerResetPassword() {
               />
               <button
                 onClick={handleEmailSubmit}
-                className="w-full bg-black text-white p-3 rounded mb-3"
+                className="w-full bg-black text-white p-3 rounded mb-3 transition duration-300 hover:bg-gray-800"
                 disabled={loading}
               >
                 {loading ? "Sending OTP..." : "Next"}
@@ -184,7 +186,7 @@ export default function CustomerResetPassword() {
               />
               <button
                 onClick={handleOtpVerification}
-                className="w-full bg-black text-white p-3 rounded mb-3"
+                className="w-full bg-black text-white p-3 rounded mb-3 transition duration-300 hover:bg-gray-800"
                 disabled={loading}
               >
                 {loading ? "Verifying..." : "Verify OTP"}
@@ -216,7 +218,7 @@ export default function CustomerResetPassword() {
               </div>
               <button
                 onClick={handleResetPassword}
-                className="w-full bg-black text-white p-3 rounded mb-3"
+                className="w-full bg-black text-white p-3 rounded mb-3 transition duration-300 hover:bg-gray-800"
                 disabled={loading}
               >
                 {loading ? "Resetting..." : "Reset Password"}
