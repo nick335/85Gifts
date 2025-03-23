@@ -32,7 +32,7 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "https://eight5gifts-be.onrender.com/api/user/forgot-password",
+        "/api/api/user/forgot-password",
         { email }
       );
 
@@ -77,7 +77,7 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "https://eight5gifts-be.onrender.com/api/user/verify",
+        "/api/api/user/verify",
         { token: otp },
         {
           headers: {
@@ -121,7 +121,7 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       await axios.post(
-        "https://eight5gifts-be.onrender.com/api/user/update-password",
+        "/api/api/user/update-password",
         { password: password },
         {
           headers: { Authorization: `Bearer ${authToken}` }, // Attach auth token

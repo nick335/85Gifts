@@ -81,7 +81,7 @@ export default function Signup() {
         const { firstName, lastName, email, password } = formData;
         // console.log(firstName, lastName, email, password);
         const response = await axios.post(
-          "https://eight5gifts-be.onrender.com/api/user/signup",
+          "/api/api/user/signup",
           {
             firstName,
             lastName,

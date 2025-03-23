@@ -42,7 +42,7 @@ function Login() {
     setValidationErrors([]);
 
     axios
-      .post("https://eight5gifts-be.onrender.com/api/user/signin", { email, password })
+      .post("/api/api/user/signin", { email, password })
       .then((result) => {
         console.log("API Response:", result.data);
 
@@ -66,7 +66,7 @@ function Login() {
 
   const handleGoogleSignIn = async () => {
     try {
-      const response = await axios.get("https://eight5gifts-be.onrender.com/api/user/auth0/signin", {
+      const response = await axios.get("/api/user/auth0/signin", {
         withCredentials: true, // Ensures cookies (if any) are included
       });
 

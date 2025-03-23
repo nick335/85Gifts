@@ -10,4 +10,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, './'),
     },
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://eight5gifts-be.onrender.com',
+        changeOrigin: true,
+        secure: false, // Set to false if the backend is using self-signed SSL
+        rewrite: (path) => path.replace(/^\/api/, ''), // Removes '/api' prefix before forwarding
+      },
+    },
+  },
 });
