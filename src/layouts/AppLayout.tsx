@@ -7,7 +7,7 @@ export default function Layout() {
     <SidebarProvider>
       <AppSidebar />
         {/* <SidebarTrigger /> */}
-      <main>
+      <main className="w-[100%]">
         <Outlet />
       </main>
     </SidebarProvider>
