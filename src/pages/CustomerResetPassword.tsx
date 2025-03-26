@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import background from "../assets/icons/loginbg.png";
-import eyeOpen from "../assets/icons/eye.png";
+import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/Eye.png";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
