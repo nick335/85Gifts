@@ -95,7 +95,7 @@ export function AppSidebar() {
 
       {/* Logout Confirmation Popup */}
       {showLogoutPopup && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black w-50% bg-opacity-30">
+        <div className="fixed inset-0 flex z-50 items-center justify-center bg-black w-50% bg-opacity-30">
           <div className="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
             <h2 className="text-lg font-semibold mb-4">Are you sure you want to logout?</h2>
             <div className="flex justify-between mt-4">
