@@ -13,17 +13,17 @@ export function LocationDropdown() {
     <div className="max-w-xs">
       <div className="relative">
         <Select value={state} onValueChange={setState}>
-          <SelectTrigger 
-            id="state-select" 
+          <SelectTrigger
+            id="state-select"
             className="w-full pl-3 text-left rounded-md shadow-sm">
             <span className="flex items-center">
-              <span className="block truncate">Qty {quantity}</span>
+              <span className="block truncate">Qty </span>
             </span>
           </SelectTrigger>
           <SelectContent className="bg-black bg-opacity-70 text-white rounded-md">
             {[...Array(11)].map((_, i) => (
-              <SelectItem 
-                key={i} 
+              <SelectItem
+                key={i}
                 value={i.toString()}
                 className="cursor-pointer hover:bg-gray-100">
                 {i}
