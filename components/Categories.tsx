@@ -17,10 +17,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
 export default function Categories() {
   return (
     <>
-      <div className="mt-[20px]">
+      <div className="">
         <Select>
           <SelectTrigger className="w-[150px] border-none">
             <SelectValue
@@ -39,8 +40,8 @@ export default function Categories() {
           </SelectContent>
         </Select>
       </div>
-      <div className="mt-[20px] flex justify-between">
-        <div className=" relative">
+      <div className="grid grid-cols-2 gap-y-7 lg:mt-[1rem] lg:flex lg:justify-between">
+        <div className=" relative"> 
           <div className="relative">
             <Card className="w-[150px] h-[180px]">
               <CardHeader>
