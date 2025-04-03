@@ -46,7 +46,7 @@ export function AppSidebar() {
               <SidebarMenu>
                 <div className="flex flex-col items-center mb-4">
                   <SidebarTrigger />
-                  <Link to="/HomePage">
+                  <Link to="/">
                     <img src={logo} alt="logo" className="w-28 mb-2" />
                   </Link>
                 </div>

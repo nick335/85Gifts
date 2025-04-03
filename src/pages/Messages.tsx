@@ -13,7 +13,7 @@ import {
 export default function Messages() {
   return (
     <>
-      <section className="bg-background bg-gradient-to-tl from-[#FFFFFF] to-[#B5BCFF]  w-screen h-screen overflow-x-hidden">
+      <section className="w-[100%] h-[100%] pt-[15px] pl-[15px] pr-[10px] bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] ">
         <header className="flex items-center justify-center mt-8">
           <div className="flex items-center bg-white border rounded-xl px-4 justify-between w-full max-w-[350px] h-[40px]">
             <div className="flex gap-2">
