@@ -17,19 +17,19 @@ import {
 import { Button } from "@/components/ui/button";
 import Categories from "@/components/Categories";
 import Bestselling from "@/components/Bestselling";
-import BottomNav from "@/components/MobNavbar";
+import MobileBottomNav from "@/components/MobileNavTab";
 
 export default function HomePage() {
   return (
     <>
       <div className="w-[100%] h-[100%] pt-[15px] pl-[15px] pr-[10px] bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] ">
         {/* Header */}
-        <div className=" w-[100%] flex justify-between gap-[2rem] lg:flex lg:justify-end lg:items-center lg:gap-[15rem]">
+        <div className=" w-[100%] flex justify-end gap-[2.5rem] pr-[5px] lg:pr-[0] lg:items-center lg:gap-[15rem]">
           <div>
             <SearchBarHome />
           </div>
           <div className="flex gap-1 lg:gap-2">
-            <button className="bg-[#fff] border rounded-[50%] py-[8px] px-[8px]">
+            <button className="hidden lg:block bg-[#fff] border rounded-[50%] py-[8px] px-[8px]">
               <IoMdCart />
             </button>
             <button className="bg-[#fff] border rounded-[50%] py-[8px] px-[8px]">
@@ -61,46 +61,54 @@ export default function HomePage() {
                 </span>
               </p>
             </div>
-            <div className="mt-[20px]">
-              <p className="text-lg font-semibold text-start">
+            <div className="hidden lg:mt-[20px] lg:block">
+              <p className="text-lg font-semibold text-start ">
                 Find the best gift for your loved ones
               </p>
             </div>
-            <div className="flex gap-3 items-center">
-              <div className="relative mt-[10px]">
-                <Card className="w-[210px] h-[60px]">
-                  <CardHeader className="pl-[12px]">
-                    <CardTitle className="absolute top-[12px] text-start">
-                      Event
-                    </CardTitle>
-                    <CardDescription className="text-start">
-                      Birthday, Anniversary, etc
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+            <div className="flex gap-3 items-center mb-[15px] mt-[25px] lg:mb-0">
+              <div className="hidden relative mt-[10px] lg:flex">
+                <button>
+                  <Card className="w-[180px] h-[70px] lg:w-[210px] lg:h-[60px]">
+                    <CardHeader className="pl-[12px]">
+                      <CardTitle className="absolute top-[12px] text-start">
+                        Event
+                      </CardTitle>
+                      <CardDescription className="text-start">
+                        Birthday, Anniversary, etc
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </button>
               </div>
               <div className="relative mt-[10px]">
-                <Card className="w-[210px] h-[60px]">
-                  <CardHeader className="pl-[12px]">
-                    <CardTitle className="absolute top-[12px] text-start">
-                      Gift Type
-                    </CardTitle>
-                    <CardDescription className="text-start">
-                      Cakes, Perfumes, etc
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <button>
+                  <Card className="w-[180px] h-[65px] lg:w-[210px] lg:h-[60px]">
+                    <CardHeader className="pl-[12px]">
+                      <CardTitle className="absolute top-[12px] text-start">
+                        Gift Type
+                      </CardTitle>
+                      <CardDescription className="text-start">
+                        Cakes, Perfumes, etc
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </button>
               </div>
               <Link to="./Gifts">
-                <Button className=" bg-[#072AC8] py-[27px] px-[40px] mt-[5px] hover:bg-[#072AC8] text-md font-semibold">
+                <Button className="bg-[#072AC8] py-[30px] px-[47px] mt-[10px] lg:py-[27px] lg:px-[40px] lg:mt-[10px] hover:bg-[#072AC8] text-md rounded-lg font-semibold">
                   Find gifts
                 </Button>
               </Link>
             </div>
           </div>
           {/* Promo-card */}
-          <div className=" w-[34%] mt-[20px]">
-            <img src={promo} alt="Friendship day promo discount" className="w-full h-[130px] lg:h-auto lg:w-auto" />
+          <div className=" w-[34%] mt-[10px] lg:mt-[20px]">
+            <img
+              src={promo}
+              alt="Friendship day promo discount"
+              className="w-full h-[80px] lg:h-auto lg:w-auto"
+            />
           </div>
         </div>
         <div className="lg:flex lg:justify-between">
@@ -110,7 +118,7 @@ export default function HomePage() {
             <Bestselling />
           </div>
           {/* Main-right */}
-          <div className="lg:w-[34%] lg:mt-[50px] bg-[#fff] h-[455px] rounded-lg shadow-[1px_1px_0_#041C8540]">
+          <div className="mb-[85px] lg:mb-0 lg:w-[34%] lg:mt-[50px] bg-[#fff] h-[455px] rounded-lg shadow-[1px_1px_0_#041C8540]">
             <Button className="bg-[#E8E5E5] text-[#000] font-semibold hover:bg-[#E8E5E5] px-[80px] mt-[15px] w-[90%]">
               Favourite
             </Button>
@@ -146,7 +154,7 @@ export default function HomePage() {
           </div>
         </div>
         {/* Footer */}
-        <BottomNav />
+        <MobileBottomNav activeTab="home" />
         <div className="hidden lg:block mb-3">
           <p>
             Need help? Check our{" "}

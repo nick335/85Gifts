@@ -40,7 +40,7 @@ export default function Categories() {
           </SelectContent>
         </Select>
       </div>
-      <div className="grid grid-cols-2 gap-y-7 lg:mt-[1rem] lg:flex lg:justify-between">
+      <div className="grid grid-cols-2 gap-y-7 mt-[15px] lg:mt-[1rem] lg:flex lg:justify-between">
         <div className=" relative"> 
           <div className="relative">
             <Card className="w-[150px] h-[180px]">
