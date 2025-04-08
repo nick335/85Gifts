@@ -29,12 +29,12 @@ const items = [
 ];
 export default function BottomNav() {
   return (
-    <nav className="fixed bottom-0 left-0 w-full bg-white shadow-md py-1.5 flex justify-around items-center border-t lg:hidden">
+    <nav className="fixed bottom-0 left-0 w-full bg-[#072AC8] shadow-md py-1.5 flex justify-around items-center border-t lg:hidden">
       {items.map((item) => (
         <button>
           <Link to={item.path} className="active:bg-[#072AC8]">
-            <item.icon className="self-center size-5" />
-            <span className="text-xs">{item.label}</span>
+            <item.icon className="self-center size-5 fill-white" />
+            <span className="text-sm text-[#fff]">{item.label}</span>
           </Link>
         </button>
       ))}
