@@ -28,10 +28,10 @@ function App() {
       <Routes>
         {/* Authenticated Routes (Require Login) */}
         <Route element={<Layout />}>
-          <Route path="/HomePage" element={<HomePage />} />
-          <Route path="/Gifts" element={<Gifts />} />
+          <Route path="/HomePage" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+          <Route path="/Gifts" element={<ProtectedRoute><Gifts /></ProtectedRoute>} />
           <Route path="/Messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
-          <Route path="/Cart" element={<Cart />} />
+          <Route path="/Cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           <Route path="/OrderHistory" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
           <Route path="/Settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
         </Route>
