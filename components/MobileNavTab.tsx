@@ -2,7 +2,7 @@ import { IconType } from "react-icons";
 import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-type NavTab = "home" | "gifts" | "cart" | "orders" | "account";
+type NavTab = "HomePage" | "Gifts" | "Cart" | "OrderHistory" | "account";
 
 interface NavItem {
     icon: IconType;
@@ -24,10 +24,10 @@ export default function MobileBottomNav({
     iconSize = 20,
 }: MobileBottomNavProps) {
     const navItems: NavItem[] = [
-        { icon: FaHome, label: "Home", tab: "home" },
-        { icon: FaSearch, label: "Gifts", tab: "gifts" },
-        { icon: FaShoppingBag, label: "Cart", tab: "cart" },
-        { icon: FaHeart, label: "Orders", tab: "orders" },
+        { icon: FaHome, label: "Home", tab: "HomePage" },
+        { icon: FaSearch, label: "Gifts", tab: "Gifts" },
+        { icon: FaShoppingBag, label: "Cart", tab: "Cart" },
+        { icon: FaHeart, label: "Orders", tab: "OrderHistory" },
         { icon: FaUser, label: "Account", tab: "account" },
     ];
 
@@ -36,7 +36,7 @@ export default function MobileBottomNav({
             <div className="flex justify-around items-center p-2">
                 {navItems.map(({ icon: Icon, label, tab }) => {
                     const isActive = activeTab === tab;
-                    const isCart = tab === "cart";
+                    const isCart = tab === "Cart";
 
                     return (
                         <Link
