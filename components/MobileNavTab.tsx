@@ -2,7 +2,7 @@ import { IconType } from "react-icons";
 import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-type NavTab = "HomePage" | "Gifts" | "Cart" | "OrderHistory" | "account";
+type NavTab = "HomePage" | "Gifts" | "Cart" | "Orders" | "account";
 
 interface NavItem {
     icon: IconType;
@@ -27,7 +27,7 @@ export default function MobileBottomNav({
         { icon: FaHome, label: "Home", tab: "HomePage" },
         { icon: FaSearch, label: "Gifts", tab: "Gifts" },
         { icon: FaShoppingBag, label: "Cart", tab: "Cart" },
-        { icon: FaHeart, label: "Orders", tab: "OrderHistory" },
+        { icon: FaHeart, label: "Orders", tab: "Orders" },
         { icon: FaUser, label: "Account", tab: "account" },
     ];
 

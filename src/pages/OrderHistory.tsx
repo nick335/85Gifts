@@ -129,7 +129,7 @@ export default function OrderHistory() {
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <MobileBottomNav activeTab="OrderHistory" />
+      <MobileBottomNav activeTab="Orders" />
     </div>
   );
 }
