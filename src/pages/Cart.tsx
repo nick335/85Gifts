@@ -144,7 +144,7 @@ export default function Cart() {
 
       {/* Help Section */}
       <MobileBottomNav
-        activeTab="cart"
+        activeTab="Cart"
         cartItemCount={cartItems.length}
         className="custom-nav-class" // optional
         iconSize={18} // optional
