@@ -17,6 +17,14 @@ export default function Cart() {
       price: 13000,
       quantity: 1,
       image: order
+    },
+    {
+      id: 2,
+      name: "Lilium Flowers",
+      category: "Flowers",
+      price: 13000,
+      quantity: 1,
+      image: order
     }
   ];
 
