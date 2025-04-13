@@ -19,9 +19,9 @@ import {
 const items = [
   { title: "Home", path: "/HomePage", icon: Home },
   { title: "Gifts", path: "/Gifts", icon: Gift },
-  { title: "Messages", path: "/Messages", icon: MessageSquareText },
   { title: "Cart", path: "/Cart", icon: RiShoppingBagLine },
-  { title: "Order History", path: "/OrderHistory", icon: ReceiptText },
+  { title: "Order History", path: "/Orders", icon: ReceiptText },
+  { title: "Messages", path: "/Messages", icon: MessageSquareText },
 ];
 
 const footerItems = [

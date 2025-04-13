@@ -17,6 +17,14 @@ export default function Cart() {
       price: 13000,
       quantity: 1,
       image: order
+    },
+    {
+      id: 2,
+      name: "Lilium Flowers",
+      category: "Flowers",
+      price: 13000,
+      quantity: 1,
+      image: order
     }
   ];
 
@@ -136,7 +144,7 @@ export default function Cart() {
 
       {/* Help Section */}
       <MobileBottomNav
-        activeTab="cart"
+        activeTab="Cart"
         cartItemCount={cartItems.length}
         className="custom-nav-class" // optional
         iconSize={18} // optional
