@@ -1,3 +1,4 @@
+import { useState } from "react";
 import cart from "../assets/icons/mdi_cart.png";
 import checkout from "../assets/icons/mdi_account-payment.png";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -6,6 +7,7 @@ import { HiMinusSm } from "react-icons/hi";
 import { IoSend } from "react-icons/io5";
 // import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
 import MobileBottomNav from "@/components/MobileNavTab";
+import BankTransferModal from "@/components/BankTransferModal";
 
 export default function Cart() {
   // This should come from your backend/state management eventually
@@ -31,6 +33,30 @@ export default function Cart() {
   const subtotal = 13000;
   const vat = 500;
   const total = subtotal + vat;
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  // Example invoice data
+  const invoiceData = {
+    invoiceNumber: "INV-2023-001",
+    amount: 1250.0,
+    // other invoice details
+  }
+
+  const handlePaymentSubmit = (formData: FormData) => {
+    // Handle the form submission
+    console.log("Payment submitted")
+
+    // You would typically send this to your backend
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`)
+    }
+
+    // Close the modal after submission
+    setIsModalOpen(false)
+
+    // Show success message or redirect
+    alert("Payment details submitted successfully!")
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] p-4 md:p-8 pb-24 md:pb-8">
@@ -133,13 +159,23 @@ export default function Cart() {
                   <span>₦{total.toLocaleString()}</span>
                 </div>
 
-                <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition">
+                <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition"
+                  onClick={() => setIsModalOpen(true)}
+                >
                   Proceed to Checkout
                 </button>
               </div>
             </div>
           </div>
         </div>
+        {/* Bank Transfer Modal */}
+        <BankTransferModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handlePaymentSubmit}
+          invoiceAmount={invoiceData.amount}
+          invoiceNumber={invoiceData.invoiceNumber}
+        />
       </div>
 
       {/* Help Section */}
