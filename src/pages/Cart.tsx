@@ -50,12 +50,6 @@ export default function Cart() {
     for (const [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`)
     }
-
-    // Close the modal after submission
-    setIsModalOpen(false)
-
-    // Show success message or redirect
-    alert("Payment details submitted successfully!")
   }
 
   return (
