@@ -17,7 +17,7 @@ export default function SearchBarHome({
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-sm">
-      <div className="relative w-[400px] m-w-xs">
+      <div className="relative w-[250px] lg:w-[400px] m-w-xs">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-500 dark:text-gray-400" />
         <Input
           type="search"
