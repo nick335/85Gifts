@@ -1,11 +1,16 @@
 import { Home,  Coins, LogOut, Settings, Users, ListOrdered } from "lucide-react"
 // import { RiShoppingBagLine } from "react-icons/ri";
 import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom";
+import { cn } from "@/src/lib/utils";
+
+
+
 
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
+  // SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
@@ -40,11 +45,11 @@ const items = [
 
 
 
-// ]
 
 
 export function AdminSideNav() {
   return (
+   <div className="flex h-screen">
     <Sidebar collapsible="icon" className="bg-[#032bb7]">
       <SidebarContent className="bg-[#032bb7] text-white">
         <SidebarGroup className="bg-[#032bb7] hover:text-white">
@@ -54,7 +59,7 @@ export function AdminSideNav() {
             <div className="mb-4">
             <SidebarTrigger />
             </div>
-            <Link to='/AdminHomePage' className=''>
+            <Link to='/adminpage' className=''>
             <img src='../src/assets/logo.png' alt='logo' className='w-28 mb-2 min-w-10'/>
             </Link>
             </span>
@@ -87,5 +92,25 @@ export function AdminSideNav() {
             {/*   </SidebarMenu> */}
             {/* </SidebarFooter> */}
     </Sidebar>
+
+        <nav className="fixed bottom-0 left-0 right-0 z-50 bg-[#032bb7] text-white flex justify-around items-center p-2 md:hidden">
+        {items.map((item) => (
+          <NavLink
+            key={item.title}
+            to={item.path}
+            className={({ isActive }) =>
+              cn(
+                "flex flex-col items-center justify-center text-xs",
+                isActive ? "text-white" : "text-gray-300"
+              )
+            }
+          >
+            <item.icon className="h-5 w-5 mb-1" />
+            {item.title}
+          </NavLink>
+        ))}
+      </nav>
+    </div>
+
   )
 }
