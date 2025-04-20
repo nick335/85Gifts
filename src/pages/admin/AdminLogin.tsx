@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import background from "../assets/icons/loginbg.png";
-import logo from "../assets/logo.png";
+import background from "../../assets/icons/loginbg.png";
+import logo from "../../assets/logo.png";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import eyeOpen from "../assets/icons/Eye.png";
-import eyeClosed from "../assets/icons/Eye.png";
+import eyeOpen from "../../assets/icons/Eye.png";
+import eyeClosed from "../../assets/icons/Eye.png";
 
-function AdminLogin() {
+function AdminLogin() { 
   const [step, setStep] = useState<"email" | "password">("email");
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -18,7 +18,7 @@ function AdminLogin() {
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    return emailRegex.test(email)
   };
 
   const handleEmailSubmit = () => {

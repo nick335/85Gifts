@@ -11,10 +11,19 @@ import Login from "./pages/LoginPage";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
-import AdminLogin from "./pages/AdminLogin";
-import AdminReset from "./pages/AdminReset";
+import AdminLogin from "./pages/admin/AdminLogin.tsx";
+import AdminReset from "./pages/admin/AdminReset.tsx";
 import CustomerResetPassword from "./pages/CustomerResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
+import AdminDashBoard from "./pages/admin/AdimDashBoard.tsx";
+import AdminLayout from "./layouts/AdminLayout";
+// import AdminLayout from "./layouts/AdminLayout.tsx";
+import Transactions from "./pages/admin/Transactions.tsx";
+import Users from "./pages/admin/Users.tsx";
+import Orders from "./pages/admin/Orders.tsx";
+
+
+
 
 function App() {
   return (
@@ -38,8 +47,13 @@ function App() {
         <Route path="/admin/login" element={<AdminLogin />} />
 
         <Route path="/admin/reset" element={<AdminReset />} />
-
+        <Route element={<AdminLayout/>}>
+        <Route path="/adminpage" element={<AdminDashBoard/>} />
+        <Route path="/users"  element={<Users/>}/>
+        <Route path="/orders" element={<Orders/>}/>
+        <Route path="/transactions" element={<Transactions/>}/>
         
+        </Route> 
         <Route path="/reset-password" element={<CustomerResetPassword />} />
 
       </Routes>
