@@ -145,7 +145,7 @@ export default function Gifts() {
                     className={`px-3 py-1 rounded-md ${currentPage === i + 1 ? 'bg-[#072AC8] text-[#fff] font-semibold' : "hover:bg-gray-200"}`}
                   >
                     {i + 1}
-                  </PaginationLink> 
+                  </PaginationLink>
                 </PaginationItem>
               ))}
               <PaginationItem>
@@ -159,7 +159,7 @@ export default function Gifts() {
             </PaginationContent>
           </Pagination>
         </div>
-        <MobileBottomNav activeTab="gifts" />
+        <MobileBottomNav activeTab="Gifts" />
       </div>
     </>
   );
