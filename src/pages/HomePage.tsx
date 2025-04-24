@@ -154,7 +154,7 @@ export default function HomePage() {
           </div>
         </div>
         {/* Footer */}
-        <MobileBottomNav activeTab="home" />
+        <MobileBottomNav activeTab="HomePage" />
         <div className="hidden lg:block mb-3">
           <p>
             Need help? Check our{" "}
