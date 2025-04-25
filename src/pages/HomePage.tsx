@@ -5,7 +5,7 @@ import { GoBell } from "react-icons/go";
 import { GoChevronDown } from "react-icons/go";
 import promo from "../assets/promo.svg";
 import perfumes from "../assets/fav-perfumes.svg";
-import avatar from "../assets/avatar-holder-img.svg"
+import avatar from "../assets/avatar-holder-img.svg";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import {
@@ -17,34 +17,37 @@ import {
 import { Button } from "@/components/ui/button";
 import Categories from "@/components/Categories";
 import Bestselling from "@/components/Bestselling";
+import MobileBottomNav from "@/components/MobileNavTab";
 
 export default function HomePage() {
   return (
     <>
       <div className="w-[100%] h-[100%] pt-[15px] pl-[15px] pr-[10px] bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] ">
         {/* Header */}
-        <div className=" w-[100%] flex justify-end items-center gap-[15rem]">
+        <div className=" w-[100%] flex justify-end gap-[2.5rem] pr-[5px] lg:pr-[0] lg:items-center lg:gap-[15rem]">
           <div>
             <SearchBarHome />
           </div>
-          <div className="flex gap-3">
-            <button className="bg-[#fff] border rounded-[50%] py-[8px] px-[8px]">
+          <div className="flex gap-1 lg:gap-2">
+            <button className="hidden lg:block bg-[#fff] border rounded-[50%] py-[8px] px-[8px]">
               <IoMdCart />
             </button>
             <button className="bg-[#fff] border rounded-[50%] py-[8px] px-[8px]">
               <GoBell />
             </button>
-            <Avatar>
-            <AvatarImage src={avatar} />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+            <div className="hidden lg:flex">
+              <Avatar>
+                <AvatarImage src={avatar} />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </div>
           </div>
         </div>
         {/* Main */}
-        <div className="flex justify-between">
-          {/* Home-left-div */}
+        <div className="flex lg:flex lg:justify-between">
+          {/* main-top*/}
           <div className="w-[65%]">
-            <div className="ml-[35px] mt-[35px] relative flex justify-start gap-5">
+            <div className="lg:ml-[35px] mt-[35px] relative flex justify-start gap-2 lg:gap-5">
               <p className="flex text-lg font-semibold">
                 Lagos
                 <span>
@@ -58,89 +61,101 @@ export default function HomePage() {
                 </span>
               </p>
             </div>
-            <div className="mt-[20px]">
-              <p className="text-lg font-semibold text-start">
+            <div className="hidden lg:mt-[20px] lg:block">
+              <p className="text-lg font-semibold text-start ">
                 Find the best gift for your loved ones
               </p>
             </div>
-            <div className="flex gap-3 items-center">
-              <div className="relative mt-[10px]">
-                <Card className="w-[210px] h-[60px]">
-                  <CardHeader className="pl-[12px]">
-                    <CardTitle className="absolute top-[12px] text-start">
-                      Event
-                    </CardTitle>
-                    <CardDescription className="text-start">
-                      Birthday, Anniversary, etc
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+            <div className="flex gap-3 items-center mb-[15px] mt-[25px] lg:mb-0">
+              <div className="hidden relative mt-[10px] lg:flex">
+                <button>
+                  <Card className="w-[180px] h-[70px] lg:w-[210px] lg:h-[60px]">
+                    <CardHeader className="pl-[12px]">
+                      <CardTitle className="absolute top-[12px] text-start">
+                        Event
+                      </CardTitle>
+                      <CardDescription className="text-start">
+                        Birthday, Anniversary, etc
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </button>
               </div>
               <div className="relative mt-[10px]">
-                <Card className="w-[210px] h-[60px]">
-                  <CardHeader className="pl-[12px]">
-                    <CardTitle className="absolute top-[12px] text-start">
-                      Gift Type
-                    </CardTitle>
-                    <CardDescription className="text-start">
-                      Cakes, Perfumes, etc
-                    </CardDescription>
-                  </CardHeader>
-                </Card>
+                <button>
+                  <Card className="w-[180px] h-[65px] lg:w-[210px] lg:h-[60px]">
+                    <CardHeader className="pl-[12px]">
+                      <CardTitle className="absolute top-[12px] text-start">
+                        Gift Type
+                      </CardTitle>
+                      <CardDescription className="text-start">
+                        Cakes, Perfumes, etc
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </button>
               </div>
               <Link to="./Gifts">
-                <Button className=" bg-[#072AC8] py-[27px] px-[40px] mt-[5px] hover:bg-[#072AC8] text-md font-semibold">
+                <Button className="bg-[#072AC8] py-[30px] px-[47px] mt-[10px] lg:py-[27px] lg:px-[40px] lg:mt-[10px] hover:bg-[#072AC8] text-md rounded-lg font-semibold">
                   Find gifts
                 </Button>
               </Link>
             </div>
-            {/* Categories section */}
+          </div>
+          {/* Promo-card */}
+          <div className=" w-[34%] mt-[10px] lg:mt-[20px]">
+            <img
+              src={promo}
+              alt="Friendship day promo discount"
+              className="w-full h-[80px] lg:h-auto lg:w-auto"
+            />
+          </div>
+        </div>
+        <div className="lg:flex lg:justify-between">
+          {/* Main-left */}
+          <div className="w-full ml-[12px] lg:ml-[0] lg:w-[64%]">
             <Categories />
             <Bestselling />
           </div>
-          {/* Home-right-div */}
-          <div className="w-[34%]">
-            <div className="mt-[20px]">
-              <img src={promo} alt="" />
-            </div>
-            <div className="mt-[30px] bg-[#fff] h-[450px] rounded-lg shadow-[1px_1px_0_#041C8540]">
-              <Button className="bg-[#E8E5E5] text-[#000] font-semibold hover:bg-[#E8E5E5] px-[80px] mt-[15px]">
-                Favourite
-              </Button>
-              <div className="mt-[30px] ml-[15px] flex gap-5">
-                <img
-                  src={perfumes}
-                  alt="favourite perfume brands"
-                  className="w-25 h-25"
-                />
-                <div className="flex flex-col gap-2 mt-5">
-                  <p className="font-semibold">Hamper pack</p>
-                  <p>(for him)</p>
-                  <p>&#8358;25,000</p>
-                </div>
+          {/* Main-right */}
+          <div className="mb-[85px] lg:mb-0 lg:w-[34%] lg:mt-[50px] bg-[#fff] h-[455px] rounded-lg shadow-[1px_1px_0_#041C8540]">
+            <Button className="bg-[#E8E5E5] text-[#000] font-semibold hover:bg-[#E8E5E5] px-[80px] mt-[15px] w-[90%]">
+              Favourite
+            </Button>
+            <div className="mt-[30px] ml-[15px] flex gap-5">
+              <img
+                src={perfumes}
+                alt="favourite perfume brands"
+                className="w-25 h-25"
+              />
+              <div className="flex flex-col gap-2 mt-5">
+                <p className="font-semibold">Hamper pack</p>
+                <p>(for him)</p>
+                <p>&#8358;25,000</p>
               </div>
-              <div className="mt-[30px] ml-[15px] flex gap-5">
-                <img
-                  src={perfumes}
-                  alt="favourite perfume brands"
-                  className="w-25 h-25"
-                />
-                <div className="flex flex-col gap-2 mt-5">
-                  <p className="font-semibold">Wines</p>
-                  <p>
-                    Jacob's <br /> creek
-                  </p>
-                  <p>&#8358;13,000</p>
-                </div>
-              </div>
-              <Button className="bg-[#072AC8] mt-10 hover:bg-[#B5BCFF] hover:text-[#000] hover:font-semibold px-[110px] ">
-                Buy Now
-              </Button>
             </div>
+            <div className="mt-[30px] ml-[15px] flex gap-5">
+              <img
+                src={perfumes}
+                alt="favourite perfume brands"
+                className="w-25 h-25"
+              />
+              <div className="flex flex-col gap-2 mt-5">
+                <p className="font-semibold">Wines</p>
+                <p>
+                  Jacob's <br /> creek
+                </p>
+                <p>&#8358;13,000</p>
+              </div>
+            </div>
+            <Button className="bg-[#072AC8] mt-10 hover:bg-[#B5BCFF] hover:text-[#000] hover:font-semibold px-[110px] w-[95%]">
+              Buy Now
+            </Button>
           </div>
         </div>
         {/* Footer */}
-        <div className="mb-3">
+        <MobileBottomNav activeTab="home" />
+        <div className="hidden lg:block mb-3">
           <p>
             Need help? Check our{" "}
             <Link to="" className="text-[#072AC8] underline">
