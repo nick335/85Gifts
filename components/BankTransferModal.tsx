@@ -1,5 +1,3 @@
-"use client"
-
 import type React from "react"
 
 import { useState, useRef } from "react"
@@ -144,19 +142,19 @@ export default function BankTransferModal({
                                 <h3 className="font-medium text-blue-800 mb-2">Transfer to this account</h3>
                                 <div className="grid grid-cols-2 gap-2 text-sm">
                                     <div className="text-gray-600">Bank Name:</div>
-                                    <div className="font-medium">{accountDetails.bankName}</div>
+                                    <div className="font-medium text-black">{accountDetails.bankName}</div>
 
                                     <div className="text-gray-600">Account Number:</div>
-                                    <div className="font-medium">{accountDetails.accountNumber}</div>
+                                    <div className="font-medium text-black">{accountDetails.accountNumber}</div>
 
                                     <div className="text-gray-600">Account Name:</div>
-                                    <div className="font-medium">{accountDetails.accountName}</div>
+                                    <div className="font-medium text-black">{accountDetails.accountName}</div>
 
                                     <div className="text-gray-600">Branch Code:</div>
-                                    <div className="font-medium">{accountDetails.branchCode}</div>
+                                    <div className="font-medium text-black">{accountDetails.branchCode}</div>
 
                                     <div className="text-gray-600">Reference:</div>
-                                    <div className="font-medium">{accountDetails.reference}</div>
+                                    <div className="font-medium text-black">{accountDetails.reference}</div>
                                 </div>
                             </div>
 
@@ -172,7 +170,7 @@ export default function BankTransferModal({
                                         id="amount"
                                         value={amount}
                                         onChange={(e) => setAmount(Number(e.target.value))}
-                                        className={`w-full px-3 py-2 border rounded-md ${errors.amount ? "border-red-500" : "border-gray-300"}`}
+                                        className={`w-full px-3 py-2 border text-black rounded-md ${errors.amount ? "border-red-500" : "border-gray-300"}`}
                                         placeholder="Enter amount"
                                     />
                                     {errors.amount && (
@@ -193,7 +191,7 @@ export default function BankTransferModal({
                                         id="bankName"
                                         value={bankName}
                                         onChange={(e) => setBankName(e.target.value)}
-                                        className={`w-full px-3 py-2 border rounded-md ${errors.bankName ? "border-red-500" : "border-gray-300"}`}
+                                        className={`w-full px-3 py-2 border text-black rounded-md ${errors.bankName ? "border-red-500" : "border-gray-300"}`}
                                         placeholder="Enter your bank name"
                                     />
                                     {errors.bankName && (

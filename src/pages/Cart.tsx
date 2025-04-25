@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import cart from "../assets/icons/mdi_cart.png";
 import checkout from "../assets/icons/mdi_account-payment.png";
 import { MdKeyboardDoubleArrowRight } from "react-icons/md";
@@ -7,50 +8,75 @@ import { HiMinusSm } from "react-icons/hi";
 import { IoSend } from "react-icons/io5";
 // import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
 import MobileBottomNav from "@/components/MobileNavTab";
-import BankTransferModal from "@/components/BankTransferModal";
 
 export default function Cart() {
-  // This should come from your backend/state management eventually
+  const navigate = useNavigate();
   const cartItems = [
     {
-      id: 1,
+      id: "67e26cb57ed09e1afb58c32e",
       name: "Lilium Flowers",
       category: "Flowers",
       price: 13000,
       quantity: 1,
       image: order
     },
-    {
-      id: 2,
-      name: "Lilium Flowers",
-      category: "Flowers",
-      price: 13000,
-      quantity: 1,
-      image: order
-    }
+    // {
+    //   id: "67e26cb57ed09e1afb58c32f",
+    //   name: "Lilium Flowers",
+    //   category: "Flowers",
+    //   price: 13000,
+    //   quantity: 1,
+    //   image: order
+    // }
   ];
+
+
 
   const subtotal = 13000;
   const vat = 500;
   const total = subtotal + vat;
 
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  // Example invoice data
-  const invoiceData = {
-    invoiceNumber: "INV-2023-001",
-    amount: 1250.0,
-    // other invoice details
-  }
+  const handleCreateInvoice = async () => {
 
-  const handlePaymentSubmit = (formData: FormData) => {
-    // Handle the form submission
-    console.log("Payment submitted")
+    const invoicePayload = {
+      items: cartItems.map(item => ({
+        giftId: item.id.toString(),  // make sure it's a string
+        quantity: item.quantity
+      })),
+      vat: vat // this is already declared in your component
+    };
 
-    // You would typically send this to your backend
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`)
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      console.error("No token found. Please login.");
+        return;
+    }
+
+    try {
+      const response = await axios.post(
+        "/api/api/user/create-invoice",
+        invoicePayload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      
+      console.log("Invoice created:", response.data);
+      navigate("/Invoice", { state: { invoiceData: response.data,  cartItems: cartItems } });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("Error creating invoice:", error.response.data);
+      } else {
+        console.error("Error creating invoice:", error);
+      }
     }
   }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] p-4 md:p-8 pb-24 md:pb-8">
@@ -153,23 +179,14 @@ export default function Cart() {
                   <span>₦{total.toLocaleString()}</span>
                 </div>
 
-                <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition"
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  Proceed to Checkout
-                </button>
+                  <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition" onClick={handleCreateInvoice}
+                  >
+                    Proceed to Checkout
+                  </button>
               </div>
             </div>
           </div>
         </div>
-        {/* Bank Transfer Modal */}
-        <BankTransferModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onSubmit={handlePaymentSubmit}
-          invoiceAmount={invoiceData.amount}
-          invoiceNumber={invoiceData.invoiceNumber}
-        />
       </div>
 
       {/* Help Section */}
