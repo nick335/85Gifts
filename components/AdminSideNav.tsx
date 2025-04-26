@@ -1,4 +1,4 @@
-import { Home,  Coins, LogOut, Settings, Users, ListOrdered } from "lucide-react"
+import { Home,  Coins, Gift, LogOut, Settings, Users, ListOrdered } from "lucide-react"
 // import { RiShoppingBagLine } from "react-icons/ri";
 import { Link } from "react-router-dom"
 import { NavLink } from "react-router-dom";
@@ -19,6 +19,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 
+
 // Menu items.
 const items = [
   {
@@ -35,6 +36,11 @@ const items = [
     title: 'transactions',
     path: "/transactions",
     icon: Coins,
+  },
+  {
+   title: "gifts",
+   path: "/admingiftspage",
+   icon: Gift,
   },
   {
     title: "orders",
