@@ -15,6 +15,7 @@ import AdminReset from "./pages/AdminReset";
 import CustomerResetPassword from "./pages/CustomerResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
 import ErrorPage from "./pages/ErrorPage";
+import Invoice from "./pages/ViewInvoice";
 import Orders from "./pages/Orders";
 
 // Protected Route Wrapper
@@ -33,6 +34,7 @@ function App() {
           <Route path="/Gifts" element={<ProtectedRoute><Gifts /></ProtectedRoute>} />
           <Route path="/Messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
           <Route path="/Cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
+          <Route path="/Invoice" element={<ProtectedRoute><Invoice /></ProtectedRoute>} />
           <Route path="/OrderHistory" element={<ProtectedRoute><OrderHistory /></ProtectedRoute>} />
           <Route path="/Orders" element={<ProtectedRoute><Orders /></ProtectedRoute>} />
           <Route path="/Settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />

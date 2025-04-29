@@ -38,7 +38,7 @@ export default function CustomerResetPassword() {
 
       if (data?.data?.authToken) {
         localStorage.setItem("authToken", data.data.authToken); // Store auth token
-        console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
+        // console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
       } else {
         throw new Error("Auth token not received.");
       }

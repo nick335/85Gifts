@@ -44,11 +44,11 @@ export default function SuccessModal({ isOpen, onClose, invoiceNumber, amount }:
                     <div className="bg-gray-50 w-full rounded-lg p-4 mb-6">
                         <div className="flex justify-between mb-2">
                             <span className="text-gray-600">Invoice Number:</span>
-                            <span className="font-medium">{invoiceNumber}</span>
+                            <span className="font-medium text-black">{invoiceNumber}</span>
                         </div>
                         <div className="flex justify-between">
                             <span className="text-gray-600">Amount:</span>
-                            <span className="font-medium">${amount.toFixed(2)}</span>
+                            <span className="font-medium text-black">${amount.toFixed(2)}</span>
                         </div>
                     </div>
 
