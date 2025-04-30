@@ -24,6 +24,7 @@ export default function Signup() {
     confirmPassword?: string;
   }>({});
   const [valid, setValid] = useState(true);
+  console.log(valid)
   const [serverError, setServerError] = useState<string | null>(null);
   const [emailExistsError, setEmailExistsError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
