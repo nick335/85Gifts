@@ -10,8 +10,8 @@ import Gifts from "./pages/Gifts";
 import Login from "./pages/LoginPage";
 import Settings from "./pages/Settings";
 import Signup from "./pages/Signup";
-import AdminLogin from "./pages/AdminLogin";
-import AdminReset from "./pages/AdminReset";
+import AdminLogin from "./pages/admin/AdminLogin.tsx";
+import AdminReset from "./pages/admin/AdminReset.tsx";
 import CustomerResetPassword from "./pages/CustomerResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
 import ErrorPage from "./pages/ErrorPage";
@@ -46,6 +46,7 @@ function App() {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/VerifyEmail" element={<VerifyEmail />} />
         <Route path="/reset-password" element={<CustomerResetPassword />} />
+        <Route path="/invoice" element={<Invoice />} />
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />

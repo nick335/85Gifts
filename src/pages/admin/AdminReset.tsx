@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import logo from "../assets/logo.png";
-import background from "../assets/icons/loginbg.png";
-import eyeOpen from "../assets/icons/Eye.png";
-import eyeClosed from "../assets/icons/Eye.png";
+import logo from "../../assets/logo.png";
+import background from "../../assets/icons/loginbg.png";
+// import eyeOpen from "../../assets/icons/Eye.png";
+import eyeOpen from "../../assets/icons/Eye.png";
+import eyeClosed from "../../assets/icons/Eye.png";
 
 export default function CustomerResetPassword() {
   const navigate = useNavigate();
