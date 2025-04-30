@@ -68,6 +68,7 @@ export default function LandingPage() {
           {/* Friendship Offer Section */}
           <FriendshipOfferSection />
 
+
           <Services />
 
           <CustomerRatings />
