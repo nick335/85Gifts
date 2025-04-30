@@ -16,6 +16,7 @@ function Login() {
   const [serverError, setServerError] = useState("");
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -23,21 +24,25 @@ function Login() {
   };
 
   const handleEmailSubmit = () => {
+    setIsLoading(true);
     setValidationErrors([]);
     if (!email) {
       setValidationErrors(["Email is required"]);
+      setIsLoading(true);
       return;
     }
     if (!validateEmail(email)) {
       setValidationErrors(["Please enter a valid email address"]);
+      setIsLoading(false);
       return;
     }
     setStep("password");
+    setIsLoading(false);
   };
-
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     setServerError("");
     setValidationErrors([]);
 
@@ -60,17 +65,17 @@ function Login() {
         } else {
           setServerError("Something went wrong. Please try again.");
         }
+      }).finally(() => {
+        setIsLoading(false);
       });
   };
-
 
   const handleGoogleSignIn = async () => {
     try {
       const response = await axios.get("/api/user/auth0/signin", {
-        withCredentials: true, // Ensures cookies (if any) are included
+        withCredentials: true,
       });
 
-      // If the backend provides a redirect URL, navigate to it
       if (response.data.redirectUrl) {
         window.location.href = response.data.redirectUrl;
       } else {
@@ -81,84 +86,180 @@ function Login() {
     }
   };
 
-
   return (
-    <div className="flex flex-col-reverse md:flex-row h-screen">
-      <div className="w-full md:w-1/2 flex items-center justify-center bg-white p-6 sm:p-8">
-        <div className="max-w-sm w-full">
-          <Link to="/" className="absolute top-6 left-6 md:top-10 md:left-10">
-            <img src={logo} alt="Logo" className="w-[71px] h-[43px]" />
-          </Link>
-          <h2 className="text-xl font-semibold mb-4 -mt-20">Welcome back! Please enter your details</h2>
+    <div className="min-h-screen bg-gray-50">
+      <div className="flex flex-col lg:flex-row">
+        {/* Left Side - Form */}
+        <div className="w-full lg:w-1/2 px-6 py-12 sm:px-12 lg:px-24 flex flex-col items-center justify-center">
+          <div className="max-w-md w-full">
+            <Link to="/" className="mb-8 block">
+              <img src={logo} alt="Logo" className="w-16" />
+            </Link>
 
-          {step === "email" ? (
-            <>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back</h1>
+            <p className="text-gray-600 mb-8">Please enter your details to sign in</p>
 
-              <input
-                type="email"
-                placeholder="johndoe.pal@gmail.com"
-                className="w-full p-3 border rounded mb-5"
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              {validationErrors.map((error, index) => (
-                <p key={index} className="text-red-500 text-sm">{error}</p>
-              ))}
-              <button onClick={handleEmailSubmit} className="w-full bg-black text-white p-3 rounded mb-5 transition duration-300 hover:bg-gray-800">
-                Continue with email
-              </button>
-              <button onClick={handleGoogleSignIn} className="w-full border p-3 mt-1 rounded flex items-center justify-center transition duration-300 hover:bg-[#B5B8FF]">
-                <img src={google} alt="Google" className="w-5 h-5 mr-2" />
-                Continue with Google
-              </button>
-              {/* <p className="mt-4 text-sm text-gray-600">
-                <Link to="/reset-password" className="text-red-600">Forgot Password?</Link>
-              </p> */}
-            </>
-          ) : (
-            <form onSubmit={handleLogin}>
+            {step === "email" ? (
+              <div className="space-y-6">
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                    Email Address
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    placeholder="johndoe.pal@gmail.com"
+                    className={`w-full px-4 py-3 rounded-lg border ${validationErrors.length ? 'border-red-500' : 'border-gray-300'
+                      } focus:ring-2 focus:ring-black focus:border-black outline-none transition`}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  {validationErrors.map((error, index) => (
+                    <p key={index} className="mt-1 text-sm text-red-600">{error}</p>
+                  ))}
+                </div>
 
-              <div className="relative w-full">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="********"
-                  className="w-full p-3 border rounded mb-1 pr-12"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <img
-                  src={showPassword ? eyeOpen : eyeClosed}
-                  alt="Toggle Password Visibility"
-                  className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer w-5 h-5"
-                  onClick={() => setShowPassword(!showPassword)}
-                />
+                <button
+                  onClick={handleEmailSubmit}
+                  disabled={isLoading}
+                  className={`w-full bg-black text-white font-medium py-3 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 ${isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-800'
+                    }`}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Processing...
+                    </div>
+                  ) : (
+                    "Continue with email"
+                  )}
+                </button>
+
+                <div className="relative mt-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-gray-50 text-gray-500">Or continue with</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleGoogleSignIn}
+                  className="w-full inline-flex justify-center items-center gap-2 py-3 px-4 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
+                >
+                  <img src={google} alt="Google" className="w-5 h-5" />
+                  Continue with Google
+                </button>
               </div>
-              {validationErrors.map((error, index) => (
-                <p key={index} className="text-red-500 text-sm">{error}</p>
-              ))}
-              {serverError && <p className="text-red-500 text-sm">{serverError}</p>}
-              <button type="submit" className="w-full bg-black text-white p-3 mt-2 rounded mb-3 transition duration-300 hover:bg-gray-800">
-                Sign In
-              </button>
-              <button onClick={handleGoogleSignIn} className="w-full border p-3 rounded flex items-center justify-center transition duration-300 hover:bg-[#B5B8FF]">
-                <img src={google} alt="Google" className="w-5 h-5 mr-2" />
-                Continue with Google
-              </button>
-              <p className="mt-4 text-sm text-gray-600">
-                <Link to="/reset-password" className="text-red-600 hover:text-red-500">Forgot Password?</Link>
-              </p>
-              <p className="mt-4 text-sm text-gray-600">
-                Don’t have an account? <Link to="/signup" className="text-[#072AC8]">Sign up</Link>
-              </p>
-              <button onClick={() => setStep("email")} className="text-[#072AC8] text-sm mt-4">
-                Back to email
-              </button>
+            ) : (
+              <form onSubmit={handleLogin} className="space-y-6">
+                <div>
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      id="password"
+                      placeholder="••••••••"
+                      className={`w-full px-4 py-3 rounded-lg border ${validationErrors.length || serverError ? 'border-red-500' : 'border-gray-300'
+                        } focus:ring-2 focus:ring-black focus:border-black outline-none transition pr-10`}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
+                      onClick={() => setShowPassword(!showPassword)}
+                    >
+                      <img
+                        src={showPassword ? eyeOpen : eyeClosed}
+                        alt="Toggle Password Visibility"
+                        className="w-5 h-5 text-gray-500"
+                      />
+                    </button>
+                  </div>
+                  {validationErrors.map((error, index) => (
+                    <p key={index} className="mt-1 text-sm text-red-600">{error}</p>
+                  ))}
+                  {serverError && <p className="mt-1 text-sm text-red-600">{serverError}</p>}
+                </div>
 
-            </form>
-          )}
+                <div className="flex justify-end">
+                  <Link
+                    to="/reset-password"
+                    className="text-sm text-red-600 hover:text-red-500 font-medium"
+                  >
+                    Forgot password?
+                  </Link>
+                </div>
+
+                {/* Enhanced Sign In Button with Loading State */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`w-full bg-black text-white font-medium py-3 px-4 rounded-lg transition duration-200 focus:outline-none focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 ${isLoading ? 'opacity-70 cursor-not-allowed' : 'hover:bg-gray-800'
+                    }`}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Signing in...
+                    </div>
+                  ) : (
+                    "Sign In"
+                  )}
+                </button>
+
+                <div className="relative mt-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray-300"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-gray-50 text-gray-500">Or continue with</span>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleGoogleSignIn}
+                  className="w-full inline-flex justify-center items-center gap-2 py-3 px-4 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
+                >
+                  <img src={google} alt="Google" className="w-5 h-5" />
+                  Continue with Google
+                </button>
+
+                <div className="text-center text-sm text-gray-600">
+                  <p className="mt-4">
+                    Don't have an account?{' '}
+                    <Link to="/signup" className="text-[#072AC8] font-medium hover:text-[#072ac8d0]">
+                      Sign up
+                    </Link>
+                  </p>
+                  <button
+                    onClick={() => setStep("email")}
+                    className="text-[#072AC8] font-medium hover:text-[#072ac8d0] mt-2"
+                  >
+                    Back to email
+                  </button>
+                </div>
+              </form>
+            )}
+          </div>
         </div>
-      </div>
 
-      <div className="w-full md:w-1/2 bg-gray-100 flex items-center justify-center relative">
-        <img src={background} alt="Decorative Background" className="absolute w-full h-full object-cover" />
+        {/* Right Side - Image */}
+        <div className="hidden lg:block lg:w-1/2 bg-gray-100 relative">
+          <img
+            src={background}
+            alt="Decorative Background"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
       </div>
     </div>
   );
