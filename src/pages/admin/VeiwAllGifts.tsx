@@ -33,50 +33,6 @@ import axios from 'axios';
 
 
 
-// Sample gift data - in a real app, this would come from an API
-// const initialGifts = [
-//   {
-//     id: "1",
-//     name: "Luxury Gift Basket",
-//     description: "A premium gift basket with gourmet treats and fine wines.",
-//     price: 149.99,
-//     imageUrl: "/placeholder.svg?height=100&width=100",
-//     inStock: true,
-//   },
-//   {
-//     id: "2",
-//     name: "Birthday Gift Box",
-//     description: "Festive birthday box with assorted treats and small gifts.",
-//     price: 49.99,
-//     imageUrl: "/placeholder.svg?height=100&width=100",
-//     inStock: true,
-//   },
-//   {
-//     id: "3",
-//     name: "Anniversary Gift Set",
-//     description: "Romantic gift set for couples celebrating their special day.",
-//     price: 89.99,
-//     imageUrl: "/placeholder.svg?height=100&width=100",
-//     inStock: true,
-//   },
-//   {
-//     id: "4",
-//     name: "Thank You Gift Box",
-//     description: "Express gratitude with this thoughtful collection of items.",
-//     price: 39.99,
-//     imageUrl: "/placeholder.svg?height=100&width=100",
-//     inStock: false,
-//   },
-//   {
-//     id: "5",
-//     name: "Corporate Gift Package",
-//     description: "Professional gift package for business partners and clients.",
-//     price: 129.99,
-//     imageUrl: "/placeholder.svg?height=100&width=100",
-//     inStock: true,
-//   },
-// ]
-
 type Gift = {
   id: string
   name: string
@@ -87,9 +43,9 @@ type Gift = {
   inStock: boolean
 }
 
-interface ApiResponse{
-  error: string;
-}
+// interface ApiResponse{
+//   error: string;
+// }
 
 export default function AdminGiftsPage() {
   const { toast } = useToast()
@@ -99,7 +55,7 @@ export default function AdminGiftsPage() {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false)
   const [currentGift, setCurrentGift] = useState<Gift | null>(null)
   const [loading, setLoading ] = useState(true);
-const [error, setError ] = useState<string | null>();
+const [error, setError ] = useState<string | null>(null);
 const [formData, setFormData] = useState<Omit<Gift, "id">>({
     name: "",
     // description: "",
@@ -115,42 +71,29 @@ const [formData, setFormData] = useState<Omit<Gift, "id">>({
   useEffect(() => {
    const fetchAllGifts = async()=> {
       try{
-        // const token = localStorage.getItem("authToken");
+        const token = localStorage.getItem("authToken");
           setLoading(true);
           setError(null)
         //I decided to use this to test the gift page behavior 
-        const response  = await axios.get("data.json");
-        setGifts(response.data);
-        }catch(error){
-        if (error instanceof Error){
-        setError(error.message)
-        }else{
-        console.error("Failed to fetch data:", error);
-        }
-      }finally{
-       setLoading(false);
-      }
-       };
-       fetchAllGifts();
-    },[]);
+  const response = await axios.get("api/gift/all",{
+  headers:{
 
-  // const response = await axios.get("api/api/gift/all",{
-  //        headers:{
-  //
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       });
-  //       console.log("Gift API Response", response.data);
-  //       setGifts(response.data.message);
-  //     }catch (error){
-  //       console.log("Error fetching gifts", error);
-  //     }finally{
-  //       setLoading(false)
-  //     }
-  //   };
-  //  fetchAllGifts();
-  // }, []);
-  //
+  Authorization: `Bearer ${token}`,
+  },
+  });
+  console.log("Gift API Response", response.data);
+  // setGifts(response.data.message);
+  const raw = response.data?.message;
+  setGifts(Array.isArray(raw) ? raw : []);
+      }catch (error){
+  console.log("Error fetching gifts", error);
+  }finally{
+  setLoading(false)
+  }
+  };
+  fetchAllGifts();
+  }, []);
+
 
   // Handle opening the add gift form
   const handleAddGift = () => {
@@ -262,7 +205,7 @@ const [formData, setFormData] = useState<Omit<Gift, "id">>({
 
   return (
     <div className="mt-6">
-      { loading ? (<p className="text-center col-span-full mt-10 text-lg">loading gifts...</p>):  gifts.length > 0 ?(
+          { loading ? (<p className="text-center col-span-full mt-10 text-lg">loading gifts...</p>): gifts.length > 0 ? (
           <Card>
         <CardHeader className="flex flex-row items-center">
           <div className="grid gap-1">
