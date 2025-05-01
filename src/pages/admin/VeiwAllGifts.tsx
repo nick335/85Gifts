@@ -32,7 +32,6 @@ import { useToast } from "@/hooks/use-toast"
 import axios from 'axios';
 
 
-
 type Gift = {
   id: string
   name: string
@@ -226,6 +225,7 @@ const [formData, setFormData] = useState<Omit<Gift, "id">>({
                 <TableHead className="text-right font-bold">Price</TableHead>
                 <TableHead className="text-center font-bold">Status</TableHead>
                 <TableHead className="text-right font-bold">Actions</TableHead>
+                {/* <TableHead className="text-right font-bold"> </TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
