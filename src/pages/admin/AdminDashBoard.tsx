@@ -12,12 +12,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import OrdersTab from "./Orders"
 import UsersTab from "./Users"
 import TransactionsTab from "./Transactions"
-import { useIsMobile } from "@/hooks/use-mobile"
 import Areachart from "./AreaChart"
 
 
 export default function Dashboard() {
-  const isMobile = useIsMobile()
   const [activeTab, setActiveTab] = useState("orders") // Add this line
 
   return (

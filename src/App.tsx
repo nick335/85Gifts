@@ -15,13 +15,12 @@ import AdminLogin from "./pages/admin/AdminLogin.tsx";
 import AdminReset from "./pages/admin/AdminReset.tsx";
 import CustomerResetPassword from "./pages/CustomerResetPassword";
 import VerifyEmail from "./pages/VerifyEmail";
-// import AdminDashBoard from "./pages/admin/AdimDashBoard.tsx";
 import AdminDashBoard from "./pages/admin/AdminDashBoard.tsx"
 import AdminLayout from "./layouts/AdminLayout";
-// import AdminLayout from "./layouts/AdminLayout.tsx";
 import Transactions from "./pages/admin/Transactions.tsx";
 import Users from "./pages/admin/Users.tsx";
 import Orders from "./pages/admin/Orders.tsx";
+import AdminGiftsPage from "./pages/admin/VeiwAllGifts.tsx";
 
 
 
@@ -52,6 +51,7 @@ function App() {
         <Route path="/adminpage" element={<AdminDashBoard/>} />
         <Route path="/users"  element={<Users/>}/>
         <Route path="/orders" element={<Orders/>}/>
+        <Route path="/admingiftspage" element={<AdminGiftsPage/>}/>
         <Route path="/transactions" element={<Transactions/>}/>
         
         </Route> 
