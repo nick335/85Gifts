@@ -87,7 +87,7 @@ export default function Cart() {
     <div className="flex flex-col mx-auto w-screen bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] absolute p-5">
       <div className="bg-white rounded-2xl p-5">
         <div className="bg-[#E8E5E5] rounded-2xl p-3 flex justify-center items-center mb-5">
-          <div className="flex gap-10">
+          <div className="flex gap-10 flex-wrap justify-center">
             <div className="flex justify-center items-center gap-2">
               <img src={cartIcon} alt="cart" className="bg-white p-3 rounded-full" />
               <h2 className="text-[18px] font-[600]">Cart</h2>
@@ -101,19 +101,19 @@ export default function Cart() {
             </div>
           </div>
         </div>
-        <div className="flex gap-10">
-          <div className="flex flex-col w-[60%]">
-            <div className="font-medium text-xl flex justify-between w-[50%] ml-8 mb-1">
+        <div className="flex flex-col lg:flex-row gap-10">
+          <div className="flex flex-col w-full lg:w-[60%]">
+            <div className="font-medium text-xl flex justify-between w-full lg:w-[50%] ml-0 lg:ml-8 mb-1">
               <h2>Product</h2>
               <h2>Total</h2>
             </div>
-            <hr className="w-[53%] ml-5 rounded-sm mb-2" />
+            <hr className="w-full lg:w-[53%] ml-0 lg:ml-5 rounded-sm mb-2" />
             {cartItems.length === 0 ? (
               <p className="text-center text-lg font-semibold mt-10">Your cart is empty.</p>
             ) : (
               cartItems.map((item) => (
-                <div key={item.id} className="bg-green-500 flex items-center justify-between p-2 mb-3 rounded">
-                  <div className="flex items-center gap-4">
+                <div key={item.id} className="bg-green-500 flex flex-col sm:flex-row items-center justify-between p-2 mb-3 rounded">
+                  <div className="flex items-center gap-4 mb-3 sm:mb-0">
                     <img
                       src={item.image}
                       alt={item.name}
@@ -155,7 +155,7 @@ export default function Cart() {
               ))
             )}
           </div>
-          <div className="w-[35%] bg-[#E8E5E5] rounded-2xl p-5">
+          <div className="w-full lg:w-[35%] bg-[#E8E5E5] rounded-2xl p-5">
             <h2 className="font-medium text-2xl mb-5">Order Summary</h2>
             <div className="flex justify-between mb-4">
               <h2 className="text-xl">Sub total</h2>

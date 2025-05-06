@@ -61,7 +61,7 @@ function Login() {
       .catch((err) => {
         console.error("Login error:", err);
         if (err.response) {
-          setServerError(err.response.data?.error || "Invalid Credentials. Please try again.");
+          setServerError(err.response.data?.error || "Please try again.");
         } else {
           setServerError("Something went wrong. Please try again.");
         }
