@@ -7,6 +7,7 @@ import Cart from "./pages/Cart";
 import OrderHistory from "./pages/OrderHistory";
 import Messages from "./pages/Messages";
 import Gifts from "./pages/Gifts";
+import GiftDetail from "./pages/GiftCard";
 import Login from "./pages/LoginPage";
 import Settings from "./pages/Settings";
 import Signup from "./pages/Signup";
@@ -32,6 +33,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/HomePage" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
           <Route path="/Gifts" element={<ProtectedRoute><Gifts /></ProtectedRoute>} />
+          <Route path="/gift/:_id" element={<ProtectedRoute><GiftDetail /></ProtectedRoute>} />
           <Route path="/Messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
           <Route path="/Cart" element={<ProtectedRoute><Cart /></ProtectedRoute>} />
           <Route path="/Invoice" element={<ProtectedRoute><Invoice /></ProtectedRoute>} />

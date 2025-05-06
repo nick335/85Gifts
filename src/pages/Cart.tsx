@@ -1,59 +1,28 @@
 import { useState } from "react";
 import { MdClose, MdKeyboardDoubleArrowRight } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useCart } from '../store/useCart';
 import cartIcon from "../assets/icons/mdi_cart.png";
 import checkoutIcon from "../assets/icons/mdi_account-payment.png";
-import orderImage from "../assets/order-1.jpg";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: "67e326cb57ed09e1afb58c32e",
-      name: "Flowers",
-      description: "Lilium Flowers",
-      price: 13000,
-      quantity: 2,
-      image: orderImage,
-    },
-  ]);
+  const { cartItems, incrementQuantity, decrementQuantity, removeFromCart, } = useCart();
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const incrementQuantity = (id: string) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    );
-  };
-
-  const decrementQuantity = (id: string) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
 
   const handleProceedToCheckout = async () => {
     setLoading(true);
     try {
       const payload = {
-        items: cartItems.map(({ id, quantity }) => ({
-          giftId: id,
+        items: cartItems.map(({ _id, quantity }) => ({
+          giftId: _id,
           quantity,
         })),
       };
 
-      const token = "your-bearer-token-here"; // Example: retrieve from auth context or localStorage
+      const token = localStorage.getItem("authToken");
 
       const response = await fetch("https://eight5gifts-be.onrender.com/api/user/create-invoice", {
         method: "POST",
@@ -112,7 +81,7 @@ export default function Cart() {
               <p className="text-center text-lg font-semibold mt-10">Your cart is empty.</p>
             ) : (
               cartItems.map((item) => (
-                <div key={item.id} className="bg-green-500 flex flex-col sm:flex-row items-center justify-between p-2 mb-3 rounded">
+                <div key={item._id} className="bg-green-500 flex flex-col sm:flex-row items-center justify-between p-2 mb-3 rounded">
                   <div className="flex items-center gap-4 mb-3 sm:mb-0">
                     <img
                       src={item.image}
@@ -127,7 +96,7 @@ export default function Cart() {
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 text-lg font-semibold">
                       <button
-                        onClick={() => decrementQuantity(item.id)}
+                        onClick={() => decrementQuantity(item._id)}
                         className="bg-white rounded px-2"
                         aria-label={`Decrease quantity of ${item.name}`}
                       >
@@ -135,7 +104,7 @@ export default function Cart() {
                       </button>
                       <span>Qty: {item.quantity}</span>
                       <button
-                        onClick={() => incrementQuantity(item.id)}
+                        onClick={() => incrementQuantity(item._id)}
                         className="bg-white rounded px-2"
                         aria-label={`Increase quantity of ${item.name}`}
                       >
@@ -144,7 +113,7 @@ export default function Cart() {
                     </div>
                     <div className="text-lg font-semibold">₦{item.price * item.quantity}</div>
                     <button
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeFromCart(item._id)}
                       className="text-white bg-red-600 rounded-full p-1 hover:bg-red-700"
                       aria-label={`Remove ${item.name} from cart`}
                     >

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { IconType } from "react-icons";
 import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { useCart } from "../src/store/useCart";
 
 type NavTab = "HomePage" | "Gifts" | "Cart" | "Orders" | "account";
 
@@ -20,13 +21,13 @@ interface MobileBottomNavProps {
 
 export default function MobileBottomNav({
     activeTab,
-    cartItemCount = 0,
     className = "",
     iconSize = 20,
 }: MobileBottomNavProps) {
     const [showAccountPopup, setShowAccountPopup] = useState(false);
     const [showLogoutPopup, setShowLogoutPopup] = useState(false);
     const navigate = useNavigate();
+    
 
     const navItems: NavItem[] = [
         { icon: FaHome, label: "Home", tab: "HomePage" },
@@ -35,6 +36,10 @@ export default function MobileBottomNav({
         { icon: FaHeart, label: "Orders", tab: "Orders" },
         { icon: FaUser, label: "Account", tab: "account" },
     ];
+
+    const { cartItems } = useCart();
+    const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+
 
     const accountOptions = [
         { label: "Edit Profile", href: "/edit-profile" },
@@ -71,11 +76,7 @@ export default function MobileBottomNav({
                                 >
                                     <div className="relative">
                                         <Icon size={iconSize} className="mb-1" />
-                                        {isCart && cartItemCount > 0 && (
-                                            <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                                                {Math.min(cartItemCount, 99)}
-                                            </span>
-                                        )}
+                                        {isCart && cartItemCount > 0 && (<span className='absolute top-2 left-[] bg-[#072ACD] text-[#fff] text-xs rounded-full px-1'>{cartItemCount}</span>)}
                                     </div>
                                     <span>{label}</span>
                                 </Link>

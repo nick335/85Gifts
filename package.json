@@ -39,7 +39,8 @@
     "serve": "^14.2.4",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "zustand": "^5.0.4"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
