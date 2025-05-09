@@ -21,45 +21,63 @@ import Transactions from "./pages/admin/Transactions.tsx";
 import Users from "./pages/admin/Users.tsx";
 import Orders from "./pages/admin/Orders.tsx";
 import AdminGiftsPage from "./pages/admin/VeiwAllGifts.tsx";
-
-
-
+import { ErrorBoundary } from "react-error-boundary"
+import ErrorBoundaryUi from "../components/ErrorBoundary.tsx"
+// import Navbar from "../components/Navbar.tsx"
+import NotFound from "../components/NotFound.tsx"
+import PublicLayout from "./layouts/PublicLayout.tsx"
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/*  Authenticated routes */}
-        <Route element={<Layout />}>
-          <Route path="/HomePage" element={<HomePage />} />
-          <Route path="/Gifts" element={<Gifts />} />
-          <Route path="/Messages" element={<Messages />} />
-          <Route path="/Cart" element={<Cart />} />
-          <Route path="/OrderHistory" element={<OrderHistory />} />
-          <Route path="/Settings" element={<Settings />} />
-          <Route path="/Logout" element={<Logout />} />
-        </Route>
-        <Route path="/Signup" element={<Signup />} />
-        <Route path="/VerifyEmail" element={<VerifyEmail />} />
-        {/* Landing Page Routes  */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/admin/login" element={<AdminLogin />} />
-
-        <Route path="/admin/reset" element={<AdminReset />} />
-        <Route element={<AdminLayout/>}>
-        <Route path="/adminpage" element={<AdminDashBoard/>} />
-        <Route path="/users"  element={<Users/>}/>
-        <Route path="/orders" element={<Orders/>}/>
-        <Route path="/admingiftspage" element={<AdminGiftsPage/>}/>
-        <Route path="/transactions" element={<Transactions/>}/>
         
-        </Route> 
-        <Route path="/reset-password" element={<CustomerResetPassword />} />
 
-      </Routes>
-    </Router>
+   <Router>
+      <ErrorBoundary FallbackComponent={ErrorBoundaryUi}>
+        <Routes>
+          {/* Public Routes with Navbar */}
+          <Route element={<PublicLayout />}>
+            <Route path="/" element={<LandingPage />} /> 
+          </Route>
+
+            {/* login */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/verifyemail" element={<VerifyEmail />} />
+            <Route path="/reset-password" element={<CustomerResetPassword />} />
+
+
+          {/* Authenticated User Routes */}
+          <Route element={<Layout />}>
+            <Route path="/homepage" element={<HomePage />} />
+            <Route path="/gifts" element={<Gifts />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/orderhistory" element={<OrderHistory />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/logout" element={<Logout />} />
+          </Route>
+
+          {/* Admin Public Routes */}
+          <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/admin/reset" element={<AdminReset />} />
+
+          {/* Admin Authenticated Routes */}
+          <Route element={<AdminLayout />}>
+            <Route path="/adminpage" element={<AdminDashBoard />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/admingiftspage" element={<AdminGiftsPage />} />
+            <Route path="/transactions" element={<Transactions />} />
+          </Route>
+
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </ErrorBoundary>
+    </Router>     
   );
+ 
 }
 
 export default App;
+

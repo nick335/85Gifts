@@ -15,8 +15,12 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="flex items-center justify-between bg-transparent text-[18px] w-full px-6 py-4 md:px-12 md:py-6">
-      {/* Logo */}
+    <header className="flex items-center justify-between bg-transparent text-[18px] w-full px-6 py-4 md:px-12 md:py-6 bg-transparent w-full top-0 mt-0 h-full bg-gradient-to-r from-[#E2E5FF] to-[#B5B8FF]"
+          style={{
+            backgroundImage: "linear-gradient(to left, #E2E5FF, #B5B8FF)",
+          }}
+        > 
+    {/* Logo */}
       <Link to="/" className="flex items-center">
         <img src="../src/assets/logo.png" alt="logo" className="h-10" />
       </Link>
@@ -59,7 +63,7 @@ export default function Navbar() {
       <div
         className={`${
           menuOpen ? "block" : "hidden"
-        } md:hidden bg-blue-600 bg-gradient-to-tr absolute top-16 left-2 w-[95%] shadow-lg py-4 px-6`}
+        } md:hidden bg-blue-600 bg-gradient-to-tr absolute top-16 left-2 w-[95%] shadow-lg py-4 px-6 z-40`}
       >
         <div className="flex flex-col gap-4">
           <Link

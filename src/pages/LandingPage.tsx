@@ -1,4 +1,4 @@
-import Navbar from "@/components/Navbar";
+// import Navbar from "@/components/Navbar";
 import { Link } from "react-router-dom";
 import Carousel from "@/components/ui/carousel";
 // import HomeBentoGrid from "@/components/HomeBentoGrid";
@@ -40,7 +40,7 @@ export default function LandingPage() {
             width: "100%",
           }}
         >
-          <Navbar />
+          {/* <Navbar /> */}
 
           <div className="main">
             <div className="hero-section grid grid-cols-5 lg:px-12 max-w-fit md:mt-2 lg:mt-4">

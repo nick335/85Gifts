@@ -4,11 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal, } from "lucide-react"
-// import { Menubar, MenubarContent, MenubarMenu, MenubarSeparator, MenubarTrigger } from "@/components/ui/menubar"
-// import { MenubarItem } from "@radix-ui/react-menubar"
 
 
 export default function TransactionsTab() {
+ 
   return (
     <div className="mt-6">
       <Card>
