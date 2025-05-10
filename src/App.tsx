@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./layouts/AppLayout";
 import './App.css';
 import LandingPage from "./pages/LandingPage";
@@ -7,9 +7,9 @@ import Cart from "./pages/Cart";
 import OrderHistory from "./pages/OrderHistory";
 import Messages from "./pages/Messages";
 import Gifts from "./pages/Gifts";
+import GiftDetail from "./pages/GiftCard";
 import Login from "./pages/LoginPage";
 import Settings from "./pages/Settings";
-import Logout from "./pages/Logout";
 import Signup from "./pages/Signup";
 import AdminLogin from "./pages/admin/AdminLogin.tsx";
 import AdminReset from "./pages/admin/AdminReset.tsx";
@@ -19,62 +19,68 @@ import AdminDashBoard from "./pages/admin/AdminDashBoard.tsx"
 import AdminLayout from "./layouts/AdminLayout";
 import Transactions from "./pages/admin/Transactions.tsx";
 import Users from "./pages/admin/Users.tsx";
-import Orders from "./pages/admin/Orders.tsx";
+import OrdersTab from "./pages/admin/AdminOrders.tsx";
 import AdminGiftsPage from "./pages/admin/VeiwAllGifts.tsx";
-import { ErrorBoundary } from "react-error-boundary"
-import ErrorBoundaryUi from "../components/ErrorBoundary.tsx"
+//import { ErrorBoundary } from "react-error-boundary"
+//import ErrorBoundaryUi from "../components/ErrorBoundary.tsx"
 // import Navbar from "../components/Navbar.tsx"
-import NotFound from "../components/NotFound.tsx"
-import PublicLayout from "./layouts/PublicLayout.tsx"
+// import NotFound from "../components/NotFound.tsx"
+// import PublicLayout from "./layouts/PublicLayout.tsx"
+import ErrorPage from "./pages/ErrorPage";
+import Invoice from "./pages/ViewInvoice";
+import Orders from "./pages/Orders";
+
+// Protected Route Wrapper
+const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const authToken = localStorage.getItem("authToken");
+  return authToken ? children : <Navigate to="/login" />;
+};
 
 function App() {
   return (
-        
+    <Router>
+       <Routes>
+         {/* Authenticated Routes (Require Login) */}
+        <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
+        <Route path="/HomePage" element={<HomePage />} />
+        <Route path="/Gifts" element={<Gifts />} />
+        <Route path="/gift/:_id" element={<GiftDetail />} />
+        <Route path="/Messages" element={<Messages />} />
+        <Route path="/Cart" element={<Cart />} />
+        <Route path="/Invoice" element={<Invoice />} />
+        <Route path="/OrderHistory" element={<OrderHistory />} />
+        <Route path="/Orders" element={<Orders />} />
+        <Route path="/Settings" element={<Settings />} />
+        </Route>
 
-   <Router>
-      <ErrorBoundary FallbackComponent={ErrorBoundaryUi}>
-        <Routes>
-          {/* Public Routes with Navbar */}
-          <Route element={<PublicLayout />}>
-            <Route path="/" element={<LandingPage />} /> 
-          </Route>
+        {/* Public Routes */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/VerifyEmail" element={<VerifyEmail />} />
+        <Route path="/reset-password" element={<CustomerResetPassword />} />
+        <Route path="/invoice" element={<Invoice />} />
 
-            {/* login */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/verifyemail" element={<VerifyEmail />} />
-            <Route path="/reset-password" element={<CustomerResetPassword />} />
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/reset" element={<AdminReset />} />
+          
 
 
-          {/* Authenticated User Routes */}
-          <Route element={<Layout />}>
-            <Route path="/homepage" element={<HomePage />} />
-            <Route path="/gifts" element={<Gifts />} />
-            <Route path="/messages" element={<Messages />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/orderhistory" element={<OrderHistory />} />
-            <Route path="/settings" element={<Settings />} />
-            <Route path="/logout" element={<Logout />} />
-          </Route>
+        {/* Admin Layout */}
+        <Route element={<AdminLayout />}>
+    <Route path="/adminpage" element={<AdminDashBoard />} />
+    <Route path="/users" element={<Users />} />
+    <Route path="/orders" element={<OrdersTab />} />
+    <Route path="/admingiftspage" element={<AdminGiftsPage />} />
+    <Route path="/transactions" element={<Transactions />} />
+    </Route>
 
-          {/* Admin Public Routes */}
-          <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/reset" element={<AdminReset />} />
 
-          {/* Admin Authenticated Routes */}
-          <Route element={<AdminLayout />}>
-            <Route path="/adminpage" element={<AdminDashBoard />} />
-            <Route path="/users" element={<Users />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/admingiftspage" element={<AdminGiftsPage />} />
-            <Route path="/transactions" element={<Transactions />} />
-          </Route>
-
-          {/* 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </ErrorBoundary>
-    </Router>     
+        {/* Catch-all route */}
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </Router>
   );
  
 }
