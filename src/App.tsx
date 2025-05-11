@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./layouts/AppLayout";
 import './App.css';
 import LandingPage from "./pages/LandingPage";
@@ -29,15 +29,14 @@ import AdminGiftsPage from "./pages/admin/VeiwAllGifts.tsx";
 import ErrorPage from "./pages/ErrorPage";
 import Invoice from "./pages/ViewInvoice";
 import Orders from "./pages/Orders";
+// import NotFound from "@/components/NotFound.tsx";
+import { ErrorBoundary } from "react-error-boundary";
+import ProtectedRoute from "@/components/ProtectedRoute.tsx";
 
-// Protected Route Wrapper
-const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const authToken = localStorage.getItem("authToken");
-  return authToken ? children : <Navigate to="/login" />;
-};
 
 function App() {
   return (
+    <ErrorBoundary FallbackComponent={ErrorPage}>
     <Router>
        <Routes>
          {/* Authenticated Routes (Require Login) */}
@@ -71,16 +70,17 @@ function App() {
         <Route element={<AdminLayout />}>
     <Route path="/adminpage" element={<AdminDashBoard />} />
     <Route path="/users" element={<Users />} />
-    <Route path="/orders" element={<OrdersTab />} />
+    <Route path="/adminorders" element={<OrdersTab />} />
     <Route path="/admingiftspage" element={<AdminGiftsPage />} />
     <Route path="/transactions" element={<Transactions />} />
     </Route>
 
 
         {/* Catch-all route */}
-        <Route path="*" element={<ErrorPage />} />
+        <Route path="*" element={<ErrorPage/>} />
       </Routes>
     </Router>
+   </ErrorBoundary> 
   );
  
 }

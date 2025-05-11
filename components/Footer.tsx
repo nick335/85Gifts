@@ -86,7 +86,7 @@ export default function Footer() {
 
   return (
     <>
-      <div className="footer-content bottom-0 bg-[#1F2022] text-white grid grid-cols-1 text-center md:grid-cols-4 justify-center items-center h-full w-full md:h-[40vh]">
+      <div className="footer-content bottom-0 bg-[#1F2022] text-white grid grid-cols-1 text-center md:grid-cols-4 justify-center align-center items-center h-full w-full md:h-[40vh]">
         <FooterSection title="About" links={aboutLinks} />
         <FooterSection title="Information" links={informationLinks} />
         <FooterSection title="Support" links={supportLinks} className="" />
