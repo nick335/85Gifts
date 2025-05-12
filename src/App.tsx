@@ -29,6 +29,7 @@ import AdminGiftsPage from "./pages/admin/VeiwAllGifts.tsx";
 import ErrorPage from "./pages/ErrorPage";
 import Invoice from "./pages/ViewInvoice";
 import Orders from "./pages/Orders";
+import { Toaster } from "sonner";
 
 // Protected Route Wrapper
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -38,6 +39,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   return (
+    <>
     <Router>
        <Routes>
          {/* Authenticated Routes (Require Login) */}
@@ -47,7 +49,7 @@ function App() {
         <Route path="/gift/:_id" element={<GiftDetail />} />
         <Route path="/Messages" element={<Messages />} />
         <Route path="/Cart" element={<Cart />} />
-        <Route path="/Invoice" element={<Invoice />} />
+        <Route path="/Invoice/:invoiceNumber" element={<Invoice />} />
         <Route path="/OrderHistory" element={<OrderHistory />} />
         <Route path="/Orders" element={<Orders />} />
         <Route path="/Settings" element={<Settings />} />
@@ -59,7 +61,6 @@ function App() {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/VerifyEmail" element={<VerifyEmail />} />
         <Route path="/reset-password" element={<CustomerResetPassword />} />
-        <Route path="/invoice" element={<Invoice />} />
 
         {/* Admin Routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
@@ -77,10 +78,12 @@ function App() {
     </Route>
 
 
-        {/* Catch-all route */}
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-    </Router>
+          {/* Catch-all route */}
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </Router>
+      <Toaster  position="top-center" richColors/>
+    </>
   );
  
 }

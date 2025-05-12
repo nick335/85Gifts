@@ -12,7 +12,7 @@ export default function ErrorPage() {
                 <h2 className="m-8 text-2xl font-semibold text-gray-800">Oops!</h2>
                 <p className="text-gray-600">That page cannot be found. We are working on it.</p>
                 <div className="m-4">
-                    <Link to="/">
+                    <Link to="/HomePage">
                         <button className="w-full bg-black text-white p-3 rounded-lg transition duration-300 hover:bg-gray-800">
                             Back to homepage...
                         </button>

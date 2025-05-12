@@ -15,6 +15,7 @@ interface CartState {
   removeFromCart: (_id: string) => void
   incrementQuantity: (_id: string) => void
   decrementQuantity: (_id: string) => void
+  clearCart: () => void
 }
 
 const getStoredCart = (): CartItem[] => {
@@ -50,6 +51,11 @@ export const useCart = create<CartState>((set, get) => ({
     const updatedCart = get().cartItems.filter((item) => item._id !== _id)
     saveCart(updatedCart)
     set({cartItems: updatedCart})
+  },
+
+  clearCart: () => {
+    saveCart([])                // Clear from localStorage
+    set({ cartItems: [] })      // Reset state
   },
 
   // removeFromCart: (_id) =>

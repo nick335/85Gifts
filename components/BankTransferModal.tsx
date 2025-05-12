@@ -1,8 +1,11 @@
 import type React from "react"
-
+import axios from 'axios';
 import { useState, useRef } from "react"
 import { X, Upload, AlertCircle } from "lucide-react"
 import SuccessModal from "./SuccessModal"
+import { toast } from "sonner"
+import { useCart } from '../src/store/useCart';
+
 
 interface BankTransferModalProps {
     isOpen: boolean
@@ -15,7 +18,7 @@ interface BankTransferModalProps {
 export default function BankTransferModal({
     isOpen,
     onClose,
-    onSubmit,
+    // onSubmit,
     invoiceAmount,
     invoiceNumber,
 }: BankTransferModalProps) {
@@ -25,14 +28,17 @@ export default function BankTransferModal({
     const [filePreview, setFilePreview] = useState<string | null>(null)
     const [errors, setErrors] = useState<{ [key: string]: string }>({})
     const [showSuccessModal, setShowSuccessModal] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const fileInputRef = useRef<HTMLInputElement>(null)
 
+    const { clearCart } = useCart()
+    
     // Bank account details (would come from your backend in a real app)
     const accountDetails = {
-        bankName: "First National Bank",
+        bankName: "Moniepoint",
         accountNumber: "1234567890",
-        accountName: "Your Company Name",
+        accountName: "85GIFTS",
         branchCode: "250655",
         reference: invoiceNumber,
     }
@@ -49,16 +55,19 @@ export default function BankTransferModal({
             setErrors({ ...errors, file: "Please upload a valid image (JPEG, PNG) or PDF file" })
             return
         }
-
+        
         // Validate file size (max 5MB)
         if (selectedFile.size > 5 * 1024 * 1024) {
             setErrors({ ...errors, file: "File size should be less than 5MB" })
             return
         }
-
+        else {
+            toast.success("File uploaded successfully.")
+        }
+        
         setFile(selectedFile)
         setErrors({ ...errors, file: "" })
-
+        
         // Create preview for images
         if (selectedFile.type.startsWith("image/")) {
             const reader = new FileReader()
@@ -75,42 +84,76 @@ export default function BankTransferModal({
     const triggerFileInput = () => {
         fileInputRef.current?.click()
     }
-
+    
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {}
-
+        
         if (!amount || amount <= 0) {
             newErrors.amount = "Please enter a valid amount"
         }
-
+        
         if (!bankName.trim()) {
             newErrors.bankName = "Please enter your bank name"
         }
-
+        
         if (!file) {
             newErrors.file = "Please upload your payment receipt"
         }
-
+        
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
-
-    const handleSubmit = (e: React.FormEvent) => {
+    
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
+        clearCart()
+        
         if (!validateForm()) return
+        
+        setLoading(true)
+        
+        const token = localStorage.getItem("authToken");
 
-        const formData = new FormData()
-        formData.append("amount", amount.toString())
-        formData.append("bankName", bankName)
-        if (file) formData.append("receipt", file)
-        formData.append("invoiceNumber", invoiceNumber)
+        if (!token) {
+            console.error("No token found. Please login.");
+            return;
+        }
 
-        // Call the onSubmit prop (which would typically send data to your backend)
-        onSubmit(formData)
+        try {
 
-        // Show success modal
-        setShowSuccessModal(true)
+            const payload = {
+                invoiceId: invoiceNumber, // Assuming invoiceNumber is actually the invoice _id
+                amount: amount,
+                transferReference: `TRX_${Date.now()}`, // or generate a better ref
+                // file: "fileUrl",
+                bankName: bankName,
+            }
+
+
+            const response = await axios.post(
+                "/api/api/payment/pay-invoice-transfer/",
+                payload,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            console.log("Success:", response.data)
+            setShowSuccessModal(true)
+
+        } catch (error: unknown) {
+            if (axios.isAxiosError(error)) {
+                console.error("Payment transfer failed:", error.response?.data || error.message)
+                toast.error(error.response?.data?.message || "Something went wrong while submitting payment.")
+            } else {
+                console.error("Unexpected error:", error)
+                toast.error("An unexpected error occurred.")
+            }
+        }
+        setLoading(true)
     }
 
     const handleSuccessClose = () => {
@@ -120,12 +163,12 @@ export default function BankTransferModal({
 
     return (
         <>
-            <div className="fixed inset-0 z-50 flex items-center justify-center">
+            <div className="fixed inset-0 z-50 flex items-center justify-center mb-12">
                 {/* Backdrop */}
                 <div className="absolute inset-0 bg-black bg-opacity-50" onClick={onClose}></div>
 
                 {/* Modal */}
-                <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4 overflow-hidden">
+                <div className="relative bg-white rounded-lg shadow-xl w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
                     {/* Header */}
                     <div className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
                         <h2 className="text-xl font-semibold">Bank Transfer Payment</h2>
@@ -171,7 +214,7 @@ export default function BankTransferModal({
                                         value={amount}
                                         onChange={(e) => setAmount(Number(e.target.value))}
                                         className={`w-full px-3 py-2 border text-black rounded-md ${errors.amount ? "border-red-500" : "border-gray-300"}`}
-                                        placeholder="Enter amount"
+                                        readOnly
                                     />
                                     {errors.amount && (
                                         <p className="mt-1 text-sm text-red-600 flex items-center">
@@ -252,9 +295,10 @@ export default function BankTransferModal({
                             <div className="mt-6">
                                 <button
                                     type="submit"
+                                    disabled={loading}
                                     className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
                                 >
-                                    Submit Payment
+                                    {loading ? "Submitting..." : "Submit Payment"}
                                 </button>
                             </div>
                         </form>
