@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { IconType } from "react-icons";
-import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
+import { FaHome, FaSearch, FaUser, FaShoppingBag } from "react-icons/fa";
+import { ReceiptText } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../src/store/useCart";
 
-type NavTab = "HomePage" | "Gifts" | "Cart" | "Orders" | "account";
+type NavTab = "HomePage" | "Gifts" | "Cart" | "OrderHistory" | "account";
 
 interface NavItem {
     icon: IconType;
@@ -33,7 +34,7 @@ export default function MobileBottomNav({
         { icon: FaHome, label: "Home", tab: "HomePage" },
         { icon: FaSearch, label: "Gifts", tab: "Gifts" },
         { icon: FaShoppingBag, label: "Cart", tab: "Cart" },
-        { icon: FaHeart, label: "Orders", tab: "Orders" },
+        { icon: ReceiptText, label: "Order History", tab: "OrderHistory" },
         { icon: FaUser, label: "Account", tab: "account" },
     ];
 

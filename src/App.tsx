@@ -5,7 +5,7 @@ import LandingPage from "./pages/LandingPage";
 import HomePage from "./pages/HomePage";
 import Cart from "./pages/Cart";
 import OrderHistory from "./pages/OrderHistory";
-import Messages from "./pages/Messages";
+import GiftCuration from "./pages/GiftCuration.tsx";
 import Gifts from "./pages/Gifts";
 import GiftDetail from "./pages/GiftCard";
 import Login from "./pages/LoginPage";
@@ -47,7 +47,7 @@ function App() {
         <Route path="/HomePage" element={<HomePage />} />
         <Route path="/Gifts" element={<Gifts />} />
         <Route path="/gift/:_id" element={<GiftDetail />} />
-        <Route path="/Messages" element={<Messages />} />
+        <Route path="/GiftCuration" element={<GiftCuration />} />
         <Route path="/Cart" element={<Cart />} />
         <Route path="/Invoice/:invoiceNumber" element={<Invoice />} />
         <Route path="/OrderHistory" element={<OrderHistory />} />

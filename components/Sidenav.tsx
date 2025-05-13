@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Gift, Home, MessageSquareText, ReceiptText, LogOut, Settings } from "lucide-react";
+import { Gift, Home, ReceiptText, LogOut, Settings } from "lucide-react";
 import { RiShoppingBagLine } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../src/assets/logo.png";
@@ -20,8 +20,8 @@ const items = [
   { title: "Home", path: "/HomePage", icon: Home },
   { title: "Gifts", path: "/Gifts", icon: Gift },
   { title: "Cart", path: "/Cart", icon: RiShoppingBagLine },
-  { title: "Order History", path: "/Orders", icon: ReceiptText },
-  { title: "Messages", path: "/Messages", icon: MessageSquareText },
+  { title: "Order History", path: "/OrderHistory", icon: ReceiptText },
+  { title: "Gift Curation", path: "/GiftCuration", icon: Gift },
 ];
 
 const footerItems = [

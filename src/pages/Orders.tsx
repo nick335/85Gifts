@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { NotebookPen } from "lucide-react";
-import MobileBottomNav from "../../components/MobileNavTab";
+// import MobileBottomNav from "../../components/MobileNavTab";
 
 export default function Orders() {
     const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
@@ -150,7 +150,7 @@ export default function Orders() {
             </div>
 
             {/* Mobile Bottom Navigation */}
-            <MobileBottomNav activeTab="Orders" />
+            {/* <MobileBottomNav activeTab="Orders" /> */}
         </div>
     );
 }
