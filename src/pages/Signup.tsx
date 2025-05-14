@@ -6,6 +6,7 @@ import Frame285 from "../assets/Frame285.png";
 import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/eye-off.svg";
 import google from "../assets/icons/google.svg";
+import { toast } from "sonner";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -98,7 +99,12 @@ export default function Signup() {
 
         if (response.status === 201) {
           localStorage.setItem("authToken", response.data.data.authToken);
-          alert(
+          // console.log("authToken", response.data.data.authToken);
+          console.log(
+            "AuthToken set in localStorage:",
+            localStorage.getItem("authToken")
+          );
+          toast.success(
             "Registered successfully. Verification code has been sent to your email, expires in 5 mins!"
           );
           navigate("/VerifyEmail", { state: { email } });
@@ -114,7 +120,7 @@ export default function Signup() {
               setEmailExistsError(
                 "This email is already registered. Please try logging in."
               );
-            } else alert("Signup failed. Please try again.");
+            } else toast.success("Signup failed. Please try again.");
           }
         }
       } finally {

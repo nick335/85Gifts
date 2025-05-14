@@ -6,6 +6,7 @@ import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/Eye.png";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { toast } from "sonner"
 
 export default function CustomerResetPassword() {
   const navigate = useNavigate();
@@ -21,11 +22,11 @@ export default function CustomerResetPassword() {
   // 1️⃣ **Send OTP to Email & Store Auth Token**
   const handleEmailSubmit = async () => {
     if (!email) {
-      alert("Please enter your email.");
+      toast.error("Please enter your email.");
       return;
     }
     if (!isValidEmail(email)) {
-      alert("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return;
     }
 
@@ -40,18 +41,18 @@ export default function CustomerResetPassword() {
         localStorage.setItem("authToken", data.data.authToken); // Store auth token
         // console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
       } else {
-        throw new Error("Auth token not received.");
+        toast.error("Auth token not received.");
       }
 
-      alert("OTP sent to your email.");
+      toast.success("OTP sent to your email.");
       setStep("otp");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        console.error("OTP Request Error:", error);
-        alert(`${error.response?.data?.error || "An error occurred."}`);
+        // console.error("OTP Request Error:", error);
+        toast.error(`${error.response?.data?.error || "An error occurred."}`);
       } else {
-        console.error("OTP Request Error:", error);
-        alert("An unexpected error occurred.")
+        // console.error("OTP Request Error:", error);
+        toast.error("An unexpected error occurred.")
       }
     } finally {
       setLoading(false);
@@ -62,14 +63,14 @@ export default function CustomerResetPassword() {
   // 2️⃣ **Verify OTP **
   const handleOtpVerification = async () => {
     if (!otp) {
-      alert("Please enter the OTP.");
+      toast.error("Please enter the OTP.");
       return;
     }
 
 
     const authToken = localStorage.getItem("authToken"); // ✅ Retrieve the token
     if (!authToken) {
-      alert("Session expired. Please restart the process.");
+      toast.error("Session expired. Please restart the process.");
       setStep("email");
       return;
     }
@@ -88,15 +89,15 @@ export default function CustomerResetPassword() {
       );
       console.log(data)
 
-      alert("OTP Verified Successfully!");
+      toast.success("OTP Verified Successfully!");
       setStep("password");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error("OTP Verification Error:", error);
-        alert(`${error.response?.data?.error || "An error occurred."}`);
+        toast.error(`${error.response?.data?.error || "An error occurred."}`);
       } else {
-        console.error("Unexpected Error:", error);
-        alert("An unexpected error occurred.")
+        // console.error("Unexpected Error:", error);
+        toast.error("An unexpected error occurred.")
       }
     } finally {
       setLoading(false);
@@ -107,13 +108,13 @@ export default function CustomerResetPassword() {
   // 3️⃣ **Submit New Password**
   const handleResetPassword = async () => {
     if (!password) {
-      alert("Please enter your new password.");
+      toast.error("Please enter your new password.");
       return;
     }
 
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
-      alert("Session expired. Please restart the process.");
+      toast.error("Session expired. Please restart the process.");
       setStep("email");
       return;
     }
@@ -128,12 +129,12 @@ export default function CustomerResetPassword() {
         }
       );
 
-      alert("Password reset successful. Please login.");
+      toast.success("Password reset successful. Please login.");
       localStorage.removeItem("authToken"); // Clear token after reset
       navigate("/login");
     } catch (error) {
       console.error("Password Reset Error:", error);
-      alert("Failed to reset password. Try again.");
+      toast.error("Failed to reset password. Try again.");
     } finally {
       setLoading(false);
     }

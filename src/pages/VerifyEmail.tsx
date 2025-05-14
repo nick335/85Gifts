@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/logo.png";
 import Frame285 from "../assets/Frame285.png";
+import { toast } from "sonner";
 
 export default function VerifyEmail() {
   const [verificationCode, setVerificationCode] = useState("");
@@ -67,7 +68,7 @@ export default function VerifyEmail() {
       );
 
       if (response.status === 200) {
-        alert("Email verified successfully!");
+        toast.success("Email verified successfully!");
         navigate("/HomePage");
       }
     } catch (err: unknown) {
@@ -78,20 +79,20 @@ export default function VerifyEmail() {
         // Handle backend error responses
         switch (err.response.status) {
           case 400:
-            setError("Invalid verification code. Please try again.");
+            toast.error("Invalid verification code. Please try again.");
             break;
           case 401:
-            setError("Expired verification code. Request a new one.");
+            toast.error("Expired verification code. Request a new one.");
             break;
           case 500:
-            setError("Server error. Please try again later.");
+            toast.error("Server error. Please try again later.");
             break;
           default:
-            setError("Something went wrong. Please try again.");
+            toast.error("Something went wrong. Please try again.");
         }
       } else {
         // Handle network errors
-        setError("Network error. Please check your internet connection.");
+        toast.error("Network error. Please check your internet connection.");
       }
     }
   };
@@ -101,7 +102,7 @@ export default function VerifyEmail() {
     const authToken = localStorage.getItem("authToken");
 
     if (!authToken) {
-      setError("Authentication token not found. Please log in again.");
+      toast.error("Authentication token not found. Please log in again.");
       return;
     }
 
@@ -119,15 +120,15 @@ export default function VerifyEmail() {
 
       if (response.status === 200) {
         setError("");
-        alert("verification code resent successfully");
+        toast.success("verification code resent successfully");
         setResendDisabled(true);
         setTimer(300);
       }
     } catch (err: unknown) {
       if (axios.isAxiosError(err) && err.response) {
-        setError("Failed to resend the code. Please try again.");
+        toast.error("Failed to resend the code. Please try again.");
       } else {
-        setError("Network error. Please check your internet connection.");
+        toast.error("Network error. Please check your internet connection.");
       }
     }
   };

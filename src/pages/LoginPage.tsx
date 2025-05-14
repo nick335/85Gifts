@@ -53,6 +53,8 @@ function Login() {
 
         if (result.data && result.data.success) {
           localStorage.setItem("authToken", result.data.data.authToken);
+          localStorage.setItem("firstName", result.data.data.firstName);
+          localStorage.setItem("lastName", result.data.data.lastName);
           navigate("/HomePage");
         } else {
           setServerError(result.data.message || "Invalid login.");
