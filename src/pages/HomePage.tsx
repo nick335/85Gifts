@@ -30,17 +30,23 @@ export default function HomePage() {
             <SearchBarHome />
           </div>
           <div className='flex gap-1 md:gap-2'>
-            <button className='hidden lg:block bg-[#fff] border rounded-[50%] py-[8px] px-[8px]'>
-              <IoMdCart />
-            </button>
-            <button className='bg-[#fff] border rounded-[50%] py-[8px] px-[8px]'>
-              <GoBell />
-            </button>
+            <Link to="/Cart">
+              <button className='hidden lg:block bg-[#fff] border rounded-[50%] py-[8px] px-[8px]'>
+                <IoMdCart />
+              </button>
+            </Link>
+            <Link to="/Notifications">
+              <button className='bg-[#fff] border rounded-[50%] py-[8px] px-[8px]'>
+                <GoBell />
+              </button>
+            </Link>
             <div className='hidden lg:flex'>
-              <Avatar>
-                <AvatarImage src={avatar} />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+              <Link to="/Profile">
+                <Avatar>
+                  <AvatarImage src={avatar} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </Link>
             </div>
           </div>
         </div>
