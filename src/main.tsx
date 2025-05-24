@@ -14,5 +14,5 @@ createRoot(document.getElementById('root')!).render(
     <Favicon url={myFavicon} />
     <App />   
   </ErrorBoundary>
-    </StrictMode>,
+    </StrictMode>
 )
