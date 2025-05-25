@@ -74,7 +74,7 @@ function Login() {
 
   const handleGoogleSignIn = async () => {
     try {
-      const response = await axios.get("/api/user/auth0/signin", {
+      const response = await axios.get("/api/api/user/google", {
         withCredentials: true,
       });
 
@@ -149,7 +149,9 @@ function Login() {
                 </div>
 
                 <button
-                  onClick={handleGoogleSignIn}
+                  onClick={() => {
+                    window.location.href = "https://eight5gifts-be.onrender.com/api/user/google";
+                  }}
                   className="w-full inline-flex justify-center items-center gap-2 py-3 px-4 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
                 >
                   <img src={google} alt="Google" className="w-5 h-5" />
