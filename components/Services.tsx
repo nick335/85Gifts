@@ -2,19 +2,19 @@ import { Link } from "react-router-dom";
 
 const services = [
   {
-    icon: "src/assets/icons/delivery.svg",
+    icon: "https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741373781/delivery_krnqi6.svg",
     title: "Free Delivery",
     description: "For all orders above 50k",
     href: "/delivery",
   },
   {
-    icon: "src/assets/icons/security.png",
+    icon: "https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741373714/security_vzcath.png",
     title: "Secure Payment",
     description: "Seamless payment on any device",
     href: "/secure-payment",
   },
   {
-    icon: "src/assets/icons/customer-care.png",
+    icon: "https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741373648/customer-care_nhyfvb.png",
     title: "Customer Support",
     description: "24/7 customer support",
     href: "/customer-support",

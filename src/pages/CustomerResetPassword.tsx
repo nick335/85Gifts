@@ -2,8 +2,11 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import background from "../assets/icons/loginbg.png";
-import eyeOpen from "../assets/icons/Eye.png";
+import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/Eye.png";
+import { Link } from "react-router-dom";
+import logo from "../assets/logo.png";
+import { toast } from "sonner"
 
 export default function CustomerResetPassword() {
   const navigate = useNavigate();
@@ -19,58 +22,63 @@ export default function CustomerResetPassword() {
   // 1️⃣ **Send OTP to Email & Store Auth Token**
   const handleEmailSubmit = async () => {
     if (!email) {
-      alert("Please enter your email.");
+      toast.error("Please enter your email.");
       return;
     }
     if (!isValidEmail(email)) {
-      alert("Please enter a valid email address.");
+      toast.error("Please enter a valid email address.");
       return;
     }
-  
+
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "https://eight5gifts-be.onrender.com/api/user/forgot-password",
+        "/api/api/user/forgot-password",
         { email }
       );
-  
+
       if (data?.data?.authToken) {
         localStorage.setItem("authToken", data.data.authToken); // Store auth token
-        console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
+        // console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
       } else {
-        throw new Error("Auth token not received.");
+        toast.error("Auth token not received.");
       }
-  
-      alert("OTP sent to your email.");
+
+      toast.success("OTP sent to your email.");
       setStep("otp");
-    } catch (error: any) {
-      console.error("OTP Request Error:", error);
-      alert(`${error.response?.data?.error || "An error occurred."}`);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        // console.error("OTP Request Error:", error);
+        toast.error(`${error.response?.data?.error || "An error occurred."}`);
+      } else {
+        // console.error("OTP Request Error:", error);
+        toast.error("An unexpected error occurred.")
+      }
     } finally {
       setLoading(false);
     }
   };
-  
+
 
   // 2️⃣ **Verify OTP **
   const handleOtpVerification = async () => {
     if (!otp) {
-      alert("Please enter the OTP.");
+      toast.error("Please enter the OTP.");
       return;
     }
 
 
-  const authToken = localStorage.getItem("authToken"); // ✅ Retrieve the token
-  if (!authToken) {
-    alert("Session expired. Please restart the process.");
-    setStep("email");
-    return;
-  }
-  
+    const authToken = localStorage.getItem("authToken"); // ✅ Retrieve the token
+    if (!authToken) {
+      toast.error("Session expired. Please restart the process.");
+      setStep("email");
+      return;
+    }
+
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "https://eight5gifts-be.onrender.com/api/user/verify",
+        "/api/api/user/verify",
         { token: otp },
         {
           headers: {
@@ -80,28 +88,33 @@ export default function CustomerResetPassword() {
         }
       );
       console.log(data)
-  
-      alert("OTP Verified Successfully!");
+
+      toast.success("OTP Verified Successfully!");
       setStep("password");
-    } catch (error: any) {
-      console.error("OTP Verification Error:", error);
-      alert(`${error.response?.data?.error || "An error occurred."}`);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.error("OTP Verification Error:", error);
+        toast.error(`${error.response?.data?.error || "An error occurred."}`);
+      } else {
+        // console.error("Unexpected Error:", error);
+        toast.error("An unexpected error occurred.")
+      }
     } finally {
       setLoading(false);
     }
   };
-  
+
 
   // 3️⃣ **Submit New Password**
   const handleResetPassword = async () => {
     if (!password) {
-      alert("Please enter your new password.");
+      toast.error("Please enter your new password.");
       return;
     }
 
     const authToken = localStorage.getItem("authToken");
     if (!authToken) {
-      alert("Session expired. Please restart the process.");
+      toast.error("Session expired. Please restart the process.");
       setStep("email");
       return;
     }
@@ -109,19 +122,19 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       await axios.post(
-        "https://eight5gifts-be.onrender.com/api/user/update-password",
+        "/api/api/user/update-password",
         { password: password },
         {
           headers: { Authorization: `Bearer ${authToken}` }, // Attach auth token
         }
       );
 
-      alert("Password reset successful. Please login.");
+      toast.success("Password reset successful. Please login.");
       localStorage.removeItem("authToken"); // Clear token after reset
       navigate("/login");
     } catch (error) {
       console.error("Password Reset Error:", error);
-      alert("Failed to reset password. Try again.");
+      toast.error("Failed to reset password. Try again.");
     } finally {
       setLoading(false);
     }
@@ -131,9 +144,9 @@ export default function CustomerResetPassword() {
     <div className="flex flex-col md:flex-row min-h-screen">
       {/* Left Side - Form */}
       <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-white px-6 sm:px-8 py-20 relative">
-        <a href="/" className="absolute top-6 left-6 md:top-10 md:left-10">
-          <img src="src/assets/logo.png" alt="Logo" className="w-[71px] h-[43px]" />
-        </a>
+        <Link to="/" className="absolute top-6 left-6 md:top-10 md:left-10">
+          <img src={logo} alt="Logo" className="w-[71px] h-[43px]" />
+        </Link>
 
         <div className="max-w-sm w-full md:mt-0 mt-32">
           {/* Step 1: Email Input */}
@@ -151,7 +164,7 @@ export default function CustomerResetPassword() {
               />
               <button
                 onClick={handleEmailSubmit}
-                className="w-full bg-black text-white p-3 rounded mb-3"
+                className="w-full bg-black text-white p-3 rounded mb-3 transition duration-300 hover:bg-gray-800"
                 disabled={loading}
               >
                 {loading ? "Sending OTP..." : "Next"}
@@ -174,7 +187,7 @@ export default function CustomerResetPassword() {
               />
               <button
                 onClick={handleOtpVerification}
-                className="w-full bg-black text-white p-3 rounded mb-3"
+                className="w-full bg-black text-white p-3 rounded mb-3 transition duration-300 hover:bg-gray-800"
                 disabled={loading}
               >
                 {loading ? "Verifying..." : "Verify OTP"}
@@ -206,7 +219,7 @@ export default function CustomerResetPassword() {
               </div>
               <button
                 onClick={handleResetPassword}
-                className="w-full bg-black text-white p-3 rounded mb-3"
+                className="w-full bg-black text-white p-3 rounded mb-3 transition duration-300 hover:bg-gray-800"
                 disabled={loading}
               >
                 {loading ? "Resetting..." : "Reset Password"}

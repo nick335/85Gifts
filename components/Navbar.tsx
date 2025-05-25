@@ -15,14 +15,14 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <header className="flex items-center justify-between bg-transparent text-[18px] w-full px-6 py-4 md:px-12 md:py-6 bg-transparent w-full top-0 mt-0 h-full bg-gradient-to-r from-[#E2E5FF] to-[#B5B8FF]"
+    <header className="flex items-center justify-between bg-transparent text-[18px] w-full px-4 py-4 md:px-6 md:py-2 bg-transparent w-full top-0 mt-0 h-full bg-gradient-to-r from-[#E2E5FF] to-[#B5B8FF]"
           style={{
             backgroundImage: "linear-gradient(to left, #E2E5FF, #B5B8FF)",
           }}
         > 
     {/* Logo */}
       <Link to="/" className="flex items-center">
-        <img src="../src/assets/logo.png" alt="logo" className="h-10" />
+        <img src="https://res.cloudinary.com/dsmc6vtpt/image/upload/v1741372844/logo_gayznn.png" alt="logo" className="h-10" />
       </Link>
       <nav className="flex w-[80%] items-center justify-between  ">
         {/* Desktop Menu */}

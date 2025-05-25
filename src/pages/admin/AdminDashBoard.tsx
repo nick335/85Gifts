@@ -9,7 +9,7 @@ import {
 } from "lucide-react"
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import OrdersTab from "./Orders"
+import OrdersTab from "./AdminOrders.tsx"
 import UsersTab from "./Users"
 import TransactionsTab from "./Transactions"
 import Areachart from "./AreaChart"
@@ -149,3 +149,5 @@ export default function Dashboard() {
     </div>
   )
 }
+
+

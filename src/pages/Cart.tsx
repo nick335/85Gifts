@@ -1,102 +1,218 @@
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useCart } from '../store/useCart';
 import cart from "../assets/icons/mdi_cart.png";
 import checkout from "../assets/icons/mdi_account-payment.png";
-import { MdKeyboardDoubleArrowRight } from "react-icons/md";
-import order from "../assets/order-1.jpg";
-// import { IoIosAdd } from "react-icons/io";
+import { MdClose, MdKeyboardDoubleArrowRight } from "react-icons/md";
+// import order from "../assets/order-1.jpg";
 import { HiMinusSm } from "react-icons/hi";
 import { IoSend } from "react-icons/io5";
+// import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
+import MobileBottomNav from "@/components/MobileNavTab";
 
 export default function Cart() {
+  const { cartItems, incrementQuantity, decrementQuantity, removeFromCart, } = useCart();
+  const navigate = useNavigate();
+
+  const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const vat = 10.5;
+  const vatCalc = (vat/100) * subtotal;
+  const total = vatCalc + subtotal;
+
+
+  const handleCreateInvoice = async () => {
+
+    const invoicePayload = {
+      items: cartItems.map(({ _id, quantity }) => ({
+        giftId: _id,  // make sure it's a string
+        quantity,
+      })),
+      vat: vat // this is already declared in your component
+    };
+
+    const firstname = localStorage.getItem("firstName");
+    const lastname = localStorage.getItem("lastName");
+    const customer = firstname + " " + lastname;
+    // console.log(firstname + " " + lastname)
+    console.log(customer)
+
+    const token = localStorage.getItem("authToken");
+    console.log(token)
+
+    if (!token) {
+      console.error("No token found. Please login.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "/api/api/user/create-invoice",
+        invoicePayload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      console.log("Invoice created:", response.data);
+
+      const invoiceNumber = response.data.data._id;
+      console.log(invoiceNumber);
+      if (!invoiceNumber) {
+        console.error("Invoice ID not returned from backend.");
+        return;
+      }
+      // navigate(`/invoice`, { state: { invoiceData: response.data,  cartItems: cartItems } });
+      navigate(`/invoice/${invoiceNumber}`, { state: { invoiceData: response.data.data, cartItems: cartItems, customer } });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("Error creating invoice:", error.response.data);
+      } else {
+        console.error("Error creating invoice:", error);
+      }
+    }
+  }
+
+
   return (
-    <>
-      <div className="flex flex-col mx-auto w-screen bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] absolute">
-        <div className=" bg-white m-5 h-full rounded-2xl">
-          <div className="bg-[#E8E5E5] rounded-2xl p-1 m-3 flex justify-center items-center ">
-            <div className="flex gap-10">
-              <div className="flex justify-center">
-                <img
-                  src={cart}
-                  alt="cart"
-                  className="bg-white p-3 rounded-full"
-                />
-                <h2 className="text-[18px] font-[600] text-center p-3"> Cart </h2>
+    <div className="min-h-screen bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] p-4 md:p-8 pb-24 md:pb-8">
+      {/* Main Container */}
+      <div className="bg-white rounded-2xl shadow-lg max-w-6xl mx-auto overflow-hidden">
+
+        {/* Progress Steps */}
+        <div className="bg-[#E8E5E5] p-4">
+          <div className="flex justify-center items-center gap-2 md:gap-10">
+            <div className="flex items-center">
+              <img src={cart} alt="cart" className="bg-white p-2 md:p-3 rounded-full h-12 w-12" />
+              <h2 className="text-sm md:text-lg font-semibold ml-2">Cart</h2>
+            </div>
+
+            <MdKeyboardDoubleArrowRight className="text-2xl md:text-3xl" />
+
+            <div className="flex items-center">
+              <img src={checkout} alt="checkout" className="bg-white p-2 md:p-3 rounded-full h-12 w-12" />
+              <h2 className="text-sm md:text-lg font-semibold ml-2">Checkout</h2>
+            </div>
+          </div>
+        </div>
+
+        {/* Cart Content */}
+        <div className="p-4 md:p-6">
+          <div className="flex flex-col lg:flex-row gap-6">
+            {/* Products List */}
+            <div className="lg:w-[60%]">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="font-medium text-lg md:text-xl">Product</h2>
+                <h2 className="font-medium text-lg md:text-xl">Total</h2>
               </div>
-              <div>
-                <h2 className="font-semibold text-[30px] p-3"> <MdKeyboardDoubleArrowRight /> </h2>
-              </div>
-              <div className="flex justify-center">
-                <img
-                  src={checkout}
-                  alt="checkout"
-                  className="bg-white p-3 rounded-full"
-                />
-                <h2 className="text-[18px] font-[600] text-center p-3"> Checkout </h2>
+              <hr className="border-t border-gray-300 mb-6" />
+              {cartItems.length === 0 ? (
+                <p className="text-center text-lg font-semibold mt-10">Your cart is empty.</p>
+              ) : (
+                
+                  cartItems.map(item => (
+                    <div key={item._id} className="flex flex-col sm:flex-row gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full sm:w-24 h-24 object-cover rounded-lg"
+                      />
+
+                      <div className="flex-1">
+                        {/* <h3 className="font-medium">{item.category}</h3> */}
+                        <p className="text-gray-600">{item.name}</p>
+
+                        <div className="flex items-center mt-2">
+                          <button
+                            onClick={() => decrementQuantity(item._id)}
+                            className="p-1 bg-white rounded-full"
+                            aria-label={`Decrease quantity of ${item.name}`}
+                          >
+                            <HiMinusSm className="text-gray-600" />
+                          </button>
+                          <span>Qty: {item.quantity}</span>
+                          <button
+                            onClick={() => incrementQuantity(item._id)}
+                            className="p-1 bg-white rounded-full"
+                            aria-label={`Increase quantity of ${item.name}`}
+                          >
+                            <span>+</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="font-medium text-lg">
+                        ₦{item.price * item.quantity}
+                      </div>
+                      <button
+                        onClick={() => removeFromCart(item._id)}
+                        className="text-white bg-red-600 rounded-full p-1 hover:bg-red-700"
+                        aria-label={`Remove ${item.name} from cart`}
+                      >
+                        <MdClose size={20} />
+                      </button>
+                    </div>
+                  ))                 
+                
+              )}
+            </div>
+
+            {/* Order Summary */}
+            <div className="lg:w-[40%] bg-[#E8E5E5] rounded-2xl p-5 h-fit">
+              <h2 className="font-medium text-xl md:text-2xl mb-6">Order Summary</h2>
+
+              <div className="space-y-4">
+                <div className="flex justify-between">
+                  <b>Sub total</b>
+                  <span>₦{subtotal.toLocaleString()}</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span>V.A.T</span>
+                  <span>{vat.toLocaleString()}%</span>
+                </div>
+
+                <hr className="border-t border-white my-2" />
+                <div className="flex justify-between items-center">
+                  <span>Add Coupon</span>
+                  <HiMinusSm className="bg-white p-1 rounded-full text-xl" />
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="text"
+                    className="w-full p-2 pr-10 bg-white rounded-lg outline-none"
+                    placeholder="Type Code"
+                  />
+                  <IoSend className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer" />
+                </div>
+
+                <hr className="border-t border-white my-4" />
+
+                <div className="flex justify-between font-semibold text-lg">
+                  <span>Total</span>
+                  <span>₦{total.toLocaleString()}</span>
+                </div>
+
+                <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition" onClick={handleCreateInvoice}
+                >
+                  Proceed to Checkout
+                </button>
               </div>
             </div>
           </div>
-          <div className="m-5">
-          <div className="flex gap-10 mt-10 ml-3">
-            <div className="flex flex-col w-[60%]" > {/* your product and total container */}
-              <div className="font-medium text-xl flex justify-between w-[50%] ml-8 mb-1">
-                <h2>Product</h2>
-                <h2>Total</h2>
-              </div>
-              <hr className="w-[53%] ml-5 rounded-sm mb-2" />
-              <div className="bg-green-500 flex-col">
-                <div className="mt-3 ml-4 ">
-                  <img src={order} alt="flowers" className="w-[110px] h-[70px]"/>
-                </div>
-                <div className="flex flex-col">
-                  <h6>Flowers</h6>
-                  <p>Lilium Flowers </p>
-                </div>
-              </div>
-              
-            </div>{/* your product and total container ending */}
-            <div className="justify-end bg-[#E8E5E5]  w-[35%] mr-3 rounded-2xl p-5"> 
-                <h2 className="font-medium text-2xl justify-start text-left">Order Summary</h2>
-                <div className="m-5">
-                <hr className=" h-1 mt-5 text-center content-center flex item bg-white text-2xl rounded-md w-[100%]"/>
-                  <div className="flex justify-between mt-4">
-                  <h2 className="text-xl">Sub total</h2>
-                  <h2>₦13,000</h2>
-                  </div>
-                  <hr className=" h-1 mt-4 text-center content-center flex item bg-white text-2xl rounded-md w-[100%]"/>
-                  <div className="flex justify-between mt-4">
-                  <h2 className="text-xl">V.A.T</h2>
-                  <h2>₦500</h2>
-                  </div>
-                  <hr className=" h-1 mt-4 text-center content-center flex item bg-white text-2xl rounded-md w-[100%]"/>
-                  <div className="flex justify-between mt-4">
-                  <h2 className="text-xl">Add Coupon </h2>
-                  <h2><HiMinusSm className="text-[#E8E5E5] p-1 rounded-full bg-white text-2xl font-bold"/></h2>
-                  </div>
-                  <div className="relative w-full mt-5">
-  <input 
-    type="text" 
-    className="outline-white bg-[#E8E5E5] p-2 text-black border-white w-full rounded-lg pr-10" 
-    placeholder="Type Code"
-  />
-  
-  <IoSend 
-    className="absolute top-1/2 right-3 transform -translate-y-1/2 text-white text-2xl cursor-pointer" 
-  />
-</div>
-                <hr className=" h-0.5 mt-24 text-center content-center flex item bg-white text-2xl rounded-md w-[100%]"/>
-                <div className="flex justify-between mt-4">
-                  <h2 className="text-xl">Total</h2>
-                  <h2>₦13,000</h2>
-                  </div>
-                  <button className="bg-[#072AC8] text-white p-3 rounded-2xl w-full mt-5 text-lg"> Proceed to Checkout</button>
-              </div>
-              </div>
-          </div>
-          </div>
-        </div>
-          <div>
-            <h2>Need help? Check our <a href="#" className="text-[#072AC8] underline"> help and support </a> or <a href="#" className="text-[#072AC8] underline"> contact us </a> </h2>
         </div>
       </div>
-    </>
+
+      {/* Help Section */}
+      <MobileBottomNav
+        activeTab="Cart"
+        cartItemCount={cartItems.length}
+        className="custom-nav-class" // optional
+        iconSize={18} // optional
+      />
+    </div>
   );
 }
