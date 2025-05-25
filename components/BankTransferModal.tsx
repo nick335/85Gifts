@@ -24,6 +24,11 @@ export default function BankTransferModal({
 }: BankTransferModalProps) {
     const [amount, setAmount] = useState(invoiceAmount)
     const [bankName, setBankName] = useState("")
+    const [buyerPhone, setBuyerPhone] = useState("")
+    const [receiverName, setReceiverName] = useState("")
+    const [receiverPhone, setReceiverPhone] = useState("")
+    const [receiverAddress, setReceiverAddress] = useState("")
+    const [notes, setNotes] = useState("")
     const [file, setFile] = useState<File | null>(null)
     const [filePreview, setFilePreview] = useState<string | null>(null)
     const [errors, setErrors] = useState<{ [key: string]: string }>({})
@@ -33,7 +38,7 @@ export default function BankTransferModal({
     const fileInputRef = useRef<HTMLInputElement>(null)
 
     const { clearCart } = useCart()
-    
+
     // Bank account details (would come from your backend in a real app)
     const accountDetails = {
         bankName: "Moniepoint",
@@ -55,7 +60,7 @@ export default function BankTransferModal({
             setErrors({ ...errors, file: "Please upload a valid image (JPEG, PNG) or PDF file" })
             return
         }
-        
+
         // Validate file size (max 5MB)
         if (selectedFile.size > 5 * 1024 * 1024) {
             setErrors({ ...errors, file: "File size should be less than 5MB" })
@@ -64,10 +69,10 @@ export default function BankTransferModal({
         else {
             toast.success("File uploaded successfully.")
         }
-        
+
         setFile(selectedFile)
         setErrors({ ...errors, file: "" })
-        
+
         // Create preview for images
         if (selectedFile.type.startsWith("image/")) {
             const reader = new FileReader()
@@ -84,35 +89,47 @@ export default function BankTransferModal({
     const triggerFileInput = () => {
         fileInputRef.current?.click()
     }
-    
+
     const validateForm = () => {
         const newErrors: { [key: string]: string } = {}
-        
-        if (!amount || amount <= 0) {
-            newErrors.amount = "Please enter a valid amount"
-        }
-        
+
         if (!bankName.trim()) {
             newErrors.bankName = "Please enter your bank name"
         }
-        
+        if (!buyerPhone.trim()) {
+            newErrors.buyerPhone = "Please enter your phone number"
+        }
+        if (!receiverName.trim()) {
+            newErrors.receiverName = "Please enter the receiver's name"
+        }
+        if (!receiverPhone.trim()) {
+            newErrors.receiverPhone = "Please enter the receiver's phone number"
+        }
+        if (!receiverAddress.trim()) {
+            newErrors.receiverAddress = "Please enter the receiver's address"
+        }
+        if (!notes.trim()) {
+            newErrors.notes = "Please write a short note"
+        }
+
+
         if (!file) {
             newErrors.file = "Please upload your payment receipt"
         }
-        
+
         setErrors(newErrors)
         return Object.keys(newErrors).length === 0
     }
-    
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
 
         clearCart()
-        
+
         if (!validateForm()) return
-        
+
         setLoading(true)
-        
+
         const token = localStorage.getItem("authToken");
 
         if (!token) {
@@ -123,12 +140,21 @@ export default function BankTransferModal({
         try {
 
             const payload = {
-                invoiceId: invoiceNumber, // Assuming invoiceNumber is actually the invoice _id
+                invoiceId: invoiceNumber,
                 amount: amount,
                 transferReference: `TRX_${Date.now()}`, // or generate a better ref
                 // file: "fileUrl",
                 bankName: bankName,
-            }
+                fulfillmentDetails: {
+                    buyerPhone: buyerPhone,
+                    receiverName: receiverName,
+                    receiverPhone: receiverPhone,
+                    receiverAddress: receiverAddress,
+                    notes: notes,
+                }
+            };
+
+            console.log(payload)
 
 
             const response = await axios.post(
@@ -153,7 +179,7 @@ export default function BankTransferModal({
                 toast.error("An unexpected error occurred.")
             }
         }
-        setLoading(true)
+        setLoading(false)
     }
 
     const handleSuccessClose = () => {
@@ -231,7 +257,7 @@ export default function BankTransferModal({
                                     </label>
                                     <input
                                         type="text"
-                                        id="bankName"
+                                        id="buyerPhone"
                                         value={bankName}
                                         onChange={(e) => setBankName(e.target.value)}
                                         className={`w-full px-3 py-2 border text-black rounded-md ${errors.bankName ? "border-red-500" : "border-gray-300"}`}
@@ -258,7 +284,7 @@ export default function BankTransferModal({
 
                                     <div
                                         onClick={triggerFileInput}
-                                        className={`border-2 border-dashed rounded-md p-4 cursor-pointer text-center ${errors.file ? "border-red-500 bg-red-50" : "border-gray-300 hover:border-blue-500"
+                                        className={`border-2 border-dashed rounded-md p-4 cursor-pointer text-center mb-4 ${errors.file ? "border-red-500 bg-red-50" : "border-gray-300 hover:border-blue-500"
                                             }`}
                                     >
                                         {filePreview ? (
@@ -289,6 +315,119 @@ export default function BankTransferModal({
                                         </p>
                                     )}
                                 </div>
+
+                                <hr className="h-2 bg-black rounded-md"></hr>
+
+                                {/* Bank Name */}
+                                <div>
+                                    <label htmlFor="bankName" className="block text-sm font-medium text-gray-700 mb-1 mt-2">
+                                        Buyer Phone
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="bankName"
+                                        value={buyerPhone}
+                                        onChange={(e) => setBuyerPhone(e.target.value)}
+                                        className={`w-full px-3 py-2 border text-black rounded-md ${errors.buyerPhone ? "border-red-500" : "border-gray-300"}`}
+                                        placeholder="Enter your phone number"
+                                    />
+                                    {errors.buyerPhone && (
+                                        <p className="mt-1 text-sm text-red-600 flex items-center">
+                                            <AlertCircle size={14} className="mr-1" />
+                                            {errors.buyerPhone}
+                                        </p>
+                                    )}
+                                </div>
+
+
+                                {/* receiver's Name */}
+                                <div>
+                                    <label htmlFor="receiverName" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Receipient's Name
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="receiverName"
+                                        value={receiverName}
+                                        onChange={(e) => setReceiverName(e.target.value)}
+                                        className={`w-full px-3 py-2 border text-black rounded-md ${errors.receiverAddress ? "border-red-500" : "border-gray-300"}`}
+                                        placeholder="Enter the receipient's name"
+                                    />
+                                    {errors.receiverName && (
+                                        <p className="mt-1 text-sm text-red-600 flex items-center">
+                                            <AlertCircle size={14} className="mr-1" />
+                                            {errors.receiverName}
+                                        </p>
+                                    )}
+                                </div>
+
+
+                                {/* receiver Phone*/}
+                                <div>
+                                    <label htmlFor="bankName" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Receiver's Phone Number
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="receiverPhone"
+                                        value={receiverPhone}
+                                        onChange={(e) => setReceiverPhone(e.target.value)}
+                                        className={`w-full px-3 py-2 border text-black rounded-md ${errors.receiverAddress ? "border-red-500" : "border-gray-300"}`}
+                                        placeholder="Enter the receipient's Phone number"
+                                    />
+                                    {errors.receiverPhone && (
+                                        <p className="mt-1 text-sm text-red-600 flex items-center">
+                                            <AlertCircle size={14} className="mr-1" />
+                                            {errors.receiverPhone}
+                                        </p>
+                                    )}
+                                </div>
+
+
+                                {/* Reciever Address  */}
+                                <div>
+                                    <label htmlFor="bankName" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Receipient's Address
+                                    </label>
+                                    <input
+                                        type="text"
+                                        id="receiverAddress"
+                                        value={receiverAddress}
+                                        onChange={(e) => setReceiverAddress(e.target.value)}
+                                        className={`w-full px-3 py-2 border text-black rounded-md ${errors.receiverAddress ? "border-red-500" : "border-gray-300"}`}
+                                        placeholder="Enter the receipient's address"
+                                    />
+                                    {errors.recieverAddress && (
+                                        <p className="mt-1 text-sm text-red-600 flex items-center">
+                                            <AlertCircle size={14} className="mr-1" />
+                                            {errors.recieverAddress}
+                                        </p>
+                                    )}
+                                </div>
+
+                                {/* notes */}
+                                <div>
+                                    <label htmlFor="bankName" className="block text-sm font-medium text-gray-700 mb-1">
+                                        Notes
+                                    </label>
+                                    <textarea
+                                        id="notes"
+                                        value={notes}
+                                        onChange={(e) => setNotes(e.target.value)}
+                                        placeholder="Write a note for your loved one..."
+                                        className={`w-full min-h-[100px] resize-y border rounded-md px-3 py-2 text-black ${errors.notes ? "border-red-500" : "border-gray-300"}`}
+                                    />
+                                    {errors.notes && (
+                                        <p className="mt-1 text-sm text-red-600 flex items-center">
+                                            <AlertCircle size={14} className="mr-1" />
+                                            {errors.notes}
+                                        </p>
+                                    )}
+                                </div>
+
+
+
+
                             </div>
 
                             {/* Submit Button */}
@@ -316,3 +455,4 @@ export default function BankTransferModal({
         </>
     )
 }
+

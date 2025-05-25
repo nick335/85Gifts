@@ -1,12 +1,12 @@
-import {
-  Mic,
-  Search,
-  ShoppingCart,
-  Bell,
-  Ellipsis,
-  Plus,
-  PhoneMissed,
-} from "lucide-react";
+// import {
+//   Mic,
+//   Search,
+//   ShoppingCart,
+//   Bell,
+//   Ellipsis,
+//   Plus,
+//   PhoneMissed,
+// } from "lucide-react";
 // import Lady from "../assets/Chat/Lady.png";
 
 
@@ -15,16 +15,16 @@ export default function Messages() {
     <>
       <section className="w-[100%] h-[100%] pt-[15px] pl-[15px] pr-[10px] bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] ">
         <header className="flex items-center justify-center mt-8">
-          <div className="flex items-center bg-white border rounded-xl px-4 justify-between w-full max-w-[350px] h-[40px]">
+          <div className="flex items-center border rounded-xl px-4 justify-between w-full max-w-[350px] h-[40px]">
             <div className="flex gap-2">
               <img src="/src/assets/icons/search-gray.png" alt="Search" />
-              <input
+              {/* <input
                 type="search"
                 id="default-search"
                 className="block text-sm text-Grey/900 border-none outline-none dark:bg-white dark:border-gray-600 dark:placeholder-gray-400 "
                 placeholder="Search"
                 required
-              />
+              /> */}
             </div>
 
             <div className=" pointer-events-none">
@@ -33,18 +33,16 @@ export default function Messages() {
           </div>
           <div>
             <div className="flex items-center gap-3">
-              <div className="border rounded-full bg-white w-[55px] h-[53px] flex justify-center items-center">
-                <ShoppingCart />
-              </div>
-              <div className="border rounded-full bg-white w-[55px] h-[53px] flex justify-center items-center">
-                <Bell />
-              </div>
+             
               {/* <img src={Lady} alt="Icon"/> */}
             </div>
           </div>
         </header>
-        <main className="bg-white mx-5 mt-3 rounded-t-xl">
-          <section>
+        <main className=" mx-5 mt-3 rounded-t-xl">
+
+          <h1 className="font-extrabold text-4xl">Coming soon</h1>
+          
+          {/* <section>
             <div>
               
             </div>
@@ -57,7 +55,7 @@ export default function Messages() {
           <Bell />
           <Ellipsis />
           <Plus />
-          <PhoneMissed />
+          <PhoneMissed /> */}
         </main>
       </section>
     </>
