@@ -55,6 +55,7 @@ function Login() {
           localStorage.setItem("authToken", result.data.data.authToken);
           localStorage.setItem("firstName", result.data.data.firstName);
           localStorage.setItem("lastName", result.data.data.lastName);
+          localStorage.setItem("userId", result.data.data._id)
           navigate("/HomePage");
         } else {
           setServerError(result.data.message || "Invalid login.");

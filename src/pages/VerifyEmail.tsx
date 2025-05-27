@@ -62,7 +62,7 @@ export default function VerifyEmail() {
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`, // Attach Bearer token here
+            Authorization: `Bearer ${authToken}`, 
           },
         }
       );
