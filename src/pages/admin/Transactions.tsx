@@ -1,12 +1,164 @@
+import axios from "axios";
+import { useEffect, useState } from "react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal, } from "lucide-react"
- 
+import { Skeleton } from "@/components/ui/skeleton"
+
+interface Transaction {
+  transferReference?: string;
+  _id: string;
+  description: string;
+  totalPrice: number;
+  transactionDate?: string;
+  status: string;
+}
 
 export default function TransactionsTab() {
+  const [transaction, setTransaction] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentTransactions = transaction.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(transaction.length / itemsPerPage);
+
+  const handleNext = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+
+
+
+
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const authToken = localStorage.getItem("authToken");
+
+        if (!authToken) {
+          setError('Authentication requires');
+          return;
+        }
+
+        const response = await fetch('api/api/admin/admintransactions', {
+          headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.success) {
+          setTransaction(data.data)
+        } else {
+          setError(data.message || 'Failed to fetch transactions')
+        }
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Error fetching transaction');
+        console.error('Error fetching transactions:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, []);
+
+
+  const approveTransaction = async (transactionId: string) => {
+    const approvePayload = {
+      transactionId
+    };
+
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      console.error("No token found. Please login.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "/api/api/admin/approve-transaction",
+        approvePayload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      console.log("Transaction approved:", response.data);
+      setTransaction(prev =>
+        prev.map(tx =>
+          tx._id === transactionId ? { ...tx, status: "completed" } : tx
+        )
+      );
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        console.error("Error approving Invoice:", error.response.data);
+      } else {
+        console.error("Error approving invoice:", error);
+      }
+    }
+  }
+
+  if (loading) {
+    return (
+      <div className="mt-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>All Transactions</CardTitle>
+            <CardDescription>View and manage payment transactions</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {[...Array(5)].map((_, i) => (
+                <Skeleton key={i} className="h-12 w-full" />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="mt-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>All Transactions</CardTitle>
+            <CardDescription>View and manage payment transactions</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-red-600 font-bold">⚠️{error}</div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-6">
       <Card>
@@ -18,120 +170,58 @@ export default function TransactionsTab() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Transaction ID</TableHead>
-                <TableHead>Order ID</TableHead>
-                <TableHead>Customer</TableHead>
-                <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
-                <TableHead className="text-right">Payment Method</TableHead>
-                <TableHead className="text-right">Status</TableHead>
+                <TableHead className="text-center">Transaction ID</TableHead>
+                <TableHead className="text-center">Customer ID</TableHead>
+                <TableHead className="text-center hidden md:table-cell">Description</TableHead>
+                <TableHead className="text-center hidden md:table-cell">Date</TableHead>
+                <TableHead className="text-center">Amount</TableHead>
+                <TableHead className="text-center">Status</TableHead>
               </TableRow>
             </TableHeader>
-           <TableBody>
-          {[
-                {
-                  id: "TRX-9876",
-                  order: "#ORD-7652",
-                  name: "Emily Johnson",
-                  date: "Apr 23, 2023",
-                  amount: "$89.99",
-                  method: "Credit Card",
-                  status: "Completed",
-                  variant: "default",
-                },
-                {
-                  id: "TRX-9875",
-                  order: "#ORD-7651",
-                  name: "Michael Chen",
-                  date: "Apr 22, 2023",
-                  amount: "$129.50",
-                  method: "PayPal",
-                  status: "Pending",
-                  variant: "outline",
-                },
-                {
-                  id: "TRX-9874",
-                  order: "#ORD-7650",
-                  name: "Sarah Williams",
-                  date: "Apr 22, 2023",
-                  amount: "$39.99",
-                  method: "Credit Card",
-                  status: "Completed",
-                  variant: "default",
-                },
-                {
-                  id: "TRX-9873",
-                  order: "#ORD-7649",
-                  name: "David Rodriguez",
-                  date: "Apr 21, 2023",
-                  amount: "$149.99",
-                  method: "Credit Card",
-                  status: "Refunded",
-                  variant: "destructive",
-                },
-                {
-                  id: "TRX-9872",
-                  order: "#ORD-7648",
-                  name: "Jessica Lee",
-                  date: "Apr 21, 2023",
-                  amount: "$79.95",
-                  method: "Apple Pay",
-                  status: "Completed",
-                  variant: "default",
-                },
-                {
-                  id: "TRX-9871",
-                  order: "#ORD-7647",
-                  name: "Robert Kim",
-                  date: "Apr 20, 2023",
-                  amount: "$215.50",
-                  method: "Credit Card",
-                  status: "Completed",
-                  variant: "default",
-                },
-                {
-                  id: "TRX-9870",
-                  order: "#ORD-7646",
-                  name: "Amanda Garcia",
-                  date: "Apr 20, 2023",
-                  amount: "$59.99",
-                  method: "PayPal",
-                  status: "Pending",
-                  variant: "outline",
-                },
-                ].map((tx) => (
-                <TableRow key={tx.id}>
-                 <TableCell className="font-medium">{tx.id}</TableCell>
-                 <TableCell>{tx.order}</TableCell>
-                 <TableCell>{tx.name}</TableCell>
-                 <TableCell className="hidden md:table-cell">{tx.date}</TableCell>
-                 <TableCell className="text-right">{tx.amount}</TableCell>
-                 <TableCell className="text-right">{tx.method}</TableCell>
-                 <TableCell className="text-right">
-                 <Badge variant="outline">{tx.status}</Badge>
-                 </TableCell>
-                  <TableCell className="text-right">
-                  <DropdownMenu>
-                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="h-8 w-8 p-0">
-                     <MoreHorizontal className="h-4 w-4" />
-                       </Button>
+            {transaction.length === 0 ? (
+              <p className="text-center text-gray-500 py-4">No transactions found.</p>
+            ) : (
+              <TableBody>
+                {currentTransactions.map((tx) => (
+                  <TableRow key={tx._id}>
+                    <TableCell className="font-medium">{tx.transferReference}</TableCell>
+                    <TableCell>{tx._id}</TableCell>
+                    <TableCell className="text-left hidden md:table-cell">{tx.description}</TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {tx.transactionDate ? new Date(tx.transactionDate).toLocaleDateString() : "N/A"}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      ₦{new Intl.NumberFormat().format(tx.totalPrice)}
+                    </TableCell>
+                    <TableCell className="text-center">
+                      <Badge variant="outline">{tx.status}</Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
                         </DropdownMenuTrigger>
-                         <DropdownMenuContent align="end">
-                          <DropdownMenuItem>Accept</DropdownMenuItem>
-                            <DropdownMenuItem>Delete</DropdownMenuItem>
-                            </DropdownMenuContent>
-                           </DropdownMenu>
-                  </TableCell>
-                </TableRow>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem onClick={() => approveTransaction(tx._id)}>Accept</DropdownMenuItem>
+                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
                 ))}
-                </TableBody>
-                </Table>
+              </TableBody>
+            )}
+          </Table>
           <div className="flex items-center justify-end space-x-2 py-4">
-            <Button variant="outline" size="sm">
+            <Button onClick={handlePrevious} variant="outline" size="sm" disabled={currentPage === 1}>
               Previous
             </Button>
-            <Button variant="outline" size="sm">
+            <span className="text-sm text-muted-foreground">
+              Page {currentPage} of {totalPages}
+            </span>
+            <Button onClick={handleNext} variant="outline" size="sm"  disabled={currentPage === totalPages}>
               Next
             </Button>
           </div>

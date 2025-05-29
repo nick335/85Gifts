@@ -52,7 +52,7 @@ export default function Gifts() {
             Authorization: `Bearer ${token}`,
           },
         })
-        console.log('Gift API Response', response.data)
+        // console.log('Gift API Response', response.data)
         setGifts(response.data.message)
       } catch (error) {
         console.log('Error fetching gifts', error)

@@ -5,7 +5,7 @@ import SearchInput from "./ui/search-bar";
 import { Button } from "./ui/button";
 
 const NavLinks = [
-  { title: "Find Gift", href: "/Signup" },
+  { title: "Find Gift", href: "/Gifts" },
   { title: "Men", href: "/Signup" },
   { title: "Women", href: "/Signup" },
   { title: "Event", href: "/Signup" },
@@ -79,7 +79,7 @@ export default function Navbar() {
         >
           <div className="flex flex-col gap-4">
             <Link
-              to="/Signup"
+              to="/Gifts"
               className="hover:text-primary"
               onClick={() => setMenuOpen(false)}
             >
