@@ -5,7 +5,7 @@ import { ReceiptText } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../src/store/useCart";
 
-type NavTab = "HomePage" | "Gifts" | "Cart" | "OrderHistory" | "account";
+type NavTab = "HomePage" | "Gifts" | "Cart" | "Orders" | "account";
 
 interface NavItem {
     icon: IconType;
@@ -34,7 +34,7 @@ export default function MobileBottomNav({
         { icon: FaHome, label: "Home", tab: "HomePage" },
         { icon: FaSearch, label: "Gifts", tab: "Gifts" },
         { icon: FaShoppingBag, label: "Cart", tab: "Cart" },
-        { icon: ReceiptText, label: "Order History", tab: "OrderHistory" },
+        { icon: ReceiptText, label: "Orders", tab: "Orders" },
         { icon: FaUser, label: "Account", tab: "account" },
     ];
 

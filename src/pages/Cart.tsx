@@ -34,10 +34,10 @@ export default function Cart() {
     const lastname = localStorage.getItem("lastName");
     const customer = firstname + " " + lastname;
     // console.log(firstname + " " + lastname)
-    console.log(customer)
+    // console.log(customer)
 
     const token = localStorage.getItem("authToken");
-    console.log(token)
+    // console.log(token)
 
     if (!token) {
       console.error("No token found. Please login.");
@@ -56,10 +56,10 @@ export default function Cart() {
         }
       );
 
-      console.log("Invoice created:", response.data);
+      // console.log("Invoice created:", response.data);
 
       const invoiceNumber = response.data.data._id;
-      console.log(invoiceNumber);
+      // console.log(invoiceNumber);
       if (!invoiceNumber) {
         console.error("Invoice ID not returned from backend.");
         return;

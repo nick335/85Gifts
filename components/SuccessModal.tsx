@@ -49,7 +49,7 @@ export default function SuccessModal({ isOpen, onClose, invoiceNumber, amount }:
                         </div>
                         <div className="flex justify-between">
                             <span className="text-gray-600">Amount:</span>
-                            <span className="font-medium text-black">${amount.toFixed(2)}</span>
+                            <span className="font-medium text-black">₦{amount.toFixed(2)}</span>
                         </div>
                     </div>
 

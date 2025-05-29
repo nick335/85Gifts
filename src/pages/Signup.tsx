@@ -95,7 +95,7 @@ export default function Signup() {
               "Content-Type": "application/json",
             },
           }
-        );
+        ); 
 
         if (response.status === 201) {
           localStorage.setItem("authToken", response.data.data.authToken);

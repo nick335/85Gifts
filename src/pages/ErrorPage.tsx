@@ -14,7 +14,7 @@ export default function ErrorPage() {
             <p className="text-gray-600 mb-6 text-center max-w-xs sm:max-w-md">
               That page cannot be found. We are working on it.
             </p>
-            <Link to="/Homepage" className="w-full max-w-xs">
+            <Link to="/" className="w-full max-w-xs">
               <button className="w-full text-white p-3 rounded-lg bg-blue-500 hover:bg-gray-800 transition duration-300">
                 Back to homepage...
               </button>
