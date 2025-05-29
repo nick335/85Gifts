@@ -282,7 +282,7 @@ export default function AdminGiftsPage() {
                   <TableRow key={gift._id}>
                     <TableCell>
                       <img
-                        src={gift.imageUrl || "/placeholder.svg"}
+                        src={gift.imageUrl && gift.imageUrl.length > 0 ? gift.imageUrl[0] : "/placeholder.svg"}
                         alt={gift.name}
                         className="h-10 w-10 rounded-md object-cover"
                       />
@@ -416,11 +416,11 @@ export default function AdminGiftsPage() {
                   type="checkbox"
                   id="stock"
                   name="stock"
-                  checked={formData.stock}
+                  checked={formData.stock > 0}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      stock: e.target.checked,
+                      stock: e.target.checked ? 1 : 0,
                     })
                   }
                   className="h-4 w-4 rounded border-gray-300"
@@ -447,7 +447,7 @@ export default function AdminGiftsPage() {
             <div className="grid gap-4 py-4">
               <div className="mx-auto">
                 <img
-                  src={currentGift.imageUrl || "/placeholder.svg"}
+                  src={currentGift.imageUrl && currentGift.imageUrl.length > 0 ? currentGift.imageUrl[0] : "/placeholder.svg"}
                   alt={currentGift.name}
                   className="h-40 w-40 rounded-md object-cover"
                 />
