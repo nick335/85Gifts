@@ -1,4 +1,4 @@
-  import { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/logo.png";
@@ -95,7 +95,7 @@ export default function Signup() {
               "Content-Type": "application/json",
             },
           }
-        ); 
+        );
 
         if (response.status === 201) {
           localStorage.setItem("authToken", response.data.data.authToken);
@@ -311,6 +311,9 @@ export default function Signup() {
 
               <div className="mt-6">
                 <button
+                  onClick={() => {
+                    window.location.href = "https://eight5gifts-be.onrender.com/api/user/google";
+                  }}
                   type="button"
                   className="w-full inline-flex justify-center items-center gap-2 py-3 px-4 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
