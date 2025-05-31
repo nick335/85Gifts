@@ -132,6 +132,7 @@ export default function BankTransferModal({
 
         const token = localStorage.getItem("authToken");
 
+
         if (!token) {
             console.error("No token found. Please login.");
             return;
@@ -139,31 +140,33 @@ export default function BankTransferModal({
 
         try {
 
-            const payload = {
-                invoiceId: invoiceNumber,
-                amount: amount,
-                transferReference: `TRX_${Date.now()}`, // or generate a better ref
-                // file: "fileUrl",
-                bankName: bankName,
-                fulfillmentDetails: {
-                    buyerPhone: buyerPhone,
-                    receiverName: receiverName,
-                    receiverPhone: receiverPhone,
-                    receiverAddress: receiverAddress,
-                    notes: notes,
-                }
-            };
+            // Create form data
+            const formData = new FormData();
+            formData.append("invoiceId", invoiceNumber);
+            formData.append("amount", amount.toString());
+            formData.append("transferReference", `TRX_${Date.now()}`);
+            if (file) {
+                formData.append("file", file); // The actual file object (e.g., from <input type="file">)
+            }
+            formData.append("bankName", bankName);
 
-            console.log(payload)
+            // fulfillmentDetails is an object; we’ll send it as JSON string
+            formData.append("fulfillmentDetails", JSON.stringify({
+                buyerPhone: buyerPhone,
+                receiverName: receiverName,
+                receiverPhone: receiverPhone,
+                receiverAddress: receiverAddress,
+                notes: notes,
+            }));
 
 
             const response = await axios.post(
                 "/api/api/payment/pay-invoice-transfer/",
-                payload,
+                formData,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`,
-                        "Content-Type": "application/json",
+                        "Content-Type": "multipart/form-data",
                     },
                 }
             )
