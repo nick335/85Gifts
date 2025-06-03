@@ -73,21 +73,21 @@ function Login() {
       });
   };
 
-  const handleGoogleSignIn = async () => {
-    try {
-      const response = await axios.get("/api/api/user/google", {
-        withCredentials: true,
-      });
+  // const handleGoogleSignIn = async () => {
+  //   try {
+  //     const response = await axios.get("/api/api/user/google", {
+  //       withCredentials: true,
+  //     });
 
-      if (response.data.redirectUrl) {
-        window.location.href = response.data.redirectUrl;
-      } else {
-        console.error("No redirect URL received from the server.");
-      }
-    } catch (error) {
-      console.error("Google login failed:", error);
-    }
-  };
+  //     if (response.data.redirectUrl) {
+  //       window.location.href = response.data.redirectUrl;
+  //     } else {
+  //       console.error("No redirect URL received from the server.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Google login failed:", error);
+  //   }
+  // };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -231,7 +231,9 @@ function Login() {
                 </div>
 
                 <button
-                  onClick={handleGoogleSignIn}
+                  onClick={() => {
+                    window.location.href = "https://eight5gifts-be.onrender.com/api/user/google";
+                  }}
                   className="w-full inline-flex justify-center items-center gap-2 py-3 px-4 border border-gray-300 rounded-lg bg-white text-gray-700 font-medium hover:bg-gray-50 transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-200"
                 >
                   <img src={google} alt="Google" className="w-5 h-5" />
