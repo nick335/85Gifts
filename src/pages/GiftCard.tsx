@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { MdOutlineAddShoppingCart } from 'react-icons/md'
 import { CiHeart } from 'react-icons/ci'
 import { ChevronLeft } from 'lucide-react'
-import flower from '../assets/flower.svg'
+// import flower from '../assets/flower.svg'
 import { useCart } from '../store/useCart'
 import MobileBottomNav from '@/components/MobileNavTab'
 
@@ -63,7 +63,7 @@ export default function GiftCard() {
       <div className='w-[100%] h-[100%] pl-[20px] pt-[10px] bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] flex flex-col lg:flex-row lg:gap-5 lg:items-center relative'>
         <div className='relative mt-5'>
           <img
-            src={flower}
+            src={giftDetail.imageUrl[0]}
             alt={giftDetail.name}
             className='w-[350px] h-[400px] object-cover rounded-md shadow-xl'
           />
