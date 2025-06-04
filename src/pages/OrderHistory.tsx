@@ -12,6 +12,7 @@ interface SingleOrder {
   shippingAddress: string
   giftName: string
   orderNumber: string
+  updatedAt: string
 }
 
 interface OrderItem {
@@ -23,10 +24,45 @@ interface OrderItem {
   _id: string
 }
 
+function buildTimeline(currentStatus: string, updatedAt: string) {
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+  const timelineSteps = [
+    'Pending',
+    'Processing',
+    'Shipped',
+    'Delivered',
+    'Cancelled',
+  ]
+  const normalizedStatus = capitalize(currentStatus)
+  const currentIndex = timelineSteps.indexOf(normalizedStatus)
+
+  return timelineSteps.map((status, index) => {
+    const isCurrent = index === currentIndex
+    const isCompleted = index < currentIndex
+
+    return {
+      status,
+      date:
+        isCurrent || isCompleted
+          ? new Date(updatedAt).toLocaleDateString('en-GB', {
+              day: 'numeric',
+              month: 'short',
+              year: 'numeric',
+            })
+          : 'Est. -',
+      completed: isCompleted,
+      current: isCurrent,
+    }
+  })
+}
+
 export default function OrderHistory() {
   const { _id } = useParams()
   const [singleOrder, setSingleOrder] = useState<SingleOrder | null>(null)
   const [loading, setLoading] = useState(true)
+  const [timeline, setTimeline] = useState<
+    { status: string; date: string; completed: boolean; current?: boolean }[]
+  >([])
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -43,8 +79,11 @@ export default function OrderHistory() {
         )
         // console.log(token)
         // console.log(userId)
-        console.log('Single Order Data:', response.data.data)
+        // console.log('Single Order Data:', response.data.data)
         setSingleOrder(response.data.data)
+        setTimeline(
+          buildTimeline(response.data.data.status, response.data.data.updatedAt)
+        )
       } catch (error) {
         console.log('No Order available', error)
       } finally {
@@ -55,16 +94,16 @@ export default function OrderHistory() {
     fetchOrder()
   }, [_id])
 
-  const shippingData = {
-    shippingTo: 'Mr Collin Asange',
-    timeline: [
-      { status: 'Pending', date: 'Aug 10', completed: true },
-      { status: 'Processing', date: 'Aug 10', completed: true, current: true },
-      { status: 'Shipped', date: 'Est. Aug 11', completed: false },
-      { status: 'Delivered', date: 'Est. Aug 11', completed: false },
-      { status: 'Cancelled', date: 'Est. Aug 11', completed: false },
-    ],
-  }
+  // const shippingData = {
+  //   shippingTo: 'Mr Collin Asange',
+  //   timeline: [
+  //     { status: 'Pending', date: 'Aug 10', completed: true },
+  //     { status: 'Processing', date: 'Aug 10', completed: true, current: true },
+  //     { status: 'Shipped', date: 'Est. Aug 11', completed: false },
+  //     { status: 'Delivered', date: 'Est. Aug 11', completed: false },
+  //     { status: 'Cancelled', date: 'Est. Aug 11', completed: false },
+  //   ],
+  // }
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF] p-4 md:p-8 pb-24 md:pb-8'>
@@ -96,13 +135,15 @@ export default function OrderHistory() {
                 </h2>
                 <p className='text-md md:text-sm text-gray-600 mb-4'>
                   Shipping to:{' '}
-                  <span className='font-medium'>{shippingData.shippingTo}</span>
+                  <span className='font-medium'>
+                    {singleOrder.shippingAddress}
+                  </span>
                 </p>
                 <div className='relative'>
-                  {shippingData.timeline.map((step, index) => (
+                  {timeline.map((step, index) => (
                     <div key={index} className='mb-8 relative'>
                       {/* Vertical line */}
-                      {index < shippingData.timeline.length - 1 && (
+                      {index < timeline.length - 1 && (
                         <div
                           className={`absolute left-[6px] top-[14px] w-0.5 h-full ${
                             step.completed ? 'bg-[#072ACD]' : 'bg-gray-200'
