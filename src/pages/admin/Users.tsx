@@ -25,7 +25,7 @@ export default function UsersTab() {
     const fetchUsers = async () => {
       try {
         // Get token from localStorage
-        const authToken = localStorage.getItem('authToken');
+        const authToken = localStorage.getItem('adminToken');
 
         if (!authToken) {
           setError('Authentication required');

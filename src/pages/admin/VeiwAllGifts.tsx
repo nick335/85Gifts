@@ -79,7 +79,7 @@ export default function AdminGiftsPage() {
     const fetchAllGifts = async () => {
       try {
         const token =
-         localStorage.getItem('authToken')
+          localStorage.getItem('adminToken')
         setLoading(true);
         setError(null);
 

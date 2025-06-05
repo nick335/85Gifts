@@ -49,7 +49,7 @@ function AdminLogin() {
       .post("https://eight5gifts-be.onrender.com/api/admin/signin", { email, password })
       .then((result) => {
         if (result.data.success) {
-          localStorage.setItem("authToken", result.data.data.authToken);
+          localStorage.setItem("adminToken", result.data.data.authToken);
           localStorage.setItem("admin", "true"); // Mark as admin session
           navigate("/adminpage");
         } else {

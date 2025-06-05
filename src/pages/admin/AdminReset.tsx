@@ -28,21 +28,21 @@ export default function CustomerResetPassword() {
       alert("Please enter a valid email address.");
       return;
     }
-  
+
     try {
       setLoading(true);
       const { data } = await axios.post(
         "https://eight5gifts-be.onrender.com/api/admin/forgot-password",
         { email }
       );
-  
+
       if (data?.data?.authToken) {
-        localStorage.setItem("authToken", data.data.authToken); // Store auth token
+        localStorage.setItem("adminToken", data.data.authToken); // Store auth token
         console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
       } else {
         throw new Error("Auth token not received.");
       }
-  
+
       alert("OTP sent to your email.");
       setStep("otp");
     } catch (error) {
@@ -52,7 +52,7 @@ export default function CustomerResetPassword() {
       setLoading(false);
     }
   };
-  
+
 
   // 2️⃣ **Verify OTP **
   const handleOtpVerification = async () => {
@@ -62,13 +62,13 @@ export default function CustomerResetPassword() {
     }
 
 
-  const authToken = localStorage.getItem("authToken"); // ✅ Retrieve the token
-  if (!authToken) {
-    alert("Session expired. Please restart the process.");
-    setStep("email");
-    return;
-  }
-  
+    const authToken = localStorage.getItem("adminToken"); // ✅ Retrieve the token
+    if (!authToken) {
+      alert("Session expired. Please restart the process.");
+      setStep("email");
+      return;
+    }
+
     try {
       setLoading(true);
       const { data } = await axios.post(
@@ -82,7 +82,7 @@ export default function CustomerResetPassword() {
         }
       );
       console.log(data)
-  
+
       alert("OTP Verified Successfully!");
       setStep("password");
     } catch (error) {
@@ -92,7 +92,7 @@ export default function CustomerResetPassword() {
       setLoading(false);
     }
   };
-  
+
 
   // 3️⃣ **Submit New Password**
   const handleResetPassword = async () => {
@@ -101,7 +101,7 @@ export default function CustomerResetPassword() {
       return;
     }
 
-    const authToken = localStorage.getItem("authToken");
+    const authToken = localStorage.getItem("adminToken");
     if (!authToken) {
       alert("Session expired. Please restart the process.");
       setStep("email");

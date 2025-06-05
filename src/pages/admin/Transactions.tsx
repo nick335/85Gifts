@@ -40,7 +40,7 @@ export default function TransactionsTab() {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const authToken = localStorage.getItem("authToken");
+        const authToken = localStorage.getItem("adminToken");
 
         if (!authToken) {
           setError('Authentication requires');

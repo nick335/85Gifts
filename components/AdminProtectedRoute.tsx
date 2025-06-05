@@ -5,7 +5,7 @@ interface AdminProtectedRouteProps {
 }
 
 const AdminProtectedRoute = ({ children }: AdminProtectedRouteProps) => {
-  const isAdminAuthenticated = localStorage.getItem('authToken')
+  const isAdminAuthenticated = localStorage.getItem('adminToken')
 
   return isAdminAuthenticated ? (
     <>{children}</>
