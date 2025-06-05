@@ -7,16 +7,17 @@
 @tailwind utilities;
 
 
-@font-face {
-  font-family: 'Satoshi';
-  src: url('./assets/fonts/Satoshi-Regular.woff2') format('woff2'),
-    url('./assets/fonts/Satoshi-Regular.woff') format('woff');
-  font-weight: normal;
+
+.nunito-<uniquifier> {
+  font-family: "Nunito", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
   font-style: normal;
 }
 
+
 body {
-  font-family: 'Satoshi', sans-serif;
+  font-family: 'Nunito', sans-serif;
   height: 100%
 }
 
