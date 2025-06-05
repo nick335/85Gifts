@@ -21,9 +21,6 @@ export default function TransactionsTab() {
   const [transaction, setTransaction] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-
-
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -39,10 +36,6 @@ export default function TransactionsTab() {
   const handlePrevious = () => {
     setCurrentPage((prev) => Math.max(prev - 1, 1));
   };
-
-
-
-
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -123,6 +116,17 @@ export default function TransactionsTab() {
     }
   }
 
+  const getVariant = (status: string) => {
+    switch (status) {
+      case "completed":
+        return "default";
+      case "cancelled":
+        return "destructive";
+      default:
+        return "outline";
+    }
+  };
+
   if (loading) {
     return (
       <div className="mt-6">
@@ -194,7 +198,7 @@ export default function TransactionsTab() {
                       ₦{new Intl.NumberFormat().format(tx.totalPrice)}
                     </TableCell>
                     <TableCell className="text-center">
-                      <Badge variant="outline">{tx.status}</Badge>
+                      <Badge variant={getVariant(tx.status)}>{tx.status}</Badge>
                     </TableCell>
                     <TableCell className="text-right">
                       <DropdownMenu>
@@ -221,7 +225,7 @@ export default function TransactionsTab() {
             <span className="text-sm text-muted-foreground">
               Page {currentPage} of {totalPages}
             </span>
-            <Button onClick={handleNext} variant="outline" size="sm"  disabled={currentPage === totalPages}>
+            <Button onClick={handleNext} variant="outline" size="sm" disabled={currentPage === totalPages}>
               Next
             </Button>
           </div>

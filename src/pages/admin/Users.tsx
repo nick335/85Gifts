@@ -111,7 +111,7 @@ export default function UsersTab() {
               <Button
                 variant="outline"
                 className="mt-4"
-                onClick={() => window.location.href = '/login'}
+                onClick={() => window.location.href = '/admin/login'}
               >
                 Login
               </Button>
