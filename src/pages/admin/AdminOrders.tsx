@@ -26,6 +26,7 @@ interface Orders {
   status: string;
   items: GiftItem[];
   giftName: string;
+  transactionId: string
 }
 
 export default function OrdersTab() {
@@ -197,7 +198,7 @@ export default function OrdersTab() {
               <TableRow>
                 <TableHead className="text-center">Order ID</TableHead>
                 <TableHead className="text-center">Customer ID </TableHead>
-                <TableHead className="text-center hidden md:table-cell">Products</TableHead>
+                <TableHead className="text-center hidden md:table-cell">Transaction Id</TableHead>
                 <TableHead className="text-center hidden md:table-cell">Created At</TableHead>
                 <TableHead className="text-center">Amount</TableHead>
                 <TableHead className="text-center">Status</TableHead>
@@ -211,7 +212,7 @@ export default function OrdersTab() {
                   <TableRow>
                     <TableCell className="font-medium">{order._id}</TableCell>
                     <TableCell>{order.userId}</TableCell>
-                    <TableCell className="text-center hidden md:table-cell">{order.items[0].giftName} </TableCell>
+                    <TableCell className="text-center hidden md:table-cell">{order.transactionId} </TableCell>
                     <TableCell className="text-center hidden md:table-cell">
                       {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "N/A"}
                     </TableCell>
