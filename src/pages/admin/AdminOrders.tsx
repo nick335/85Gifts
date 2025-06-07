@@ -215,7 +215,7 @@ export default function OrdersTab() {
                     <TableCell className="text-center hidden md:table-cell">
                       {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "N/A"}
                     </TableCell>
-                    <TableCell className="text-center">#{order.items[0].totalPrice}</TableCell>
+                    <TableCell className="text-center">#{order.totalPrice}</TableCell>
                     <TableCell className="text-center">
                       <Badge variant={getVariant(order.status)}>{order.status}</Badge>
                     </TableCell>
