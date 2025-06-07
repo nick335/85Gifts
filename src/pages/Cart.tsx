@@ -16,8 +16,9 @@ export default function Cart() {
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const vat = 10.5;
-  const vatCalc = (vat/100) * subtotal;
-  const total = vatCalc + subtotal;
+  const flatDelivery = 3000
+  const vatCalc = (vat / 100) * subtotal;
+  const total = vatCalc + subtotal + flatDelivery;
 
 
   const handleCreateInvoice = async () => {
@@ -111,51 +112,51 @@ export default function Cart() {
               {cartItems.length === 0 ? (
                 <p className="text-center text-lg font-semibold mt-10">Your cart is empty.</p>
               ) : (
-                
-                  cartItems.map(item => (
-                    <div key={item._id} className="flex flex-col sm:flex-row gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full sm:w-24 h-24 object-cover rounded-lg"
-                      />
 
-                      <div className="flex-1">
-                        {/* <h3 className="font-medium">{item.category}</h3> */}
-                        <p className="text-gray-600">{item.name}</p>
+                cartItems.map(item => (
+                  <div key={item._id} className="flex flex-col sm:flex-row gap-4 mb-6 p-4 bg-gray-50 rounded-lg">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full sm:w-24 h-24 object-cover rounded-lg"
+                    />
 
-                        <div className="flex items-center mt-2">
-                          <button
-                            onClick={() => decrementQuantity(item._id)}
-                            className="p-1 bg-white rounded-full"
-                            aria-label={`Decrease quantity of ${item.name}`}
-                          >
-                            <HiMinusSm className="text-gray-600" />
-                          </button>
-                          <span>Qty: {item.quantity}</span>
-                          <button
-                            onClick={() => incrementQuantity(item._id)}
-                            className="p-1 bg-white rounded-full"
-                            aria-label={`Increase quantity of ${item.name}`}
-                          >
-                            <span>+</span>
-                          </button>
-                        </div>
+                    <div className="flex-1">
+                      {/* <h3 className="font-medium">{item.category}</h3> */}
+                      <p className="text-gray-600">{item.name}</p>
+
+                      <div className="flex items-center mt-2">
+                        <button
+                          onClick={() => decrementQuantity(item._id)}
+                          className="p-1 bg-white rounded-full"
+                          aria-label={`Decrease quantity of ${item.name}`}
+                        >
+                          <HiMinusSm className="text-gray-600" />
+                        </button>
+                        <span>Qty: {item.quantity}</span>
+                        <button
+                          onClick={() => incrementQuantity(item._id)}
+                          className="p-1 bg-white rounded-full"
+                          aria-label={`Increase quantity of ${item.name}`}
+                        >
+                          <span>+</span>
+                        </button>
                       </div>
-
-                      <div className="font-medium text-lg">
-                        ₦{item.price * item.quantity}
-                      </div>
-                      <button
-                        onClick={() => removeFromCart(item._id)}
-                        className="text-white bg-red-600 rounded-full p-1 hover:bg-red-700"
-                        aria-label={`Remove ${item.name} from cart`}
-                      >
-                        <MdClose size={20} />
-                      </button>
                     </div>
-                  ))                 
-                
+
+                    <div className="font-medium text-lg">
+                      ₦{item.price * item.quantity}
+                    </div>
+                    <button
+                      onClick={() => removeFromCart(item._id)}
+                      className="text-white bg-red-600 rounded-full p-1 hover:bg-red-700"
+                      aria-label={`Remove ${item.name} from cart`}
+                    >
+                      <MdClose size={20} />
+                    </button>
+                  </div>
+                ))
+
               )}
             </div>
 
@@ -170,8 +171,13 @@ export default function Cart() {
                 </div>
 
                 <div className="flex justify-between">
-                  <span>V.A.T</span>
+                  <span>CP</span>
                   <span>{vat.toLocaleString()}%</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span>Delivery Fee</span>
+                  <span>N{flatDelivery.toLocaleString()}</span>
                 </div>
 
                 <hr className="border-t border-white my-2" />
