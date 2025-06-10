@@ -28,7 +28,8 @@ export default function Cart() {
         giftId: _id,  // make sure it's a string
         quantity,
       })),
-      vat: vat // this is already declared in your component
+      vat: vat, // this is already declared in your component
+      deliveryFees: flatDelivery
     };
 
     const firstname = localStorage.getItem("firstName");
