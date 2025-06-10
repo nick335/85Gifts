@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import SearchBarHome from '@/components/ui/search-bar-dashboard'
 import { Link } from 'react-router-dom'
 import { IoMdCart } from 'react-icons/io'
@@ -21,6 +22,23 @@ import MobileBottomNav from '@/components/MobileNavTab'
 import { Country, State } from '@/components/location'
 
 export default function HomePage() {
+
+  useEffect(() => {
+    // Check if there's a token in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    if (token) {
+      // Save the token to localStorage
+      localStorage.setItem("authToken", token);
+
+      // Optionally, remove the token from the URL for a cleaner look
+      window.history.replaceState({}, document.title, "/Homepage");
+    }
+  }, []);
+
+
+
   return (
     <>
       <div className='w-[100%] h-[100%] pt-[15px] pl-[15px] pr-[10px] bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF]'>

@@ -115,8 +115,6 @@ function Invoice() {
                             <div className="sender text-start mt-5">
                                 <h3><b>Invoiced to:</b></h3>
                                 <p>{customer}</p>
-                                <p>Agatha phase III Rd, Ojuelegba, Anambra.</p>
-                                <p>Call: +2347073298531</p>
                             </div>
                         </div>
                         <section>

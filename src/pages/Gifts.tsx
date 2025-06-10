@@ -25,15 +25,14 @@ interface Gift {
   price: number
   quantity: number
 }
+
 export default function Gifts() {
   const [gifts, setGifts] = useState<Gift[]>([])
   const [loading, setLoading] = useState(true)
   const [wishlist, setWishlist] = useState<string[]>([])
 
-  const { addToCart,cartItems } = useCart()
-  const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0);
-
-
+  const { addToCart, cartItems } = useCart()
+  const cartItemCount = cartItems.reduce((total, item) => total + item.quantity, 0)
 
   const toggleWishlist = (giftId: string) => {
     setWishlist((prev) =>
@@ -52,7 +51,6 @@ export default function Gifts() {
             Authorization: `Bearer ${token}`,
           },
         })
-        // console.log('Gift API Response', response.data)
         setGifts(response.data.message)
       } catch (error) {
         console.log('Error fetching gifts', error)
@@ -66,19 +64,23 @@ export default function Gifts() {
 
   return (
     <>
-      <div className='w-[100%] h-[100%] pt-[15px] pl-[10px] pr-[10px] bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF]'>
-        <div className='w-[100%] flex justify-end gap-[2.5rem] pr-[5px] lg:pr-[0] lg:items-center lg:gap-[15rem] '>
+      <div className='w-full h-full pt-4 px-2.5 bg-gradient-to-br from-[#B5BCFF] via-[#E2E5FF] to-[#FFFFFF]'>
+        <div className='w-full flex justify-end gap-10 pr-1.5 lg:pr-0 lg:items-center lg:gap-[15rem]'>
           <div>
             <SearchBarHome />
           </div>
           <div className='flex gap-1 lg:gap-2 lg:items-center'>
             <Link to='/Cart'>
-            <button className='hidden lg:block bg-[#fff] border rounded-[50%] py-[8px] px-[8px]'>
-              <IoMdCart size={22}/>
-              {cartItemCount > 0 && (<span className='absolute top-2 bg-[#FFDA1F] text-[#072ACD] text-xs rounded-full px-1.5'>{cartItemCount}</span>)}
-            </button>
+              <button className='hidden lg:block bg-white border rounded-full p-2 relative'>
+                <IoMdCart size={22} />
+                {cartItemCount > 0 && (
+                  <span className='absolute -top-1 -right-1 bg-[#FFDA1F] text-[#072ACD] text-xs rounded-full w-5 h-5 flex items-center justify-center'>
+                    {cartItemCount}
+                  </span>
+                )}
+              </button>
             </Link>
-            <button className='bg-[#fff] border rounded-[50%] py-[8px] px-[8px]'>
+            <button className='bg-white border rounded-full p-2'>
               <GoBell size={22} />
             </button>
             <div className='hidden lg:flex'>
@@ -89,33 +91,37 @@ export default function Gifts() {
             </div>
           </div>
         </div>
+
         {/* Gifts Section */}
-        <div className='mt-[55px] grid grid-cols-2 gap-x-6 gap-y-8 lg:gap-y-5 lg:place-items-center lg:grid-cols-6'>
+        <div className='mt-14 grid grid-cols-2 gap-4 lg:grid-cols-4 xl:grid-cols-6 px-4'>
           {loading ? (
             <div className='col-span-full flex flex-col items-center mt-10'>
               <div className="w-10 h-10 border-4 border-[#072ACD] border-t-transparent rounded-full animate-spin"></div>
-            <p className='text-center col-span-full mt-10 text-lg'>
-              Loading gifts...
-            </p>
+              <p className='text-center mt-10 text-lg'>
+                Loading gifts...
+              </p>
             </div>
           ) : gifts.length > 0 ? (
             gifts.map((gift) => (
-              <div key={gift._id} className="relative w-[150px] h-[160px] group transform transition-transform duration-300 shadow-xl hover:scale-105 hover:shadow-lg">
-              <Link to={`/gift/${gift._id}`}
-               >
-                <img
-                  src={gift.imageUrl[0]}
-                  alt={gift.name}
-                  className='w-[170px] h-[115px] object-cover absolute top-0 left-0 z-10 rounded-t-md '
-                />
-              </Link>
-              {/* Gift Cards */}
-                <Card className='w-[170px] h-[150px] absolute top-[110px] rounded-t-none z-0'>
-                  <CardHeader>
-                    <CardTitle className='text-center absolute top-[7px] left-[1px]'>
+              <div
+                key={gift._id}
+                className="relative w-full h-[280px] group transform transition-all duration-300 hover:scale-[1.02] hover:shadow-lg mb-8"
+              >
+                <Link to={`/gift/${gift._id}`}>
+                  <img
+                    src={gift.imageUrl[0]}
+                    alt={gift.name}
+                    className='w-full h-[180px] object-cover rounded-t-md'
+                  />
+                </Link>
+
+                {/* Gift Card */}
+                <Card className='w-full h-[120px] absolute bottom-0 rounded-t-none border-t-0'>
+                  <CardHeader className='p-3'>
+                    <CardTitle className='text-sm line-clamp-1'>
                       {gift.name}
                     </CardTitle>
-                    <CardDescription className='text-sm absolute top-[50px] left-[10px] text-[#444]'>
+                    <CardDescription className='text-sm text-[#444]'>
                       {new Intl.NumberFormat('en-NG', {
                         style: 'currency',
                         currency: 'NGN',
@@ -124,9 +130,10 @@ export default function Gifts() {
                   </CardHeader>
 
                   {/* Add to cart button */}
-                  <div className='hidden group-hover:flex absolute bottom-[10px] right-[35px]'>
+                  <div className='hidden group-hover:flex absolute bottom-3 right-3'>
                     <Button
-                      onClick={() =>
+                      onClick={(e) => {
+                        e.preventDefault()
                         addToCart({
                           _id: gift._id,
                           name: gift.name,
@@ -135,8 +142,8 @@ export default function Gifts() {
                           image: gift.imageUrl[0],
                           quantity: 1,
                         })
-                      }
-                      className='bg-[#072ACD] hover:bg-[#0221a8]'
+                      }}
+                      className='bg-[#072ACD] hover:bg-[#0221a8] text-xs h-8'
                     >
                       Add to cart
                     </Button>
@@ -150,15 +157,15 @@ export default function Gifts() {
                     e.preventDefault()
                     toggleWishlist(gift._id)
                   }}
-                  className='absolute bottom-[-30px] right-[-10px]'
+                  className='absolute top-2 right-2 bg-white/80 p-1 rounded-full'
                 >
                   {wishlist.includes(gift._id) ? (
-                    <FaHeart className='text-[#072AC8]' size={18} />
+                    <FaHeart className='text-[#072AC8]' size={16} />
                   ) : (
-                    <CiHeart className='fill-[#072AC8]' size={24} />
+                    <CiHeart className='text-[#072AC8]' size={20} />
                   )}
                 </button>
-                </div>
+              </div>
             ))
           ) : (
             <p className='text-center col-span-full mt-10 text-lg'>

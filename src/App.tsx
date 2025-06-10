@@ -33,6 +33,7 @@ import Orders from './pages/Orders'
 import { ErrorBoundary } from 'react-error-boundary'
 import ProtectedRoute from '@/components/ProtectedRoute.tsx'
 import { Toaster } from 'sonner'
+import AdminProtectedRoute from '@/components/AdminProtectedRoute.tsx'
 
 function App() {
   return (
@@ -54,7 +55,7 @@ function App() {
             <Route path='/GiftCuration' element={<GiftCuration />} />
             <Route path='/Cart' element={<Cart />} />
             <Route path='/Invoice/:invoiceNumber' element={<Invoice />} />
-           {/* <Route path='/OrderHistory' element={<OrderHistory />} /> */}
+            {/* <Route path='/OrderHistory' element={<OrderHistory />} /> */}
             <Route path='/Orders' element={<Orders />} />
             <Route path='/Settings' element={<Settings />} />
           </Route>
@@ -70,13 +71,22 @@ function App() {
           <Route path='/admin/login' element={<AdminLogin />} />
           <Route path='/admin/reset' element={<AdminReset />} />
 
-          {/* Admin Layout */}
-          <Route element={<AdminLayout />}>
-            <Route path='/adminpage' element={<AdminDashBoard />} />
-            <Route path='/users' element={<Users />} />
-            <Route path='/adminorders' element={<OrdersTab />} />
-            <Route path='/admingiftspage' element={<AdminGiftsPage />} />
-            <Route path='/transactions' element={<Transactions />} />
+          {/* Protected Admin Routes */}
+          <Route
+            element={
+              <AdminProtectedRoute>
+                <AdminLayout />
+              </AdminProtectedRoute>
+            }
+          >
+            {/* Admin Layout */}
+            <Route element={<AdminLayout />}>
+              <Route path='/adminpage' element={<AdminDashBoard />} />
+              <Route path='/users' element={<Users />} />
+              <Route path='/adminorders' element={<OrdersTab />} />
+              <Route path='/admingiftspage' element={<AdminGiftsPage />} />
+              <Route path='/transactions' element={<Transactions />} />
+            </Route>
           </Route>
 
           {/* Catch-all route */}

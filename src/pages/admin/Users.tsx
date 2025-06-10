@@ -25,7 +25,7 @@ export default function UsersTab() {
     const fetchUsers = async () => {
       try {
         // Get token from localStorage
-        const authToken = localStorage.getItem('authToken');
+        const authToken = localStorage.getItem('adminToken');
 
         if (!authToken) {
           setError('Authentication required');
@@ -111,7 +111,7 @@ export default function UsersTab() {
               <Button
                 variant="outline"
                 className="mt-4"
-                onClick={() => window.location.href = '/login'}
+                onClick={() => window.location.href = '/admin/login'}
               >
                 Login
               </Button>
