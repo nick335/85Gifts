@@ -45,10 +45,10 @@ function buildTimeline(currentStatus: string, updatedAt: string) {
       date:
         isCurrent || isCompleted
           ? new Date(updatedAt).toLocaleDateString('en-GB', {
-              day: 'numeric',
-              month: 'short',
-              year: 'numeric',
-            })
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+          })
           : 'Est. -',
       completed: isCompleted,
       current: isCurrent,
@@ -145,18 +145,16 @@ export default function OrderHistory() {
                       {/* Vertical line */}
                       {index < timeline.length - 1 && (
                         <div
-                          className={`absolute left-[6px] top-[14px] w-0.5 h-full ${
-                            step.completed ? 'bg-[#072ACD]' : 'bg-gray-200'
-                          }`}
+                          className={`absolute left-[6px] top-[14px] w-0.5 h-full ${step.completed ? 'bg-[#072ACD]' : 'bg-gray-200'
+                            }`}
                         ></div>
                       )}
 
                       {/* Timeline dot */}
                       <div className='flex items-start'>
                         <div
-                          className={`rounded-full h-3 w-3 mt-1.5 ${
-                            step.completed ? 'bg-[#072ACD]' : 'bg-gray-200'
-                          } ${step.current ? 'ring-2 ring-[#072ACD]' : ''}`}
+                          className={`rounded-full h-3 w-3 mt-1.5 ${step.completed ? 'bg-[#072ACD]' : 'bg-gray-200'
+                            } ${step.current ? 'ring-2 ring-[#072ACD]' : ''}`}
                         ></div>
 
                         <div className='ml-4'>

@@ -46,7 +46,7 @@ function AdminLogin() {
     setValidationErrors([]);
 
     axios
-      .post("https://eight5gifts-be.onrender.com/api/admin/signin", { email, password })
+      .post("/api/api/admin/signin", { email, password })
       .then((result) => {
         if (result.data.success) {
           localStorage.setItem("adminToken", result.data.data.authToken);
@@ -60,6 +60,7 @@ function AdminLogin() {
         if (err.response && err.response.status === 400) {
           if (err.response.data.errors) {
             setValidationErrors(err.response.data.errors);
+            navigate("/admin/login")
           } else if (err.response.data) {
             setServerError("Invalid Credentials. Please try again.");
           }
