@@ -4,6 +4,7 @@ import { NotebookPen, RotateCw, Star, X } from 'lucide-react'
 import gloss from '../assets/lipgloss.svg'
 import MobileBottomNav from '../../components/MobileNavTab'
 import axios from 'axios'
+import { toast } from 'sonner'
 
 interface SingleOrder {
   _id: string
@@ -81,6 +82,7 @@ export default function OrderHistory() {
         // console.log(userId)
         // console.log('Single Order Data:', response.data.data)
         setSingleOrder(response.data.data)
+        toast.success("Order history updated")
         setTimeline(
           buildTimeline(response.data.data.status, response.data.data.updatedAt)
         )

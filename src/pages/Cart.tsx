@@ -1,10 +1,11 @@
 import axios from "axios";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from '../store/useCart';
 import cart from "../assets/icons/mdi_cart.png";
 import checkout from "../assets/icons/mdi_account-payment.png";
 import { MdClose, MdKeyboardDoubleArrowRight } from "react-icons/md";
-// import order from "../assets/order-1.jpg";
+import { toast } from "sonner";
 import { HiMinusSm } from "react-icons/hi";
 import { IoSend } from "react-icons/io5";
 // import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
@@ -13,6 +14,7 @@ import MobileBottomNav from "@/components/MobileNavTab";
 export default function Cart() {
   const { cartItems, incrementQuantity, decrementQuantity, removeFromCart, } = useCart();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const vat = 10.5;
@@ -20,8 +22,8 @@ export default function Cart() {
   const vatCalc = (vat / 100) * subtotal;
   const total = vatCalc + subtotal + flatDelivery;
 
-
   const handleCreateInvoice = async () => {
+    setIsLoading(true);
 
     const invoicePayload = {
       items: cartItems.map(({ _id, quantity }) => ({
@@ -35,14 +37,14 @@ export default function Cart() {
     const firstname = localStorage.getItem("firstName");
     const lastname = localStorage.getItem("lastName");
     const customer = firstname + " " + lastname;
-    // console.log(firstname + " " + lastname)
-    // console.log(customer)
+    // toast.log(firstname + " " + lastname)
+    // toast.log(customer)
 
     const token = localStorage.getItem("authToken");
-    // console.log(token)
+    // toast.log(token)
 
     if (!token) {
-      console.error("No token found. Please login.");
+      toast.error("No token found. Please login.");
       return;
     }
 
@@ -58,23 +60,26 @@ export default function Cart() {
         }
       );
 
-      // console.log("Invoice created:", response.data);
-
+      toast.loading("Invoice created:", response.data);
       const invoiceNumber = response.data.data._id;
-      // console.log(invoiceNumber);
+      // toast.log(invoiceNumber);
       if (!invoiceNumber) {
-        console.error("Invoice ID not returned from backend.");
+        toast.error("Invoice ID not returned from backend.");
         return;
       }
       // navigate(`/invoice`, { state: { invoiceData: response.data,  cartItems: cartItems } });
       navigate(`/invoice/${invoiceNumber}`, { state: { invoiceData: response.data.data, cartItems: cartItems, customer } });
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
-        console.error("Error creating invoice:", error.response.data);
+        toast.error("Error creating invoice", error.response.data);
       } else {
+        toast.error("Error creating invoice");
         console.error("Error creating invoice:", error);
       }
-    }
+    } finally {
+      setIsLoading(false);
+      toast.dismiss();
+    };
   }
 
 
@@ -203,9 +208,21 @@ export default function Cart() {
                   <span>₦{total.toLocaleString()}</span>
                 </div>
 
-                <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition" onClick={handleCreateInvoice}
+                <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition"
+                  onClick={handleCreateInvoice}
+                  disabled={isLoading}
                 >
-                  Proceed to Checkout
+                  {isLoading ? (
+                    <div className="flex items-center justify-center">
+                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      Proceeding to Checkout
+                    </div>
+                  ) : (
+                    "Proceed to Checkout"
+                  )}
                 </button>
               </div>
             </div>

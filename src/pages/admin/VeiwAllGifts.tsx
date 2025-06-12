@@ -36,6 +36,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Skeleton } from "@/components/ui/skeleton"
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -64,6 +65,22 @@ export default function AdminGiftsPage() {
   const [currentGift, setCurrentGift] = useState<Gift | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentGifts = gifts.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(gifts.length / itemsPerPage);
+
+  const handleNext = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  };
+
+  const handlePrevious = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
 
   const [formData, setFormData] = useState<Omit<Gift, "_id">>({
     name: "",
@@ -244,20 +261,35 @@ export default function AdminGiftsPage() {
   return (
     <div className="mt-6">
       {loading ? (
-        <p className="text-center col-span-full mt-10 text-lg">
-          loading gifts...
-        </p>
-      ) : gifts.length > 0 ? (
         <Card>
-          <CardHeader className="flex flex-row items-center">
+          <CardHeader>
             <div className="grid gap-1">
               <CardTitle>All Gifts</CardTitle>
               <CardDescription>Manage gift items in your store</CardDescription>
             </div>
-            <Button className="ml-auto" onClick={handleAddGift}>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Gift
-            </Button>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              {[...Array(5)].map((_, i) => (
+                <Skeleton key={i} className="h-12 w-full" />
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      ) : gifts.length > 0 ? (
+        <Card>
+          <CardHeader >
+            <div className="grid gap-1">
+              <CardTitle>All Gifts</CardTitle>
+              <CardDescription>Manage gift items in your store</CardDescription>
+            </div>
+            <div className="flex flex-row items-center">
+              <div></div>
+              <Button className="ml-auto" onClick={handleAddGift}>
+                <Plus className="mr-2 h-4 w-4" />
+                Add Gift
+              </Button>
+            </div>
           </CardHeader>
           <CardContent>
             <Table>
@@ -278,7 +310,7 @@ export default function AdminGiftsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {gifts.map((gift) => (
+                {currentGifts.map((gift) => (
                   <TableRow key={gift._id}>
                     <TableCell>
                       <img
@@ -288,7 +320,7 @@ export default function AdminGiftsPage() {
                       />
                     </TableCell>
                     <TableCell className="font-medium">{gift.name}</TableCell>
-                    <TableCell className="text-right">${gift.price}</TableCell>
+                    <TableCell className="text-right">#{gift.price}</TableCell>
                     <TableCell className="text-center">
                       <Badge variant={gift.stock ? "default" : "outline"}>
                         {gift.stock ? "In Stock" : "Out of Stock"}
@@ -328,10 +360,13 @@ export default function AdminGiftsPage() {
               </TableBody>
             </Table>
             <div className="flex items-center justify-end space-x-2 py-4">
-              <Button variant="outline" size="sm">
+              <Button onClick={handlePrevious} variant="outline" size="sm">
                 Previous
               </Button>
-              <Button variant="outline" size="sm">
+              <span className="text-sm text-muted-foreground">
+                Page {currentPage} of {totalPages}
+              </span>
+              <Button onClick={handleNext} variant="outline" size="sm">
                 Next
               </Button>
             </div>

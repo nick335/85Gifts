@@ -17,6 +17,7 @@ import {
 } from '@/components/ui/card'
 import { CiHeart } from 'react-icons/ci'
 import { FaHeart } from 'react-icons/fa'
+import { toast } from 'sonner'
 
 interface Gift {
   _id: string
@@ -54,6 +55,7 @@ export default function Gifts() {
         setGifts(response.data.message)
       } catch (error) {
         console.log('Error fetching gifts', error)
+        toast.error('Error fetching gifts')
       } finally {
         setLoading(false)
       }

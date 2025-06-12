@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { MoreHorizontal, } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
 
 interface GiftItem {
   giftId: string;
@@ -75,11 +76,13 @@ export default function OrdersTab() {
         if (data.success) {
           setOrders(data.data)
         } else {
+          toast.error('Failed to fetch orders')
           setError(data.message || 'Failed to fetch orders')
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error fetching Orders');
         console.error('Error fetching Orders:', err);
+        toast.error('Error fetching Orders');
       } finally {
         setLoading(false);
       }
@@ -98,7 +101,7 @@ export default function OrdersTab() {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
-      console.error("No token found. Please login.");
+      toast.error("No token found. Please login.");
       return;
     }
 
@@ -114,7 +117,7 @@ export default function OrdersTab() {
         }
       );
 
-      console.log("Order status updated approved:", response.data);
+      toast.success("Order status updated", response.data);
       setOrders(prev =>
         prev.map(order =>
           order._id === orderId ? { ...order, status } : order
@@ -123,9 +126,11 @@ export default function OrdersTab() {
 
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
-        console.error("Error approving Invoice:", error.response.data);
+        console.error("Error updating Order:", error.response.data);
+        toast.error("Error updating Order:", error.response.data);
       } else {
-        console.error("Error approving invoice:", error);
+        console.error("Error updating Order:", error);
+        toast.error("Error updating Order:");
       }
     }
   }
@@ -198,7 +203,7 @@ export default function OrdersTab() {
               <TableRow>
                 <TableHead className="text-center">Order ID</TableHead>
                 <TableHead className="text-center">Customer ID </TableHead>
-                <TableHead className="text-center hidden md:table-cell">Transaction Id</TableHead>
+                <TableHead className="text-center hidden md:table-cell">Products</TableHead>
                 <TableHead className="text-center hidden md:table-cell">Created At</TableHead>
                 <TableHead className="text-center">Amount</TableHead>
                 <TableHead className="text-center">Status</TableHead>
@@ -212,11 +217,11 @@ export default function OrdersTab() {
                   <TableRow>
                     <TableCell className="font-medium">{order._id}</TableCell>
                     <TableCell>{order.userId}</TableCell>
-                    <TableCell className="text-center hidden md:table-cell">{order.transactionId} </TableCell>
+                    <TableCell className="text-center hidden md:table-cell">{order.items[0].giftName} </TableCell>
                     <TableCell className="text-center hidden md:table-cell">
                       {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "N/A"}
                     </TableCell>
-                    <TableCell className="text-center">#{order.totalPrice}</TableCell>
+                    <TableCell className="text-center">#{order.items[0].totalPrice}</TableCell>
                     <TableCell className="text-center">
                       <Badge variant={getVariant(order.status)}>{order.status}</Badge>
                     </TableCell>
