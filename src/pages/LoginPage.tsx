@@ -48,7 +48,7 @@ function Login() {
     setValidationErrors([]);
 
     axios
-      .post("/api/api/user/signin", { email, password })
+      .post("https://eight5gifts-be.onrender.com/api/api/user/signin", { email, password })
       .then((result) => {
         console.log("API Response:", result.data);
 
