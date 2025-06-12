@@ -76,10 +76,10 @@ export default function Cart() {
         toast.error("Error creating invoice");
         console.error("Error creating invoice:", error);
       }
-    }finally {
-        setIsLoading(false);
-        toast.dismiss();
-      };
+    } finally {
+      setIsLoading(false);
+      toast.dismiss();
+    };
   }
 
 
@@ -208,11 +208,11 @@ export default function Cart() {
                   <span>₦{total.toLocaleString()}</span>
                 </div>
 
-                <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition" 
+                <button className="w-full bg-[#072AC8] text-white py-3 rounded-2xl mt-6 hover:bg-blue-700 transition"
                   onClick={handleCreateInvoice}
                   disabled={isLoading}
                 >
-                   {isLoading ? (
+                  {isLoading ? (
                     <div className="flex items-center justify-center">
                       <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
