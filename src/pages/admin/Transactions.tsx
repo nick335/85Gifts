@@ -7,6 +7,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal, } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner";
 
 interface Transaction {
   transferReference?: string;
@@ -85,7 +86,7 @@ export default function TransactionsTab() {
     const token = localStorage.getItem("authToken");
 
     if (!token) {
-      console.error("No token found. Please login.");
+      toast.error("No token found. Please login.");
       return;
     }
 
@@ -101,7 +102,8 @@ export default function TransactionsTab() {
         }
       );
 
-      console.log("Transaction approved:", response.data);
+      toast.success("Transaction approved");
+      console.log("Transaction approved", response.data);
       setTransaction(prev =>
         prev.map(tx =>
           tx._id === transactionId ? { ...tx, status: "completed" } : tx
@@ -109,9 +111,49 @@ export default function TransactionsTab() {
       );
     } catch (error: unknown) {
       if (axios.isAxiosError(error) && error.response) {
-        console.error("Error approving Invoice:", error.response.data);
+        toast.error("Error approving Invoice:", error.response.data);
       } else {
         console.error("Error approving invoice:", error);
+        toast.error("Error approving invoice");
+      }
+    }
+  }
+
+  const declineTransaction = async (transactionId: string) => {
+    const approvePayload = {
+      transactionId
+    };
+
+    const token = localStorage.getItem("adminToken");
+
+    if (!token) {
+      toast.error("No token found. Please login.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "/api/api/admin/decline-transaction",
+        approvePayload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      toast.success("Transaction declined", response.data);
+      setTransaction(prev =>
+        prev.map(tx =>
+          tx._id === transactionId ? { ...tx, status: "declined" } : tx
+        )
+      );
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response) {
+        toast.error("Error declining Invoice:", error.response.data);
+      } else {
+        console.error("Error declining invoice:", error);
       }
     }
   }
@@ -120,7 +162,7 @@ export default function TransactionsTab() {
     switch (status) {
       case "completed":
         return "default";
-      case "cancelled":
+      case "declined":
         return "destructive";
       default:
         return "outline";
@@ -209,7 +251,7 @@ export default function TransactionsTab() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
                           <DropdownMenuItem onClick={() => approveTransaction(tx._id)}>Accept</DropdownMenuItem>
-                          <DropdownMenuItem>Delete</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => declineTransaction(tx._id)}>Decline</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>

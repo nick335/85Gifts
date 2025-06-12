@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import { toast } from 'sonner'
 
 interface CartItem {
   _id: string
@@ -45,12 +46,14 @@ export const useCart = create<CartState>((set, get) => ({
 
     saveCart(updatedCart)
     set({ cartItems: updatedCart })
+    toast.success("Item added to Cart")
   },
 
   removeFromCart: (_id) => {
     const updatedCart = get().cartItems.filter((item) => item._id !== _id)
     saveCart(updatedCart)
     set({cartItems: updatedCart})
+    toast.success("Item removed from Cart")
   },
 
   clearCart: () => {

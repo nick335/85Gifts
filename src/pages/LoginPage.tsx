@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import google from "../assets/icons/google.svg";
 import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/eye-off.svg";
+import { toast } from "sonner";
 
 function Login() {
   const [step, setStep] = useState<"email" | "password">("email");
@@ -56,9 +57,11 @@ function Login() {
           localStorage.setItem("firstName", result.data.data.firstName);
           localStorage.setItem("lastName", result.data.data.lastName);
           localStorage.setItem("userId", result.data.data._id)
+          toast.success("Login Successful!");
           navigate("/HomePage");
         } else {
           setServerError(result.data.message || "Invalid login.");
+          toast.error("Login Failed");
         }
       })
       .catch((err) => {

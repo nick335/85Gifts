@@ -4,6 +4,7 @@ import { NotebookPen } from 'lucide-react'
 import MobileBottomNav from '../../components/MobileNavTab'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 
 interface Orders {
   _id: string
@@ -35,6 +36,7 @@ export default function Orders() {
           'Error fetching orders:',
           error
         )
+        toast.error('Error fetching orders')
       } finally {
         setLoading(false)
       }
@@ -142,38 +144,38 @@ export default function Orders() {
 
         {/* Orders List */}
         <div className='p-3 md:p-6'>
-            {loading ? (
-                <div className='col-span-full flex flex-col items-center mt-10'>
+          {loading ? (
+            <div className='col-span-full flex flex-col items-center mt-10'>
               <div className="w-10 h-10 border-4 border-[#072ACD] border-t-transparent rounded-full animate-spin"></div>
-            <p className='text-center col-span-full mt-10 text-lg'>
-              Loading orders...
-            </p>
+              <p className='text-center col-span-full mt-10 text-lg'>
+                Loading orders...
+              </p>
             </div>
-            ): orders && orders.length > 0 ? (
+          ) : orders && orders.length > 0 ? (
             orders.map((order) => (
-            <div
-              key={order._id}
-              className='border rounded-lg p-4 mb-6 bg-gray-50'
-            >
-              <div className='flex justify-between items-center'>
-                <div>
-                  <h2 className='text-sm font-semibold text-gray-500'>
-                    Order #{order.orderNumber}
-                  </h2>
-                  <p className='text-sm font-semibold'>Ships to {order.shippingAddress}</p>
-                  <p className='text-sm text-gray-500'>
-                    Placed on {order.createdAt}
-                  </p>
+              <div
+                key={order._id}
+                className='border rounded-lg p-4 mb-6 bg-gray-50'
+              >
+                <div className='flex justify-between items-center'>
+                  <div>
+                    <h2 className='text-sm font-semibold text-gray-500'>
+                      Order #{order.orderNumber}
+                    </h2>
+                    <p className='text-sm font-semibold'>Ships to {order.shippingAddress}</p>
+                    <p className='text-sm text-gray-500'>
+                      Placed on {order.createdAt}
+                    </p>
+                  </div>
+                  <Button className='bg-[#072ACD] self-end md:self-center'><Link to={`/order/${order._id}`}>View more</Link></Button>
                 </div>
-                <Button className='bg-[#072ACD] self-end md:self-center'><Link to={`/order/${order._id}`}>View more</Link></Button>
               </div>
-            </div>
-          ))
-        ) : (
+            ))
+          ) : (
             <p className='text-center col-span-full mt-10 text-lg text-red-700'>
               No orders found
             </p>
-        )}
+          )}
         </div>
       </div>
       {/* Mobile Bottom Navigation */}

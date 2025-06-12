@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
 
 interface User {
   id: string;
@@ -53,6 +54,7 @@ export default function UsersTab() {
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Error fetching users');
         console.error('Error fetching users:', err);
+        toast.error('Error fetching users');
       } finally {
         setLoading(false);
       }
