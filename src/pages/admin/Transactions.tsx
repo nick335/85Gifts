@@ -8,6 +8,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { MoreHorizontal, } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from "sonner";
+import { config } from "@/src/config";
 
 interface Transaction {
   transferReference?: string;
@@ -48,7 +49,7 @@ export default function TransactionsTab() {
           return;
         }
 
-        const response = await fetch('api/api/admin/admintransactions', {
+        const response = await fetch(`${config.BACKEND_URL}/api/admin/admintransactions`, {
           headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
@@ -92,7 +93,7 @@ export default function TransactionsTab() {
 
     try {
       const response = await axios.post(
-        "/api/api/admin/approve-transaction",
+        `${config.BACKEND_URL}/api/admin/approve-transaction`,
         approvePayload,
         {
           headers: {
@@ -133,7 +134,7 @@ export default function TransactionsTab() {
 
     try {
       const response = await axios.post(
-        "/api/api/admin/decline-transaction",
+        `${config.BACKEND_URL}/api/admin/decline-transaction`,
         approvePayload,
         {
           headers: {

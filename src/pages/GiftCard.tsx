@@ -8,6 +8,7 @@ import { CiHeart } from 'react-icons/ci'
 import { ChevronLeft } from 'lucide-react'
 import { useCart } from '../store/useCart'
 import MobileBottomNav from '@/components/MobileNavTab'
+import { config } from '../config'
 
 interface GiftDetail {
   _id: string
@@ -27,7 +28,7 @@ export default function GiftCard() {
     const fetchGiftDetail = async () => {
       try {
         const token = localStorage.getItem('authToken')
-        const response = await axios.get(`/api/api/gift/${_id}`, {
+        const response = await axios.get(`${config.BACKEND_URL}/api/gift/${_id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

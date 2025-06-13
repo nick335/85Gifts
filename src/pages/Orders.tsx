@@ -5,6 +5,7 @@ import MobileBottomNav from '../../components/MobileNavTab'
 import axios from 'axios'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
+import { config } from '../config'
 
 interface Orders {
   _id: string
@@ -24,7 +25,7 @@ export default function Orders() {
       try {
         const token = localStorage.getItem('authToken')
         const userId = localStorage.getItem('userId')
-        const res = await axios.get(`api/api/user/get-user-orders/${userId}`, {
+        const res = await axios.get(`${config.BACKEND_URL}/api/user/get-user-orders/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

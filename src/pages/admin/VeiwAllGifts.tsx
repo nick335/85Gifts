@@ -43,6 +43,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
+import { config } from "@/src/config";
 
 // Adjusted Gift type to match API structure
 type Gift = {
@@ -189,7 +190,7 @@ export default function AdminGiftsPage() {
     try {
       if (currentGift) {
         const response = await axios.put(
-          `api/api/gift/update/${currentGift._id}`,
+          `${config.BACKEND_URL}/api/gift/update/${currentGift._id}`,
           formData,
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -233,7 +234,7 @@ export default function AdminGiftsPage() {
       localStorage.getItem('authToken')
     if (currentGift) {
       try {
-        await axios.delete(`api/api/gift/delete/${currentGift._id}`, {
+        await axios.delete(`${config.BACKEND_URL}/api/gift/delete/${currentGift._id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 

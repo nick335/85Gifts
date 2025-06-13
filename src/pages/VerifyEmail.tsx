@@ -4,6 +4,7 @@ import axios from "axios";
 import logo from "../assets/logo.png";
 import Frame285 from "../assets/Frame285.png";
 import { toast } from "sonner";
+import { config } from "../config";
 
 export default function VerifyEmail() {
   const [verificationCode, setVerificationCode] = useState("");
@@ -23,7 +24,7 @@ export default function VerifyEmail() {
       setResendDisabled(false);
     }
   }, [timer]);
-  
+
 
   //  Format time(MM:SS)
   const formatTime = (seconds: number) => {
@@ -57,12 +58,12 @@ export default function VerifyEmail() {
     try {
       // Send the verification code to the backend for validation
       const response = await axios.post(
-        "/api/api/user/verify",
+        `${config.BACKEND_URL}/api/user/verify`,
         { token: verificationCode },
         {
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${authToken}`, 
+            Authorization: `Bearer ${authToken}`,
           },
         }
       );
@@ -108,7 +109,7 @@ export default function VerifyEmail() {
 
     try {
       const response = await axios.post(
-        "https://eight5gifts-be.onrender.com/api/user/resend-verification",
+        `${config.BACKEND_URL}/api/user/resend-verification`,
         { email },
         {
           headers: {
@@ -170,11 +171,10 @@ export default function VerifyEmail() {
                 Code expires in {formatTime(timer)}
               </p>
               <button
-                className={`px-3 py-1 ml-8 rounded-lg items-center ${
-                  resendDisabled
-                    ? "bg-gray-400 text-white cursor-not-allowed"
-                    : "bg-[#072AC8] text-white"
-                }`}
+                className={`px-3 py-1 ml-8 rounded-lg items-center ${resendDisabled
+                  ? "bg-gray-400 text-white cursor-not-allowed"
+                  : "bg-[#072AC8] text-white"
+                  }`}
                 disabled={resendDisabled}
                 onClick={handleResendCode}
               >

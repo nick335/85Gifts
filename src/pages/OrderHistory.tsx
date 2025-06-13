@@ -5,6 +5,7 @@ import gloss from '../assets/lipgloss.svg'
 import MobileBottomNav from '../../components/MobileNavTab'
 import axios from 'axios'
 import { toast } from 'sonner'
+import { config } from '../config'
 
 interface SingleOrder {
   _id: string
@@ -71,7 +72,7 @@ export default function OrderHistory() {
         const token = localStorage.getItem('authToken')
         const userId = localStorage.getItem('userId')
         const response = await axios.get(
-          `/api/api/user/get-order/${userId}/${_id}`,
+          `${config.BACKEND_URL}/api/user/get-order/${userId}/${_id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

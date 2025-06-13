@@ -7,6 +7,7 @@ import eyeClosed from "../assets/icons/Eye.png";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { toast } from "sonner"
+import { config } from "../config";
 
 export default function CustomerResetPassword() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "/api/api/user/forgot-password",
+        `${config.BACKEND_URL}/api/user/forgot-password`,
         { email }
       );
 
@@ -78,7 +79,7 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "/api/api/user/verify",
+        `${config.BACKEND_URL}/api/user/verify`,
         { token: otp },
         {
           headers: {
@@ -122,7 +123,7 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       await axios.post(
-        "/api/api/user/update-password",
+        `${config.BACKEND_URL}/api/user/update-password`,
         { password: password },
         {
           headers: { Authorization: `Bearer ${authToken}` }, // Attach auth token

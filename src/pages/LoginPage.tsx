@@ -8,6 +8,7 @@ import google from "../assets/icons/google.svg";
 import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/eye-off.svg";
 import { toast } from "sonner";
+import { config } from "../config";
 
 function Login() {
   const [step, setStep] = useState<"email" | "password">("email");
@@ -48,7 +49,7 @@ function Login() {
     setValidationErrors([]);
 
     axios
-      .post("https://eight5gifts-be.onrender.com/api/user/signin", { email, password })
+      .post(`${config.BACKEND_URL}/api/user/signin`, { email, password })
       .then((result) => {
         console.log("API Response:", result.data);
 

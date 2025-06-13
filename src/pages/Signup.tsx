@@ -7,6 +7,7 @@ import eyeOpen from "../assets/icons/eye.svg";
 import eyeClosed from "../assets/icons/eye-off.svg";
 import google from "../assets/icons/google.svg";
 import { toast } from "sonner";
+import { config } from "../config";
 
 export default function Signup() {
   const [formData, setFormData] = useState({
@@ -83,7 +84,7 @@ export default function Signup() {
         // Destructuring only the necessary fields from formData
         const { firstName, lastName, email, password } = formData;
         const response = await axios.post(
-          "/api/api/user/signup",
+          `${config.BACKEND_URL}/api/user/signup`,
           {
             firstName,
             lastName,
@@ -95,7 +96,7 @@ export default function Signup() {
               "Content-Type": "application/json",
             },
           }
-        ); 
+        );
 
         if (response.status === 201) {
           localStorage.setItem("authToken", response.data.data.authToken);
