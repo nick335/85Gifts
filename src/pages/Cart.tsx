@@ -10,6 +10,7 @@ import { HiMinusSm } from "react-icons/hi";
 import { IoSend } from "react-icons/io5";
 // import { FaHome, FaSearch, FaUser, FaShoppingBag, FaHeart } from "react-icons/fa";
 import MobileBottomNav from "@/components/MobileNavTab";
+import { config } from "../config";
 
 export default function Cart() {
   const { cartItems, incrementQuantity, decrementQuantity, removeFromCart, } = useCart();
@@ -50,7 +51,7 @@ export default function Cart() {
 
     try {
       const response = await axios.post(
-        "/api/api/user/create-invoice",
+        `${config.BACKEND_URL}/api/user/create-invoice`,
         invoicePayload,
         {
           headers: {

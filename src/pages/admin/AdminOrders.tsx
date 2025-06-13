@@ -8,6 +8,7 @@ import { MoreHorizontal, } from "lucide-react"
 import { useEffect, useState } from "react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from "sonner"
+import { config } from "@/src/config"
 
 interface GiftItem {
   giftId: string;
@@ -60,7 +61,7 @@ export default function OrdersTab() {
           return;
         }
 
-        const response = await fetch('api/api/admin/orders', {
+        const response = await fetch(`${config.BACKEND_URL}/api/admin/orders`, {
           headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
@@ -107,7 +108,7 @@ export default function OrdersTab() {
 
     try {
       const response = await axios.post(
-        "/api/api/admin/update-order-status",
+        `${config.BACKEND_URL}/api/admin/update-order-status`,
         updatePayload,
         {
           headers: {

@@ -6,6 +6,7 @@ import background from "../../assets/icons/loginbg.png";
 // import eyeOpen from "../../assets/icons/Eye.png";
 import eyeOpen from "../../assets/icons/Eye.png";
 import eyeClosed from "../../assets/icons/Eye.png";
+import { config } from "@/src/config";
 
 export default function CustomerResetPassword() {
   const navigate = useNavigate();
@@ -32,13 +33,13 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "https://eight5gifts-be.onrender.com/api/admin/forgot-password",
+        `${config.BACKEND_URL}/api/admin/forgot-password`,
         { email }
       );
 
       if (data?.data?.authToken) {
         localStorage.setItem("adminToken", data.data.authToken); // Store auth token
-        console.log("AuthToken set in localStorage:", localStorage.getItem("authToken"));
+        console.log("AuthToken set in localStorage:", localStorage.getItem("adminToken"));
       } else {
         throw new Error("Auth token not received.");
       }
@@ -72,7 +73,7 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       const { data } = await axios.post(
-        "https://eight5gifts-be.onrender.com/api/user/verify",
+        `${config.BACKEND_URL}/api/user/verify`,
         { token: otp },
         {
           headers: {
@@ -111,7 +112,7 @@ export default function CustomerResetPassword() {
     try {
       setLoading(true);
       await axios.post(
-        "https://eight5gifts-be.onrender.com/api/admin/update-password",
+        `${config.BACKEND_URL}/admin/update-password`,
         { password: password },
         {
           headers: { Authorization: `Bearer ${authToken}` }, // Attach auth token

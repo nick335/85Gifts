@@ -6,6 +6,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import eyeOpen from "../../assets/icons/Eye.png";
 import eyeClosed from "../../assets/icons/Eye.png";
+import { config } from "@/src/config";
 
 function AdminLogin() {
   const [step, setStep] = useState<"email" | "password">("email");
@@ -46,7 +47,7 @@ function AdminLogin() {
     setValidationErrors([]);
 
     axios
-      .post("/api/api/admin/signin", { email, password })
+      .post(`${config.BACKEND_URL}/api/admin/signin`, { email, password })
       .then((result) => {
         if (result.data.success) {
           localStorage.setItem("adminToken", result.data.data.authToken);

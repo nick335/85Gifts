@@ -14,6 +14,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import axios from "axios";
+import { config } from "../config";
 
 
 
@@ -44,7 +45,7 @@ function Invoice() {
         if (!invoiceData) {
             // Fetch invoice data if not passed via state
             setLoading(true);
-            axios.get(`https://eight5gifts-be.onrender.com/api/user/invoice/${invoiceNumber}`)
+            axios.get(`${config.BACKEND_URL}/api/user/invoice/${invoiceNumber}`)
                 .then(res => {
                     setInvoiceData(res.data.data);
                     setCartItems(res.data.data.items || []);

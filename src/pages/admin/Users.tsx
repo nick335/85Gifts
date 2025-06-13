@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from "sonner"
+import { config } from '@/src/config';
 
 interface User {
   id: string;
@@ -33,7 +34,7 @@ export default function UsersTab() {
           return;
         }
 
-        const response = await fetch('/api/api/admin/users', {
+        const response = await fetch(`${config.BACKEND_URL}/api/admin/users`, {
           headers: {
             'Authorization': `Bearer ${authToken}`,
             'Content-Type': 'application/json'
