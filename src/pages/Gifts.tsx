@@ -18,7 +18,7 @@ import {
 import { CiHeart } from 'react-icons/ci'
 import { FaHeart } from 'react-icons/fa'
 import { toast } from 'sonner'
-// import { config } from '../config'
+import { config } from '../config'
 
 interface Gift {
   _id: string
@@ -48,7 +48,7 @@ export default function Gifts() {
     const fetchGifts = async () => {
       try {
         const token = localStorage.getItem('authToken')
-        const response = await axios.get(`https://eight5gifts-be.onrender.com/api/gift/all`, {
+        const response = await axios.get(`${config.BACKEND_URL}/api/gift/all`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
